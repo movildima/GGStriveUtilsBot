@@ -9,6 +9,8 @@
     <PackageReference Include="DSharpPlus" Version="4.0.1" />
     <PackageReference Include="DSharpPlus.CommandsNext" Version="4.0.1" />
     <PackageReference Include="DSharpPlus.Interactivity" Version="4.0.1" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.34" />
+    <PackageReference Include="TinyJson" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "GGStriveUtilsBot": {
+      "commandName": "Project",
+      "workingDirectory": "$(ProjectDir)\\"
+    }
+  }
+}

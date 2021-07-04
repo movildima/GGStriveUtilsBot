@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.IO;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.Interactivity;
+using DSharpPlus.Interactivity.Extensions;
 
 namespace GGStriveUtilsBot
 {
@@ -19,9 +22,21 @@ namespace GGStriveUtilsBot
         {
             discord = new DiscordClient(new DiscordConfiguration()
             {
-                Token = "Token",
+                Token = System.IO.File.ReadAllText("token.txt"),
                 TokenType = TokenType.Bot
             });
+
+            discord.UseInteractivity(new InteractivityConfiguration()
+            {
+                Timeout = TimeSpan.FromSeconds(60)
+            });
+
+            commands = discord.UseCommandsNext(new CommandsNextConfiguration()
+            {
+                StringPrefixes = new[] { "!" }
+            });
+
+            commands.RegisterCommands<Commands.FrameDataModule>();
 
             await discord.ConnectAsync();
             await Task.Delay(-1);
