@@ -38,6 +38,9 @@ namespace GGStriveUtilsBot
 
             commands.RegisterCommands<Commands.FrameDataModule>();
 
+            //download frame data
+            Utils.DustloopDataFetcher.Initialize();
+
             await discord.ConnectAsync();
             await Task.Delay(-1);
         }

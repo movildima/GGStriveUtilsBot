@@ -14,22 +14,73 @@ namespace GGStriveUtilsBot.Commands
     class FrameDataModule : BaseCommandModule
     {
         [Command("framedata"), Aliases("f")]
-        public async Task FrameDataCommand(CommandContext ctx, string parameters)
+        public async Task FrameDataCommand(CommandContext ctx, string Character, [RemainingText] string Move)
         {
-            var builder = GenericEmbedBuilder.Create();
-            builder.Title = "Anji Mito";
-            builder.Description = "Fuujin frame data";
-            builder.AddField("Input", "236HS", true);
-            builder.AddField("Damage", "35", true);
-            builder.AddField("Guard", "All", true);
-            builder.AddField("Startup", "17[33]", true);
-            builder.AddField("Active", "4", true);
-            builder.AddField("Recovery", "29", true);
-            builder.AddField("On block", "-16", true);
-            builder.AddField("On hit", "-13", true);
-            builder.Thumbnail = new DiscordEmbedBuilder.EmbedThumbnail();
-            builder.Thumbnail.Url = "https://dustloop.com/wiki/images/thumb/a/a0/GGST_Anji_Mito_Fuujin.png/651px-GGST_Anji_Mito_Fuujin.png";
-            await ctx.RespondAsync(builder.Build());
+            var results = Utils.DustloopDataFetcher.fetchMove(Character, Move);
+            ctx.RespondAsync(buildEmbed(results));
+        }
+
+        [Command("framedata")]
+        public async Task FrameDataCommand(CommandContext ctx, string Move)
+        {
+            var results = Utils.DustloopDataFetcher.fetchMove(null, Move);
+            await ctx.RespondAsync(buildEmbed(results));
+        }
+
+        private DiscordEmbed buildEmbed(MoveListInternal list)
+        {
+            switch (list.result)
+            {
+                case MoveDataResult.Success:
+                    return build1XEmbed(list.moves[0]);
+                    break;
+                case MoveDataResult.NoResult:
+                    var embed = GenericEmbedBuilder.Create();
+                    return embed.Build();
+                    break;
+                case MoveDataResult.ExtraResults:
+                    return build3XEmbed(list.moves);
+                    break;
+                case MoveDataResult.TooManyResults:
+                    var embed2 = GenericEmbedBuilder.Create();
+                    return embed2.Build();
+                default:
+                    var embed3 = GenericEmbedBuilder.Create();
+                    return embed3.Build();
+            };
+        }
+
+        private DiscordEmbed build1XEmbed(MoveData move)
+        {
+            var embed = GenericEmbedBuilder.Create();
+
+            embed.AddField("Input", move.input, true);
+            if (!string.IsNullOrEmpty(move.damage))
+                embed.AddField("Damage", move.damage, true);
+            if (!string.IsNullOrEmpty(move.guard))
+                embed.AddField("Guard", move.guard, true);
+            if (!string.IsNullOrEmpty(move.startup))
+                embed.AddField("Startup", move.startup, true);
+            if (!string.IsNullOrEmpty(move.active))
+                embed.AddField("Active", move.active, true);
+            if (!string.IsNullOrEmpty(move.recovery))
+                embed.AddField("Recovery", move.recovery, true);
+            if (!string.IsNullOrEmpty(move.onBlock))
+                embed.AddField("On block", move.onBlock, true);
+            if (!string.IsNullOrEmpty(move.onHit))
+                embed.AddField("On hit", move.onHit, true);
+            if (!string.IsNullOrEmpty(move.invuln))
+                embed.AddField("Invuln", move.invuln, true);
+            embed.Thumbnail = new DiscordEmbedBuilder.EmbedThumbnail();
+            embed.Thumbnail.Url = move.images[0];
+
+            return embed.Build();
+        }
+
+        private DiscordEmbed build3XEmbed(List<MoveData> moves)
+        {
+            var embed = GenericEmbedBuilder.Create();
+            return embed.Build();
         }
     }
 }
