@@ -17,9 +17,6 @@ namespace GGStriveUtilsBot.Commands
         public async Task FrameDataCommand(CommandContext ctx, string Character, [RemainingText] string Move)
         {
             (string chara, string move) = Utils.InputParser.parseFrameDataInput(Character + " " + Move);
-            // Uncomment to log parsing results
-            // Console.WriteLine(chara);
-            // Console.WriteLine(move);
             var results = Utils.DustloopDataFetcher.fetchMove(chara, move);
             ctx.RespondAsync(buildEmbed(results));
         }

@@ -27,7 +27,11 @@ namespace GGStriveUtilsBot.Utils
             @"))(\s*)"
             );
         // Part of regex that captures either move names or numpad notated moves
-        static private string movePattern = @"(?<move>((?<literal>([a-z]*\s*)*)|(?<prefix>[cfj])?(\.)?(\d+)(?<suffix>p|k|s|hs?|d)))$";
+        static private string movePattern = String.Join(
+            "",
+            @"(?<move>((?<literal>([a-z]*\s*)*)|",
+            @"(?<prefix>[cfj])?(\.)?(\d+)(\]|\[)?(?<suffix>p|k|s|hs?|d)(\]|\[)?)*)$"
+        );
         static private string charaMovePattern = String.Join("", charaPattern, movePattern);
 
         static private Regex charaMoveRegex = new Regex(charaMovePattern,
@@ -41,24 +45,25 @@ namespace GGStriveUtilsBot.Utils
             Match match = matches[0];
             GroupCollection groups = match.Groups;
 
-            // 'literal' denotes a move's full name ("Gunflame") 
-            string literal = groups["prefix"].Value.ToString();
-            // 'prefix' denotes close ('c'), far ('f'), or jump ('j')
-            string prefix = groups["prefix"].Value.ToString();
-            // 'suffix' denotes attack button ('p', 'k', 's', 'h', 'd')
-            string suffix = groups["suffix"].Value.ToString();
-
+            // denotes a move's full name ("Gunflame") 
+            var literal = groups["literal"];
+            // denotes close ('c'), far ('f'), or jump ('j')
+            // NOTE: May contain multiple individual captures
+            _ = groups["prefix"];
+            // denotes attack button ('p', 'k', 's', 'h', 'd')
+            // NOTE: May contain multiple individual captures
+            _ = groups["suffix"];
+            
             // 'chara' denotes a character name
             string chara = groups["chara"].Value.ToString();
             // 'move' denotes an attack, which could be either it's
             // literal name (see above), or it's numpad notation.
-            string move = groups["move"].Value.ToString();
+            string move = groups["move"].Value.ToString().ToLower();
 
             // Replace 'HS' -> 'H' to match dustloop format
-            if (!groups["literal"].Success && groups["suffix"].Value.ToString().ToLower() == "hs") {
-                move.Replace(suffix, "h");
+            if (literal.Length < 1) {
+                move = move.Replace("hs", "h");
             }
-
             return (chara, move);
         }
     }
