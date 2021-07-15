@@ -20,6 +20,8 @@ namespace GGStriveUtilsBot.Commands
         [Command("framedata"), Aliases("f"), Description("Fetch frame data of a specified move from Dustloop wiki.")]
         public async Task FrameDataCommand(CommandContext ctx, [RemainingText, Description("TBD")] string Move)
         {
+            await ctx.TriggerTypingAsync();
+
             (string chara, string move) = Utils.InputParser.parseFrameDataInput(Move);
             var results = Utils.DustloopDataFetcher.fetchMove(chara, move);
             var interactivity = ctx.Client.GetInteractivity();
@@ -75,6 +77,10 @@ namespace GGStriveUtilsBot.Commands
         {
             var embed = GenericEmbedBuilder.Create();
 
+            if (!string.IsNullOrEmpty(move.name))
+                embed = embed.WithTitle("Frame data for " + move.name);
+            else
+                embed = embed.WithTitle("Frame data for " + move.input);
             embed.AddField("Input", move.input, true);
             if (!string.IsNullOrEmpty(move.damage))
                 embed.AddField("Damage", move.damage, true);

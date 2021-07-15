@@ -30,7 +30,7 @@ namespace GGStriveUtilsBot.Utils
         static private string movePattern = String.Join(
             "",
             @"(?<move>((?<literal>([a-z]*\s*)*)|",
-            @"(?<prefix>[cfj])?(\.)?(\d+)(\]|\[)?(?<suffix>p|k|s|hs?|d)(\]|\[)?)*)$"
+            @"(?<prefix>[cfj])?(\.)?(\d*)(\]|\[)?(?<suffix>p|k|s|hs?|d)(\]|\[)?)*)$"
         );
         static private string charaMovePattern = String.Join("", charaPattern, movePattern);
 
