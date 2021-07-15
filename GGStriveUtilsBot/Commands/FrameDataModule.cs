@@ -16,7 +16,8 @@ namespace GGStriveUtilsBot.Commands
         [Command("framedata"), Aliases("f")]
         public async Task FrameDataCommand(CommandContext ctx, string Character, [RemainingText] string Move)
         {
-            var results = Utils.DustloopDataFetcher.fetchMove(Character, Move);
+            (string chara, string move) = Utils.InputParser.parseFrameDataInput(Character + " " + Move);
+            var results = Utils.DustloopDataFetcher.fetchMove(chara, move);
             ctx.RespondAsync(buildEmbed(results));
         }
 
@@ -33,14 +34,11 @@ namespace GGStriveUtilsBot.Commands
             {
                 case MoveDataResult.Success:
                     return build1XEmbed(list.moves[0]);
-                    break;
                 case MoveDataResult.NoResult:
                     var embed = GenericEmbedBuilder.Create();
                     return embed.Build();
-                    break;
                 case MoveDataResult.ExtraResults:
                     return build3XEmbed(list.moves);
-                    break;
                 case MoveDataResult.TooManyResults:
                     var embed2 = GenericEmbedBuilder.Create();
                     return embed2.Build();
