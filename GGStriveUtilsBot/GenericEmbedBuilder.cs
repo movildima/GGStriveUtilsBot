@@ -16,7 +16,7 @@ namespace GGStriveUtilsBot
             r.Footer = new DiscordEmbedBuilder.EmbedFooter();
             r.Footer.IconUrl = "https://cdn.discordapp.com/avatars/861273965666238485/2287810a2e3e5498e3738188d047ebc6.webp?size=64";
             if (dustloopFooter)
-                r.Footer.Text = "Data provided by the Dustloop wiki";
+                r.Footer.Text = "Data provided by Dustloop wiki";
             else
                 r.Footer.Text = "I did the Dragon Uninstall.";
 
