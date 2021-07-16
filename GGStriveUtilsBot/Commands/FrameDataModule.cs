@@ -22,7 +22,7 @@ namespace GGStriveUtilsBot.Commands
         {
             await ctx.TriggerTypingAsync();
 
-            (string chara, string move) = Utils.InputParser.parseFrameDataInput(Move);
+            (string chara, string move, bool isNumpad) = Utils.InputParser.parseFrameDataInput(Move);
             var results = Utils.DustloopDataFetcher.fetchMove(chara, move);
             var interactivity = ctx.Client.GetInteractivity();
             DiscordEmoji emoji1 = DiscordEmoji.FromName(ctx.Client, ":one:");

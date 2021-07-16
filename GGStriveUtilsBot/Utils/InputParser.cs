@@ -24,7 +24,7 @@ namespace GGStriveUtilsBot.Utils
             @"(chipp)(?:\s+zanuff)?|",
             @"(anji)(?:\s+mito)?|",
             @"(axl)(?:\s+low)?",
-            @"))(\s*)"
+            @")?)(\s*)"
             );
         // Part of regex that captures either move names or numpad notated moves
         static private string movePattern = String.Join(
@@ -37,10 +37,10 @@ namespace GGStriveUtilsBot.Utils
         static private Regex charaMoveRegex = new Regex(charaMovePattern,
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        public static (string chara, string move) parseFrameDataInput(string input) {
+        public static (string chara, string move, bool isNumpad) parseFrameDataInput(string input) {
             MatchCollection matches = charaMoveRegex.Matches(input);
             if (matches.Count == 0) {
-                return ("Unknown", "Unknown");
+                return ("Unknown", "Unknown", false);
             }
             Match match = matches[0];
             GroupCollection groups = match.Groups;
@@ -60,11 +60,21 @@ namespace GGStriveUtilsBot.Utils
             // literal name (see above), or it's numpad notation.
             string move = groups["move"].Value.ToString().ToLower();
 
+            bool isNumpad = false;
+
             // Replace 'HS' -> 'H' to match dustloop format
             if (literal.Length < 1) {
+                isNumpad = true;
                 move = move.Replace("hs", "h");
             }
-            return (chara, move);
+
+            // Character name & move are both specified
+            if (chara.Length > 1) {
+                return (chara, move, isNumpad);
+            }
+
+            // Move is specified without character name
+            return (null, move, isNumpad);
         }
     }
 }
