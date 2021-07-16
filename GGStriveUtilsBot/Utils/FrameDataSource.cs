@@ -36,3 +36,9 @@ public enum MoveDataResult
     ExtraResults,
     TooManyResults
 }
+
+public class IconData
+{
+    public string name { get; set; }
+    public string icon { get; set; }
+}
