@@ -81,7 +81,8 @@ namespace GGStriveUtilsBot.Commands
                 embed = embed.WithTitle("Frame data for " + move.name);
             else
                 embed = embed.WithTitle("Frame data for " + move.input);
-            embed.AddField("Input", move.input, true);
+            if (!string.IsNullOrEmpty(move.input))
+                embed.AddField("Input", move.input, true);
             if (!string.IsNullOrEmpty(move.damage))
                 embed.AddField("Damage", move.damage, true);
             if (!string.IsNullOrEmpty(move.guard))
@@ -112,9 +113,9 @@ namespace GGStriveUtilsBot.Commands
             foreach (var move in moves)
             {
                 if(sameChara)
-                    embed.AddField((moves.IndexOf(move) + 1).ToString() + ": " + move.name, move.input);
+                    embed.AddField((moves.IndexOf(move) + 1).ToString() + ": " + move.name, string.IsNullOrEmpty(move.input) ? "No input" : move.input);
                 else
-                    embed.AddField((moves.IndexOf(move) + 1).ToString() + ": (" + move.chara + ") " + move.name, move.input);
+                    embed.AddField((moves.IndexOf(move) + 1).ToString() + ": (" + move.chara + ") " + move.name, string.IsNullOrEmpty(move.input) ? "No input" : move.input);
             }
             return embed.Build();
         }
