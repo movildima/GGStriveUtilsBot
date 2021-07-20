@@ -8,7 +8,7 @@ namespace GGStriveUtilsBot.Utils
         // Part of regex that captures both shortened and full names
         static private string charaPattern = String.Join(
             "",
-            @"(^(?<chara>",
+            @"^(?<chara>(",
             @"(sol)(?:\s+badguy)?|",
             @"(ky)(?:\s+kiske)?|",
             @"(may)|",
@@ -24,18 +24,21 @@ namespace GGStriveUtilsBot.Utils
             @"(chipp)(?:\s+zanuff)?|",
             @"(anji)(?:\s+mito)?|",
             @"(axl)(?:\s+low)?",
-            @")?)(\s*)"
+            @"))?\s*"
             );
         // Part of regex that captures either move names or numpad notated moves
         static private string movePattern = String.Join(
             "",
-            @"(?<move>((?<literal>([a-z]*\s*)*)|",
-            @"(?<prefix>[cfj])?(\.)?(\d*)(\]|\[)?(?<suffix>p|k|s|hs?|d)(\]|\[)?)*)$"
+            @"((?<literal>(([a-z]*\s*)*)$)|",
+            @"(?<numpad>([cfj]?\.?\d*(\]|\[)?\d?(p|k|s|hs?|d)?(\]|\[)?\d?\s*)*$))"
         );
         static private string charaMovePattern = String.Join("", charaPattern, movePattern);
 
         static private Regex charaMoveRegex = new Regex(charaMovePattern,
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        static private Regex prefixMoveRegex = new Regex(@"^j\d?(p|k|s|hs?|d)|(c|f)s$",
+            RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public static (string chara, string move, bool isNumpad) parseFrameDataInput(string input) {
             MatchCollection matches = charaMoveRegex.Matches(input);
@@ -46,35 +49,29 @@ namespace GGStriveUtilsBot.Utils
             GroupCollection groups = match.Groups;
 
             // denotes a move's full name ("Gunflame") 
-            var literal = groups["literal"];
-            // denotes close ('c'), far ('f'), or jump ('j')
-            // NOTE: May contain multiple individual captures
-            _ = groups["prefix"];
-            // denotes attack button ('p', 'k', 's', 'h', 'd')
-            // NOTE: May contain multiple individual captures
-            _ = groups["suffix"];
+            var literal = groups["literal"].Value.ToString().ToLower();
+            // denotes a move in numpad notation ("236P")
+            var numpad = groups["numpad"].Value.ToString().ToLower();
+            numpad = numpad.Replace("hs", "h");
             
             // 'chara' denotes a character name
-            string chara = groups["chara"].Value.ToString();
-            // 'move' denotes an attack, which could be either it's
-            // literal name (see above), or it's numpad notation.
-            string move = groups["move"].Value.ToString().ToLower();
+            string chara = groups["chara"].Value.ToString().ToLower();
+            chara = chara.Length > 1 ? chara : null;
+            string move = numpad.Length > literal.Length ? numpad : literal;
+            bool isNumpad = numpad.Length > literal.Length;
 
-            bool isNumpad = false;
-
-            // Replace 'HS' -> 'H' to match dustloop format
-            if (literal.Length < 1) {
+            // Correct the case where a user inputs j2K instead of j.2K, cS instead of c.S, etc.
+            MatchCollection prefixMoveMatches = prefixMoveRegex.Matches(move);
+            if (prefixMoveMatches.Count > 0) {
                 isNumpad = true;
-                move = move.Replace("hs", "h");
+                move = move.Insert(1, ".");
             }
 
-            // Character name & move are both specified
-            if (chara.Length > 1) {
-                return (chara, move, isNumpad);
-            }
+            // If for some reason a user enters numpad notation without a character,
+            // this *CAN* be parsed, but should fail further down the line when fetching moves.
+            // (We have no way to know which "5K" in the game they're referring to, for example)
 
-            // Move is specified without character name
-            return (null, move, isNumpad);
+            return (chara, move, isNumpad);
         }
     }
 }
