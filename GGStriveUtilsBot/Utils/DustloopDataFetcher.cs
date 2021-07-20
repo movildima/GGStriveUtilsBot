@@ -40,7 +40,7 @@ namespace GGStriveUtilsBot.Utils
                 else if (dataMove.name.ToLower().Contains(move.ToLower())) //broader match
                     results1.Add(dataMove);
                 //prevent overloading
-                if (results1.Count > 10)
+                if (results1.Count > 50)
                     break;
             }
             //remove moves that don't match the character

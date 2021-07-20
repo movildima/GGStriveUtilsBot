@@ -108,9 +108,13 @@ namespace GGStriveUtilsBot.Commands
             var embed = GenericEmbedBuilder.Create();
             embed = embed.WithTitle("Multiple results found!");
             embed = embed.WithDescription("Select one of the following moves:");
+            var sameChara = moves.Where(f => f.chara == moves[0].chara).Count() == moves.Count;
             foreach (var move in moves)
             {
-                embed.AddField((moves.IndexOf(move) + 1).ToString() + ": " + move.name, move.input);
+                if(sameChara)
+                    embed.AddField((moves.IndexOf(move) + 1).ToString() + ": " + move.name, move.input);
+                else
+                    embed.AddField((moves.IndexOf(move) + 1).ToString() + ": (" + move.chara + ") " + move.name, move.input);
             }
             return embed.Build();
         }
