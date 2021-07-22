@@ -16,6 +16,7 @@ namespace GGStriveUtilsBot.Commands
 {
     class FrameDataModule : BaseCommandModule
     {
+        private string pageLink = "https://www.dustloop.com/wiki/index.php?title=GGST/{0}#{1}";
 
         [Command("framedata"), Aliases("f"), Description("Fetch frame data of a specified move from Dustloop wiki.")]
         public async Task FrameDataCommand(CommandContext ctx, [RemainingText, Description("TBD")] string Move)
@@ -78,9 +79,9 @@ namespace GGStriveUtilsBot.Commands
             var embed = GenericEmbedBuilder.Create();
 
             if (!string.IsNullOrEmpty(move.name))
-                embed = embed.WithTitle("Frame data for " + move.name);
+                embed = embed.WithTitle("Frame data for " + move.name).WithUrl(string.Format(pageLink,move.chara,move.name).Replace(" ", "_"));
             else
-                embed = embed.WithTitle("Frame data for " + move.input);
+                embed = embed.WithTitle("Frame data for " + move.input).WithUrl(string.Format(pageLink, move.chara, move.input).Replace(" ", "_"));
             if (!string.IsNullOrEmpty(move.input))
                 embed.AddField("Input", move.input, true);
             if (!string.IsNullOrEmpty(move.damage))
