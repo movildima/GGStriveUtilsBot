@@ -16,6 +16,7 @@ namespace GGStriveUtilsBot.Commands
 {
     class FrameDataModule : BaseCommandModule
     {
+        private string pageLink = "https://www.dustloop.com/wiki/index.php?title=GGST/{0}#{1}";
 
         [Command("framedata"), Aliases("f"), Description("Fetch frame data of a specified move from Dustloop wiki.")]
         public async Task FrameDataCommand(CommandContext ctx, [RemainingText, Description("TBD")] string Move)
@@ -78,10 +79,11 @@ namespace GGStriveUtilsBot.Commands
             var embed = GenericEmbedBuilder.Create();
 
             if (!string.IsNullOrEmpty(move.name))
-                embed = embed.WithTitle("Frame data for " + move.name);
+                embed = embed.WithTitle("Frame data for " + move.name).WithUrl(string.Format(pageLink,move.chara,move.name).Replace(" ", "_"));
             else
-                embed = embed.WithTitle("Frame data for " + move.input);
-            embed.AddField("Input", move.input, true);
+                embed = embed.WithTitle("Frame data for " + move.input).WithUrl(string.Format(pageLink, move.chara, move.input).Replace(" ", "_"));
+            if (!string.IsNullOrEmpty(move.input))
+                embed.AddField("Input", move.input, true);
             if (!string.IsNullOrEmpty(move.damage))
                 embed.AddField("Damage", move.damage, true);
             if (!string.IsNullOrEmpty(move.guard))
@@ -108,9 +110,13 @@ namespace GGStriveUtilsBot.Commands
             var embed = GenericEmbedBuilder.Create();
             embed = embed.WithTitle("Multiple results found!");
             embed = embed.WithDescription("Select one of the following moves:");
+            var sameChara = moves.Where(f => f.chara == moves[0].chara).Count() == moves.Count;
             foreach (var move in moves)
             {
-                embed.AddField((moves.IndexOf(move) + 1).ToString() + ": " + move.name, move.input);
+                if(sameChara)
+                    embed.AddField((moves.IndexOf(move) + 1).ToString() + ": " + move.name, string.IsNullOrEmpty(move.input) ? "No input" : move.input);
+                else
+                    embed.AddField((moves.IndexOf(move) + 1).ToString() + ": (" + move.chara + ") " + move.name, string.IsNullOrEmpty(move.input) ? "No input" : move.input);
             }
             return embed.Build();
         }

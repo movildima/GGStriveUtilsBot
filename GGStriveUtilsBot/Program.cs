@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.IO;
 using DSharpPlus;
+using DSharpPlus.Entities;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Extensions;
@@ -41,7 +42,7 @@ namespace GGStriveUtilsBot
             //download frame data
             Utils.DustloopDataFetcher.Initialize();
 
-            await discord.ConnectAsync();
+            await discord.ConnectAsync(new DiscordActivity("Asuka R. Kreutz Radio Station", ActivityType.ListeningTo));
             await Task.Delay(-1);
         }
     }
