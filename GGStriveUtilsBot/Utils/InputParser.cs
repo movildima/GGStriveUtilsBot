@@ -30,14 +30,14 @@ namespace GGStriveUtilsBot.Utils
         static private string movePattern = String.Join(
             "",
             @"((?<literal>(([a-z]*\s*)*)$)|",
-            @"(?<numpad>([cfj]?\.?\d*(\]|\[)?\d?(p|k|s|hs?|d)?(\]|\[)?\d?\s*)*$))"
+            @"(?<numpad>(([cfj]|(bt))?\.?\d*(\]|\[)?\d?(p|k|s|hs?|d)?(\]|\[)?\d?\s*)*$))"
         );
         static private string charaMovePattern = String.Join("", charaPattern, movePattern);
 
         static private Regex charaMoveRegex = new Regex(charaMovePattern,
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        static private Regex prefixMoveRegex = new Regex(@"^j\d?(p|k|s|hs?|d)|(c|f)s$",
+        static private Regex prefixMoveRegex = new Regex(@"^(j|bt)\d?(p|k|s|hs?|d)|(c|f)s$",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public static (string chara, string move, bool isNumpad) parseFrameDataInput(string input) {
@@ -64,7 +64,11 @@ namespace GGStriveUtilsBot.Utils
             MatchCollection prefixMoveMatches = prefixMoveRegex.Matches(move);
             if (prefixMoveMatches.Count > 0) {
                 isNumpad = true;
-                move = move.Insert(1, ".");
+                if (move.StartsWith("bt")) {
+                    move = move.Insert(2, ".");
+                } else {
+                    move = move.Insert(1, ".");
+                }
             }
 
             // If for some reason a user enters numpad notation without a character,
