@@ -15,7 +15,7 @@ namespace GGStriveUtilsBot.Utils
         static private string imgQuery = "https://dustloop.com/wiki/api.php?action=query&format=json&prop=imageinfo&titles=File:{0}&iiprop=url";
         static private string iconQuery = "https://www.dustloop.com/wiki/index.php?title=Special:CargoExport&tables=ggstCharacters&&fields=name%2Cicon&&order+by=%60name%60%2C%60icon%60&limit=1000&format=json";
         const int LDistance = 3; //google Levenshtein distance for more info
-        const int maxResults = 4; //will play around with this to see how bad it gets
+        static readonly int maxResults = FrameDataEmbedBuilder.emoteList.Count; //will play around with this to see how bad it gets
 
         static public List<MoveData> dataSource;
         static public List<IconData> iconSource;
@@ -80,7 +80,7 @@ namespace GGStriveUtilsBot.Utils
             {
                 if (dataMove.input.ToLower() == move.ToLower()) //motion input
                     results1.Add(dataMove);
-                else if ((character == null || !isNumpad) && (Levenshtein.Distance(dataMove.name.ToLower(), move.ToLower()) < LDistance)) //typos
+                else if ((/*character == null || */!isNumpad) && (Levenshtein.Distance(dataMove.name.ToLower(), move.ToLower()) < LDistance)) //typos
                     results1.Add(dataMove);
                 else if (dataMove.name.ToLower().Contains(move.ToLower())) //broader match
                     results1.Add(dataMove);
