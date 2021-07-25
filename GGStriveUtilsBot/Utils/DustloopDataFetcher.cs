@@ -13,17 +13,62 @@ namespace GGStriveUtilsBot.Utils
     {
         static private string mainQuery = "https://www.dustloop.com/wiki/index.php?title=Special:CargoExport&tables=MoveData_GGST&&fields=chara%2C+input%2C+name%2C+images%2C+damage%2C+guard%2C+startup%2C+active%2C+recovery%2C+onBlock%2C+onHit%2C+invuln&&order+by=%60chara%60%2C%60input%60%2C%60name%60%2C%60cargo__MoveData_GGST%60.%60images__full%60%2C%60damage%60&limit=1000&format=json";
         static private string imgQuery = "https://dustloop.com/wiki/api.php?action=query&format=json&prop=imageinfo&titles=File:{0}&iiprop=url";
-        static private string charIconQuery = "https://www.dustloop.com/wiki/index.php?title=Special:CargoExport&tables=ggstCharacters%2C&&fields=ggstCharacters.name%2C+ggstCharacters.icon%2C&where=name%3D%22{0}%22&order+by=%60cargo__ggstCharacters%60.%60name%60%2C%60cargo__ggstCharacters%60.%60icon%60&limit=100&format=json";
+        static private string iconQuery = "https://www.dustloop.com/wiki/index.php?title=Special:CargoExport&tables=ggstCharacters&&fields=name%2Cicon&&order+by=%60name%60%2C%60icon%60&limit=1000&format=json";
         const int LDistance = 3; //google Levenshtein distance for more info
         const int maxResults = 4; //will play around with this to see how bad it gets
 
         static public List<MoveData> dataSource;
+        static public List<IconData> iconSource;
 
         public static void Initialize()
         {
             var response = new WebClient().DownloadString(mainQuery);
             dataSource = JsonConvert.DeserializeObject<List<MoveData>>(response);
+
+            response = new WebClient().DownloadString(iconQuery);
+            iconSource = JsonConvert.DeserializeObject<List<IconData>>(response);
             Console.WriteLine("Data loaded");
+
+            //preload images and icons, takes a while but makes requests much faster, disabled while debugging
+#if !DEBUG
+            foreach (var dataMove in dataSource) //load images
+            {
+                loadImage(dataMove);
+            }
+            Console.WriteLine("Images loaded");
+#endif
+            foreach (var icon in iconSource) //load icons
+            {
+                loadIcon(icon);
+                Console.WriteLine(string.Format("Icon for {0} loaded", icon.name));
+            }
+            Console.WriteLine("Icons loaded");
+        }
+
+
+        private static void loadImage(MoveData dataMove)
+        {
+            if (!dataMove.imgLoaded)
+            {
+                var r = new WebClient().DownloadString(String.Format(imgQuery, dataMove.images[0]));
+                if (JObject.Parse(r).SelectToken("query.pages.*.imageinfo[0].url") != null) //check if image is available
+                {
+                    dataMove.imgFull = JObject.Parse(r).SelectToken("query.pages.*.imageinfo[0].url").Value<string>(); //I hate this
+                    dataMove.imgLoaded = true;
+                }
+            }
+        }
+        private static void loadIcon(IconData icon)
+        {
+            if (!icon.iconLoaded)
+            {
+                var r = new WebClient().DownloadString(String.Format(imgQuery, icon.icon));
+                if (JObject.Parse(r).SelectToken("query.pages.*.imageinfo[0].url") != null)
+                {
+                    icon.iconFull = JObject.Parse(r).SelectToken("query.pages.*.imageinfo[0].url").Value<string>(); //I hate this
+                    icon.iconLoaded = true;
+                }
+            }
         }
 
         public static MoveListInternal fetchMove(string character, string move, bool isNumpad)
@@ -54,28 +99,13 @@ namespace GGStriveUtilsBot.Utils
             }
             else
                 results2.AddRange(results1);
-            //load the image
+            //load the image, if debugging
+#if DEBUG
             foreach (var dataMove in results2)
             {
-                if (!dataMove.imgLoaded)
-                {
-                    var response = new WebClient().DownloadString(String.Format(imgQuery, dataMove.images[0]));
-                    if (JObject.Parse(response).SelectToken("query.pages.*.imageinfo[0].url") != null) //check if image is available
-                    {
-                        dataMove.imgFull = JObject.Parse(response).SelectToken("query.pages.*.imageinfo[0].url").Value<string>(); //I hate this
-                        dataMove.imgLoaded = true;
-                    }
-                    else //load character icon instead
-                    {
-                        response = new WebClient().DownloadString(String.Format(charIconQuery, dataMove.chara));
-                        var j = JsonConvert.DeserializeObject<IconData[]>(response);
-                        string icon = j[0].icon;
-                        response = new WebClient().DownloadString(String.Format(imgQuery, icon));
-                        dataMove.imgFull = JObject.Parse(response).SelectToken("query.pages.*.imageinfo[0].url").Value<string>(); //I hate this
-                        dataMove.imgLoaded = true;
-                    }
-                }
+                loadImage(dataMove);
             }
+#endif
             //construct the result
             MoveListInternal r = new MoveListInternal();
             r.moves = results2;

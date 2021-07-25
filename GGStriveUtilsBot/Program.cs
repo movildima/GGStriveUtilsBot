@@ -38,6 +38,7 @@ namespace GGStriveUtilsBot
             });
 
             commands.RegisterCommands<Commands.FrameDataModule>();
+            commands.RegisterCommands<Commands.UpdateDataModule>();
 
             //download frame data
             Utils.DustloopDataFetcher.Initialize();
