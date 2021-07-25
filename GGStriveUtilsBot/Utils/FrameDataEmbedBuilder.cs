@@ -51,14 +51,25 @@ namespace GGStriveUtilsBot.Utils
             };
             return null;
         }
-        public static DiscordEmbed build1XEmbed(MoveData move)
+        private static DiscordEmbed build1XEmbed(MoveData move)
         {
             var embed = GenericEmbedBuilder.Create();
-
+            embed.Author = new DiscordEmbedBuilder.EmbedAuthor();
+            if (Utils.DustloopDataFetcher.iconSource.Where(f => f.name == move.chara && f.iconLoaded).Count() == 1)
+            {
+                embed.Author.IconUrl = Utils.DustloopDataFetcher.iconSource.Where(f => f.name == move.chara).FirstOrDefault().iconFull;
+                embed = embed.WithThumbnail(Utils.DustloopDataFetcher.iconSource.Where(f => f.name == move.chara).FirstOrDefault().iconFull);
+            }
             if (!string.IsNullOrEmpty(move.name))
-                embed = embed.WithTitle("Frame data for " + move.name).WithUrl(string.Format(pageLink, move.chara, move.name).Replace(" ", "_"));
+            {
+                embed.Author.Name = "Frame data for " + move.name;
+                embed.Author.Url = string.Format(pageLink, move.chara, move.name).Replace(" ", "_");
+            }
             else
-                embed = embed.WithTitle("Frame data for " + move.input).WithUrl(string.Format(pageLink, move.chara, move.input).Replace(" ", "_"));
+            {
+                embed.Author.Name = "Frame data for " + move.input;
+                embed.Author.Url = string.Format(pageLink, move.chara, move.input).Replace(" ", "_");
+            }
             if (!string.IsNullOrEmpty(move.input))
                 embed.AddField("Input", move.input, true);
             if (!string.IsNullOrEmpty(move.damage))
@@ -77,7 +88,8 @@ namespace GGStriveUtilsBot.Utils
                 embed.AddField("On hit", move.onHit, true);
             if (!string.IsNullOrEmpty(move.invuln))
                 embed.AddField("Invuln", move.invuln, true);
-            embed = embed.WithThumbnail(move.imgFull);
+            if (move.imgLoaded)
+                embed = embed.WithThumbnail(move.imgFull);
 
             return embed.Build();
         }
