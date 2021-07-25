@@ -37,7 +37,7 @@ namespace GGStriveUtilsBot.Utils
         static private Regex charaMoveRegex = new Regex(charaMovePattern,
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        static private Regex prefixMoveRegex = new Regex(@"^(j|bt)\d{0,3}(p|k|s|hs?|d)|(c|f)s{1,3}$",
+        static private Regex prefixMoveRegex = new Regex(@"^(j|bt)\d{0,6}(p|k|s|hs?|d)|(c|f)s{1,3}$",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         public static (string chara, string move, bool isNumpad) parseFrameDataInput(string input) {
