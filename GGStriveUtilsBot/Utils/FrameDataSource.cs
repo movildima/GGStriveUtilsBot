@@ -1,10 +1,5 @@
 ﻿using System.Collections.Generic;
 
-public class FrameDataSource
-{
-    public MoveData[] moves { get; set; }
-}
-
 public class MoveData
 {
     public string chara { get; set; }
@@ -41,4 +36,6 @@ public class IconData
 {
     public string name { get; set; }
     public string icon { get; set; }
+    public bool iconLoaded { get; set; }
+    public string iconFull { get; set; }
 }

@@ -43,6 +43,7 @@ namespace GGStriveUtilsBot
             slash = discord.UseSlashCommands();
 
             commands.RegisterCommands<Commands.FrameDataModule>();
+            commands.RegisterCommands<Commands.UpdateDataModule>();
 
             slash.RegisterCommands<SlashCommands.FrameDataSlashModule>(865166124568150026); //testing server
 
