@@ -15,7 +15,7 @@ namespace GGStriveUtilsBot.Utils
         static private string imgQuery = "https://dustloop.com/wiki/api.php?action=query&format=json&prop=imageinfo&titles=File:{0}&iiprop=url";
         static private string charIconQuery = "https://www.dustloop.com/wiki/index.php?title=Special:CargoExport&tables=ggstCharacters%2C&&fields=ggstCharacters.name%2C+ggstCharacters.icon%2C&where=name%3D%22{0}%22&order+by=%60cargo__ggstCharacters%60.%60name%60%2C%60cargo__ggstCharacters%60.%60icon%60&limit=100&format=json";
         const int LDistance = 3; //google Levenshtein distance for more info
-        const int maxResults = 4; //will play around with this to see how bad it gets
+        static readonly int maxResults = FrameDataEmbedBuilder.emoteList.Count; //will play around with this to see how bad it gets
 
         static public List<MoveData> dataSource;
 
@@ -35,7 +35,7 @@ namespace GGStriveUtilsBot.Utils
             {
                 if (dataMove.input.ToLower() == move.ToLower()) //motion input
                     results1.Add(dataMove);
-                else if ((character == null || !isNumpad) && (Levenshtein.Distance(dataMove.name.ToLower(), move.ToLower()) < LDistance)) //typos
+                else if ((/*character == null || */!isNumpad) && (Levenshtein.Distance(dataMove.name.ToLower(), move.ToLower()) < LDistance)) //typos
                     results1.Add(dataMove);
                 else if (dataMove.name.ToLower().Contains(move.ToLower())) //broader match
                     results1.Add(dataMove);
@@ -71,8 +71,11 @@ namespace GGStriveUtilsBot.Utils
                         var j = JsonConvert.DeserializeObject<IconData[]>(response);
                         string icon = j[0].icon;
                         response = new WebClient().DownloadString(String.Format(imgQuery, icon));
-                        dataMove.imgFull = JObject.Parse(response).SelectToken("query.pages.*.imageinfo[0].url").Value<string>(); //I hate this
-                        dataMove.imgLoaded = true;
+                        if (JObject.Parse(response).SelectToken("query.pages.*.imageinfo[0].url") != null)
+                        {
+                            dataMove.imgFull = JObject.Parse(response).SelectToken("query.pages.*.imageinfo[0].url").Value<string>(); //I hate this
+                            dataMove.imgLoaded = true;
+                        }
                     }
                 }
             }
