@@ -25,9 +25,9 @@ namespace GGStriveUtilsBot
         {
             discord = new DiscordClient(new DiscordConfiguration()
             {
-                Token = System.IO.File.ReadAllText("token-testing.txt"),
+                Token = System.IO.File.ReadAllText("token.txt"),
                 TokenType = TokenType.Bot,
-                MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Debug
+                //MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Debug
             });
 
             discord.UseInteractivity(new InteractivityConfiguration()
@@ -37,7 +37,7 @@ namespace GGStriveUtilsBot
 
             commands = discord.UseCommandsNext(new CommandsNextConfiguration()
             {
-                StringPrefixes = new[] { "?" }
+                StringPrefixes = new[] { "!" }
             });
 
             slash = discord.UseSlashCommands();
@@ -45,7 +45,7 @@ namespace GGStriveUtilsBot
             commands.RegisterCommands<Commands.FrameDataModule>();
             commands.RegisterCommands<Commands.UpdateDataModule>();
 
-            slash.RegisterCommands<SlashCommands.FrameDataSlashModule>(865166124568150026); //testing server
+            slash.RegisterCommands<SlashCommands.FrameDataSlashModule>();
 
             //download frame data
             Utils.DustloopDataFetcher.Initialize();
