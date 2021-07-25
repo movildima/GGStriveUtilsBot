@@ -17,7 +17,7 @@ namespace GGStriveUtilsBot.Commands
     class FrameDataModule : BaseCommandModule
     {
         [Command("framedata"), Aliases("f"), Description("Fetch frame data of a specified move from Dustloop wiki.")]
-        public async Task FrameDataCommand(CommandContext ctx, [RemainingText, Description("TBD")] string Move)
+        public async Task FrameDataCommand(CommandContext ctx, [RemainingText, Description("Character name followed by move, or just a move name(move can be indicated by name or in numpad notation)")] string Move)
         {
             await ctx.TriggerTypingAsync();
 
