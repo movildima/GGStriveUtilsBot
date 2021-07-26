@@ -25,7 +25,11 @@ namespace GGStriveUtilsBot
         {
             discord = new DiscordClient(new DiscordConfiguration()
             {
+#if !DEBUG
                 Token = System.IO.File.ReadAllText("token.txt"),
+#elif DEBUG
+                Token = System.IO.File.ReadAllText("token-testing.txt"),
+#endif
                 TokenType = TokenType.Bot,
                 //MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Debug
             });
@@ -37,7 +41,11 @@ namespace GGStriveUtilsBot
 
             commands = discord.UseCommandsNext(new CommandsNextConfiguration()
             {
+#if !DEBUG
                 StringPrefixes = new[] { "!" }
+#elif DEBUG
+                StringPrefixes = new[] { "?" }
+#endif
             });
 
             slash = discord.UseSlashCommands();

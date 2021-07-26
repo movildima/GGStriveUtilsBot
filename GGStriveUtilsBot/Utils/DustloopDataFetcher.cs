@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
 using System.Net;
+using System.Linq;
 using Fastenshtein;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -71,23 +72,44 @@ namespace GGStriveUtilsBot.Utils
             }
         }
 
+        private static string moveShorthand(string character, string move)
+        {
+            move = move.ToLower();
+            string r = move;
+            //dp inputs
+
+            //totsugeki
+            if (Levenshtein.Distance(move, "totsugeki") < LDistance)
+                r = "Mr. Dolphin";
+            //heavenly potemkin buster
+            if (move == "hpb")
+                r = "Heavenly Potemkin Buster";
+
+            return r;
+        }
+
         public static MoveListInternal fetchMove(string character, string move, bool isNumpad)
         {
             List<MoveData> results1 = new List<MoveData>();
             List<MoveData> results2 = new List<MoveData>();
             //store every matching move, by input or by name
-            foreach (var dataMove in dataSource)
-            {
-                if (dataMove.input.ToLower() == move.ToLower()) //motion input
-                    results1.Add(dataMove);
-                else if ((/*character == null || */!isNumpad) && (Levenshtein.Distance(dataMove.name.ToLower(), move.ToLower()) < LDistance)) //typos
-                    results1.Add(dataMove);
-                else if (dataMove.name.ToLower().Contains(move.ToLower())) //broader match
-                    results1.Add(dataMove);
-                //prevent overloading
-                if (results1.Count > 50)
-                    break;
-            }
+            //foreach (var dataMove in dataSource)
+            //{
+            //    if (dataMove.input.ToLower() == move.ToLower()) //motion input
+            //        results1.Add(dataMove);
+            //    else if ((/*character == null || */!isNumpad) && (Levenshtein.Distance(dataMove.name.ToLower(), move.ToLower()) < LDistance)) //typos
+            //        results1.Add(dataMove);
+            //    else if (dataMove.name.ToLower().Contains(move.ToLower())) //broader match
+            //        results1.Add(dataMove);
+            //    //prevent overloading
+            //    if (results1.Count > 50)
+            //        break;
+            //}
+            move = moveShorthand(character, move); // transform move based on a list of shorthands
+
+            results1.AddRange(dataSource.Where(f => (isNumpad && f.input.ToLower() == move) || // numpad notation
+                                                    (!isNumpad && Levenshtein.Distance(f.name.ToLower(), move.ToLower()) < LDistance) || //typos
+                                                    (f.name.ToLower().Contains(move.ToLower())))); // direct match
             //remove moves that don't match the character
             if (character != null)
             {

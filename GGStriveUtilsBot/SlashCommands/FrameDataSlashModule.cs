@@ -19,41 +19,5 @@ namespace GGStriveUtilsBot.SlashCommands
             if(result != null)
                 await ctx.EditResponseAsync(new DiscordWebhookBuilder().AddEmbed(result));
         }
-
-        public enum Character
-        {
-            [ChoiceName("Sol Badguy")]
-            Sol,
-            [ChoiceName("Ky Kiske")]
-            Ky,
-            [ChoiceName("May")]
-            May,
-            [ChoiceName("Faust")]
-            Faust,
-            [ChoiceName("I-no")]
-            Ino,
-            [ChoiceName("Ramlethal Valentine")]
-            Ram,
-            [ChoiceName("Zato-1")]
-            Zato,
-            [ChoiceName("Nagoriyuki")]
-            Nago,
-            [ChoiceName("Potemkin")]
-            Pot,
-            [ChoiceName("Giovanna")]
-            Gio,
-            [ChoiceName("Millia Rage")]
-            Millia,
-            [ChoiceName("Leo Whitefang")]
-            Leo,
-            [ChoiceName("Chipp Zanuff")]
-            Chipp,
-            [ChoiceName("Anji Mito")]
-            Anji,
-            [ChoiceName("Axl Low")]
-            Axl,
-            [ChoiceName("Goldlewis Dickinson")]
-            Goldlewis
-        }
     }
 }
