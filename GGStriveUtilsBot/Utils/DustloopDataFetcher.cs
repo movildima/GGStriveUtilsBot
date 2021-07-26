@@ -109,7 +109,8 @@ namespace GGStriveUtilsBot.Utils
 
             results1.AddRange(dataSource.Where(f => (isNumpad && f.input.ToLower() == move) || // numpad notation
                                                     (!isNumpad && Levenshtein.Distance(f.name.ToLower(), move.ToLower()) < LDistance) || //typos
-                                                    (f.name.ToLower().Contains(move.ToLower())))); // direct match
+                                                    (f.name.ToLower().Contains(move.ToLower())) || // direct match
+                                                    (move == "5s" && (f.input == "c.S" || f.input == "f.S")))); // 5S fix
             //remove moves that don't match the character
             if (character != null)
             {
