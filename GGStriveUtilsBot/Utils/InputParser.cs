@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.RegularExpressions;
+using DSharpPlus.SlashCommands;
 
 namespace GGStriveUtilsBot.Utils
 {
@@ -9,21 +10,22 @@ namespace GGStriveUtilsBot.Utils
         static private string charaPattern = String.Join(
             "",
             @"^(?<chara>(",
-            @"(sol)(?:\s+badguy)?|",
-            @"(ky)(?:\s+kiske)?|",
-            @"(may)|",
-            @"(faust)|",
-            @"(ino)|",
-            @"(ram)(?:lethal)?(?:\s+valentine)?|",
-            @"(zato)(?:-1)?|",
-            @"(nago)(?:ryuki)?|",
-            @"(pot)(emkin)?|",
-            @"(gio)(vanna)?|",
-            @"(millia)(?:\s+rage)?|",
-            @"(leo)(?:\s+whitefang)?|",
-            @"(chipp)(?:\s+zanuff)?|",
-            @"(anji)(?:\s+mito)?|",
-            @"(axl)(?:\s+low)?",
+            @"(?<Sol>sol)(?:\s+badguy)?|",
+            @"(?<Ky>ky)(?:\s+kiske)?|",
+            @"(?<May>may)|",
+            @"(?<Faust>faust)|",
+            @"(?<Ino>i-?no)|",
+            @"(?<Ram>ram)(?:lethal)?(?:\s+valentine)?|",
+            @"(?<Zato>zato)(?:-1)?|",
+            @"(?<Nago>nago)(?:riyuki)?|",
+            @"(?<Pot>pot)(?:emkin)?|",
+            @"(?<Gio>gio)(?:vanna)?|",
+            @"(?<Millia>millia)(?:\s+rage)?|",
+            @"(?<Leo>leo)(?:\s+whitefang)?|",
+            @"(?<Chipp>chipp)(?:\s+zanuff)?|",
+            @"(?<Anji>anji)(?:\s+mito)?|",
+            @"(?<Axl>axl)(?:\s+low)?|",
+            @"(?<Goldlewis>gold)(?:lewis)?(?:\s+dickinson)?",
             @"))?\s*"
             );
         // Part of regex that captures either move names or numpad notated moves
@@ -40,23 +42,29 @@ namespace GGStriveUtilsBot.Utils
         static private Regex prefixMoveRegex = new Regex(@"^(j|bt)\d{0,6}(p|k|s|hs?|d)|(c|f)s{1,3}$",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        public static (string chara, string move, bool isNumpad) parseFrameDataInput(string input) {
+        public static (Character? character, string move, bool isNumpad) parseFrameDataInput(string input) {
             MatchCollection matches = charaMoveRegex.Matches(input);
             if (matches.Count == 0) {
-                return ("Unknown", "Unknown", false);
+                return (null, "Unknown", false);
             }
+
             Match match = matches[0];
             GroupCollection groups = match.Groups;
+
+            Character? character = null;
+            foreach (var v in Enum.GetValues(typeof(Character)))
+            {
+                if (groups[v.ToString()].Length > 0) {
+                    character = (Character)Enum.Parse(typeof(Character), v.ToString());
+                }
+            }
 
             // denotes a move's full name ("Gunflame") 
             var literal = groups["literal"].Value.ToString().ToLower();
             // denotes a move in numpad notation ("236P")
             var numpad = groups["numpad"].Value.ToString().ToLower();
             numpad = numpad.Replace("hs", "h");
-            
-            // 'chara' denotes a character name
-            string chara = groups["chara"].Value.ToString().ToLower();
-            chara = chara.Length > 1 ? chara : null;
+
             string move = numpad.Length > literal.Length ? numpad : literal;
             bool isNumpad = numpad.Length > literal.Length;
 
@@ -75,7 +83,7 @@ namespace GGStriveUtilsBot.Utils
             // this *CAN* be parsed, but should fail further down the line when fetching moves.
             // (We have no way to know which "5K" in the game they're referring to, for example)
 
-            return (chara, move, isNumpad);
+            return (character, move, isNumpad);
         }
     }
 }
