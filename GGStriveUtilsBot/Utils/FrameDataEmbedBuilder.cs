@@ -7,6 +7,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
+using DSharpPlus.SlashCommands;
 
 namespace GGStriveUtilsBot.Utils
 {
@@ -16,8 +17,15 @@ namespace GGStriveUtilsBot.Utils
 
         public static async Task<DiscordEmbed> selectEmbed(DiscordClient client, DiscordUser user, DiscordChannel channel, string Move)
         {
-            (string chara, string move, bool isNumpad) = Utils.InputParser.parseFrameDataInput(Move);
-            var results = Utils.DustloopDataFetcher.fetchMove(chara, move, isNumpad);
+            (Character? character, string move, bool isNumpad) = Utils.InputParser.parseFrameDataInput(Move);
+
+            string name = null;
+            if (character.HasValue) {
+                Character chara = (Character)character;
+                name = chara.GetName();
+            }
+
+            var results = Utils.DustloopDataFetcher.fetchMove(name, move, isNumpad);
             var interactivity = client.GetInteractivity();
 
             switch (results.result)
