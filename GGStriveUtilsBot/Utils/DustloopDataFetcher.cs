@@ -35,6 +35,7 @@ namespace GGStriveUtilsBot.Utils
             foreach (var dataMove in dataSource) //load images
             {
                 loadImage(dataMove);
+                Console.WriteLine(string.Format("Image: {0} loaded", dataMove.imgFull));
             }
             Console.WriteLine("Images loaded");
 #endif
