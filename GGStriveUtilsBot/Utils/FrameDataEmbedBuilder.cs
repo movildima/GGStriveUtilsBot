@@ -36,11 +36,11 @@ namespace GGStriveUtilsBot.Utils
                     return buildNoResultEmbed();
                 case MoveDataResult.ExtraResults:
                     var response = await channel.SendMessageAsync(buildXEmbed(results.moves));
-                    for (int i = 1; i <= results.moves.Count; i++)
+                    for (int i = 1; i < results.moves.Count; i++)
                     {
                         if(i < emoteList.Count)
                         {
-                            await response.CreateReactionAsync(DiscordEmoji.FromUnicode(client, emoteList[i - 1]));
+                            await response.CreateReactionAsync(DiscordEmoji.FromUnicode(client, emoteList[i]));
                         }
                     }
                     var reaction = await interactivity.WaitForReactionAsync(f => f.User == user && emoteList.Where(g => f.Emoji == DiscordEmoji.FromUnicode(g)).Count() > 0, TimeSpan.FromSeconds(20));
