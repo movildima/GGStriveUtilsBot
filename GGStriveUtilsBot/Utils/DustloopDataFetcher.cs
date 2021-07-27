@@ -80,7 +80,31 @@ namespace GGStriveUtilsBot.Utils
             move = move.ToLower();
             string r = move;
             //dp inputs
-
+            if(move == "dp" || Levenshtein.Distance(move, "dragon punch") < LDistance)
+            {
+                if(character.HasValue)
+                {
+                    Character chara = (Character)character;
+                    switch(chara)
+                    {
+                        case Character.Sol:
+                            r = "Volcanic Viper";
+                            break;
+                        case Character.Ky:
+                            r = "Vapor Thrust";
+                            break;
+                        case Character.Gio:
+                            r = "Sol Nascente";
+                            break;
+                        case Character.Leo:
+                            r = "Eisen Sturm";
+                            break;
+                        case Character.Chipp:
+                            r = "Beta Blade";
+                            break;
+                    }
+                }
+            }
             //totsugeki
             if (Levenshtein.Distance(move, "totsugeki") < LDistance)
                 r = "Mr. Dolphin";
