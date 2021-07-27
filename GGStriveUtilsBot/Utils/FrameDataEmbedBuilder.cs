@@ -19,13 +19,7 @@ namespace GGStriveUtilsBot.Utils
         {
             (Character? character, string move, bool isNumpad) = Utils.InputParser.parseFrameDataInput(Move);
 
-            string name = null;
-            if (character.HasValue) {
-                Character chara = (Character)character;
-                name = chara.GetName();
-            }
-
-            var results = Utils.DustloopDataFetcher.fetchMove(name, move, isNumpad);
+            var results = Utils.DustloopDataFetcher.fetchMove(character, move, isNumpad);
             var interactivity = client.GetInteractivity();
 
             switch (results.result)
@@ -36,7 +30,7 @@ namespace GGStriveUtilsBot.Utils
                     return buildNoResultEmbed();
                 case MoveDataResult.ExtraResults:
                     var response = await channel.SendMessageAsync(buildXEmbed(results.moves));
-                    for (int i = 1; i < results.moves.Count; i++)
+                    for (int i = 0; i < results.moves.Count; i++)
                     {
                         if(i < emoteList.Count)
                         {

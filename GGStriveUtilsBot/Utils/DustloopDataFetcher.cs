@@ -7,6 +7,8 @@ using System.Linq;
 using Fastenshtein;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using DSharpPlus;
+using DSharpPlus.SlashCommands;
 
 namespace GGStriveUtilsBot.Utils
 {
@@ -73,7 +75,7 @@ namespace GGStriveUtilsBot.Utils
             }
         }
 
-        private static string moveShorthand(string character, string move)
+        private static string moveShorthand(Character? character, string move)
         {
             move = move.ToLower();
             string r = move;
@@ -89,7 +91,7 @@ namespace GGStriveUtilsBot.Utils
             return r;
         }
 
-        public static MoveListInternal fetchMove(string character, string move, bool isNumpad)
+        public static MoveListInternal fetchMove(Character? character, string move, bool isNumpad)
         {
             List<MoveData> results1 = new List<MoveData>();
             List<MoveData> results2 = new List<MoveData>();
@@ -113,11 +115,12 @@ namespace GGStriveUtilsBot.Utils
                                                     (f.name.ToLower().Contains(move.ToLower())) || // direct match
                                                     (move == "5s" && (f.input == "c.S" || f.input == "f.S")))); // 5S fix
             //remove moves that don't match the character
-            if (character != null)
+            if (character.HasValue)
             {
+                Character chara = (Character)character;
                 foreach (var dataMove in results1)
                 {
-                    if (dataMove.chara.ToLower().Contains(character.ToLower()))
+                    if (dataMove.chara.ToLower().Contains(chara.GetName().ToLower()))
                         results2.Add(dataMove);
                 }
             }
