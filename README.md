@@ -10,6 +10,8 @@ All frame data is fetched from the [Dustloop Wiki](https://www.dustloop.com/wiki
 `!framedata <move>`
 
 `<move>` - any move name, or character name followed by numpad notation of the move.
+
+The same command is provided as a slash command as well, `/framedata`, which also provides autocomplete for all characters.
 ### Examples
 `!f sol 236p`
 
@@ -17,6 +19,8 @@ All frame data is fetched from the [Dustloop Wiki](https://www.dustloop.com/wiki
 
 `!f megalomania`
 
-![Megalomania](https://i.imgur.com/tP4tDrk.png)
+![Megalomania](https://i.imgur.com/UCJxAPV.png)
 
-The same command is provided as a slash command as well, `/framedata`, which also provides autocomplete for all characters.
+`!f behemoth`
+
+![Behemoth Typhoon Selector](https://i.imgur.com/HrvrTSa.png)
