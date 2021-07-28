@@ -19,7 +19,7 @@ namespace GGStriveUtilsBot.Utils
         {
             (Character? character, string move, bool isNumpad) = Utils.InputParser.parseFrameDataInput(Move);
 
-            var results = Utils.DustloopDataFetcher.fetchMove(character, move, isNumpad);
+            var results = DustloopDataFetcher.fetchMove(character, move, isNumpad);
             var interactivity = client.GetInteractivity();
 
             switch (results.result)
@@ -57,10 +57,10 @@ namespace GGStriveUtilsBot.Utils
         {
             var embed = GenericEmbedBuilder.Create();
             embed.Author = new DiscordEmbedBuilder.EmbedAuthor();
-            if (Utils.DustloopDataFetcher.iconSource.Where(f => f.name == move.chara && f.iconLoaded).Count() == 1)
+            if (DustloopDataFetcher.iconSource.Where(f => f.name == move.chara && f.iconLoaded).Count() == 1)
             {
-                embed.Author.IconUrl = Utils.DustloopDataFetcher.iconSource.Where(f => f.name == move.chara).FirstOrDefault().iconFull;
-                embed = embed.WithThumbnail(Utils.DustloopDataFetcher.iconSource.Where(f => f.name == move.chara).FirstOrDefault().iconFull);
+                embed.Author.IconUrl = DustloopDataFetcher.iconSource.FirstOrDefault(f => f.name == move.chara).iconFull;
+                embed = embed.WithThumbnail(DustloopDataFetcher.iconSource.FirstOrDefault(f => f.name == move.chara).iconFull);
             }
             if (!string.IsNullOrEmpty(move.name))
             {
