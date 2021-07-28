@@ -75,15 +75,15 @@ namespace GGStriveUtilsBot.Utils
             if (!string.IsNullOrEmpty(move.input))
                 embed.AddField("Input", move.input, true);
             if (!string.IsNullOrEmpty(move.damage))
-                embed.AddField("Damage", move.damage, true);
+                embed.AddField("Damage", move.damage.Replace("*","\\*"), true);
             if (!string.IsNullOrEmpty(move.guard))
-                embed.AddField("Guard", move.guard, true);
+                embed.AddField("Guard", move.guard.Replace("*", "\\*"), true);
             if (!string.IsNullOrEmpty(move.startup))
-                embed.AddField("Startup", move.startup, true);
+                embed.AddField("Startup", move.startup.Replace("*", "\\*"), true);
             if (!string.IsNullOrEmpty(move.active))
-                embed.AddField("Active", move.active, true);
+                embed.AddField("Active", move.active.Replace("*", "\\*"), true);
             if (!string.IsNullOrEmpty(move.recovery))
-                embed.AddField("Recovery", move.recovery, true);
+                embed.AddField("Recovery", move.recovery.Replace("*", "\\*"), true);
             if (!string.IsNullOrEmpty(move.onBlock))
                 embed.AddField("On block", move.onBlock, true);
             if (!string.IsNullOrEmpty(move.onHit))
