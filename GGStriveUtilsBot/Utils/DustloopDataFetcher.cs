@@ -49,7 +49,6 @@ namespace GGStriveUtilsBot.Utils
             Console.WriteLine("Icons loaded");
         }
 
-
         private static void loadImage(MoveData dataMove)
         {
             if (!dataMove.imgLoaded)
@@ -78,7 +77,6 @@ namespace GGStriveUtilsBot.Utils
         private static string moveShorthand(Character? character, string move)
         {
             move = move.ToLower();
-            string r = move;
             //dp inputs
             if(move == "dp" || Levenshtein.Distance(move, "dragon punch") < LDistance)
             {
@@ -88,31 +86,26 @@ namespace GGStriveUtilsBot.Utils
                     switch(chara)
                     {
                         case Character.Sol:
-                            r = "Volcanic Viper";
-                            break;
+                            return "Volcanic Viper";
                         case Character.Ky:
-                            r = "Vapor Thrust";
-                            break;
+                            return "Vapor Thrust";
                         case Character.Gio:
-                            r = "Sol Nascente";
-                            break;
+                            return "Sol Nascente";
                         case Character.Leo:
-                            r = "Eisen Sturm";
-                            break;
+                            return "Eisen Sturm";
                         case Character.Chipp:
-                            r = "Beta Blade";
-                            break;
+                            return "Beta Blade";
                     }
                 }
             }
             //totsugeki
             if (Levenshtein.Distance(move, "totsugeki") < LDistance)
-                r = "Mr. Dolphin";
+                return "Mr. Dolphin";
             //heavenly potemkin buster
             if (move == "hpb")
-                r = "Heavenly Potemkin Buster";
+                return "Heavenly Potemkin Buster";
 
-            return r;
+            return move;
         }
 
         public static MoveListInternal fetchMove(Character? character, string move, bool isNumpad)
