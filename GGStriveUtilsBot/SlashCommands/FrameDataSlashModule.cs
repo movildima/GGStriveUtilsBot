@@ -16,8 +16,10 @@ namespace GGStriveUtilsBot.SlashCommands
         {
             await ctx.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
             var result = await Utils.FrameDataEmbedBuilder.selectEmbed(ctx.Client, ctx.User, ctx.Channel, character.GetName() + " " + move);
-            if(result != null)
+            if (result != null)
                 await ctx.EditResponseAsync(new DiscordWebhookBuilder().AddEmbed(result));
+            else
+                await ctx.DeleteResponseAsync();
         }
     }
 }

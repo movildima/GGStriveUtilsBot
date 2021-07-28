@@ -104,7 +104,9 @@ namespace GGStriveUtilsBot.Utils
             //heavenly potemkin buster
             if (move == "hpb")
                 return "Heavenly Potemkin Buster";
-
+            //behemoth typhoon
+            if (Levenshtein.Distance(move, "behemoth") < LDistance || Levenshtein.Distance(move, "behemoth typhoon") < LDistance)
+                return "Behemoth Typhoon";
             return move;
         }
 
@@ -155,6 +157,8 @@ namespace GGStriveUtilsBot.Utils
                 r.result = MoveDataResult.NoResult;
             else if (r.moves.Count <= maxResults)
                 r.result = MoveDataResult.ExtraResults;
+            else if (r.moves.Count == 16 && r.moves[0].name.Contains("Behemoth"))
+                r.result = MoveDataResult.SpecialBehemoth;
             else
                 r.result = MoveDataResult.TooManyResults;
             return r;

@@ -32,7 +32,7 @@ namespace GGStriveUtilsBot.Utils
                     var response = await channel.SendMessageAsync(buildXEmbed(results.moves));
                     for (int i = 0; i < results.moves.Count; i++)
                     {
-                        if(i < emoteList.Count)
+                        if (i < emoteList.Count)
                         {
                             await response.CreateReactionAsync(DiscordEmoji.FromUnicode(client, emoteList[i]));
                         }
@@ -50,6 +50,38 @@ namespace GGStriveUtilsBot.Utils
                     }
                 case MoveDataResult.TooManyResults:
                     return buildTooManyEmbed();
+                case MoveDataResult.SpecialBehemoth:
+                    var buttonResponse = await channel.SendMessageAsync(buildBehemothSelector(false));
+                    var buttonReaction = await buttonResponse.WaitForButtonAsync(user, TimeSpan.FromSeconds(40));
+                    if (!buttonReaction.TimedOut)
+                    {
+                        if (buttonReaction.Result.Id == "air_ok")
+                        {
+                            await buttonResponse.ModifyAsync(buildBehemothSelector(true));
+                            await buttonReaction.Result.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
+                            buttonReaction = await buttonResponse.WaitForButtonAsync(user, TimeSpan.FromSeconds(40));
+                            if (!buttonReaction.TimedOut)
+                            {
+                                await buttonResponse.DeleteAsync();
+                                return build1XEmbed(results.moves.FirstOrDefault(f => f.input == buttonReaction.Result.Id));
+                            }
+                            else
+                            {
+                                await buttonResponse.DeleteAsync();
+                                return null;
+                            }
+                        }
+                        else
+                        {
+                            await buttonResponse.DeleteAsync();
+                            return build1XEmbed(results.moves.FirstOrDefault(f => f.input == buttonReaction.Result.Id));
+                        }
+                    }
+                    else
+                    {
+                        await buttonResponse.DeleteAsync();
+                        return null;
+                    }
             };
             return null;
         }
@@ -75,7 +107,7 @@ namespace GGStriveUtilsBot.Utils
             if (!string.IsNullOrEmpty(move.input))
                 embed.AddField("Input", move.input, true);
             if (!string.IsNullOrEmpty(move.damage))
-                embed.AddField("Damage", move.damage.Replace("*","\\*"), true);
+                embed.AddField("Damage", move.damage.Replace("*", "\\*"), true);
             if (!string.IsNullOrEmpty(move.guard))
                 embed.AddField("Guard", move.guard.Replace("*", "\\*"), true);
             if (!string.IsNullOrEmpty(move.startup))
@@ -128,6 +160,18 @@ namespace GGStriveUtilsBot.Utils
             return embed.Build();
         }
 
+        public static DiscordMessageBuilder buildBehemothSelector(bool buildAir)
+        {
+            if (!buildAir)
+            {
+                return goldlewisGroundMsg;
+            }
+            else
+            {
+                return goldlewisAirMsg;
+            }
+        }
+
         public static List<string> emoteList = new List<string>()
             {
                 "1️⃣",
@@ -139,5 +183,79 @@ namespace GGStriveUtilsBot.Utils
                 "7️⃣",
                 "8️⃣"
             };
+
+        #region Behemoth Typhoon selector message builders
+        public static DiscordMessageBuilder goldlewisGroundMsg = new DiscordMessageBuilder()
+            /*embed*/
+            .WithEmbed(GenericEmbedBuilder.Create()
+                        .WithImageUrl("https://cdn.discordapp.com/attachments/377843610219053059/869983493428490240/Behemoth_Typhoon___DPAD_Ver.png") // PseudoWoodo's awesome behemoth selector \o/
+                        .WithDescription("In this Behemoth Typhoon: you select which version of Behemoth Typhoon you want to check.\nPress the green button to switch to air versions of the move."))
+            // the whole shebang lmao
+            .AddComponents(new DiscordComponent[]
+            {
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "87412H", "", false, new DiscordComponentEmoji(868814261902790656)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "89632H", "", false, new DiscordComponentEmoji(868814261625978891)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Success, "air_ok", "Switch to air moves", false)
+            })
+            .AddComponents(new DiscordComponent[]
+            {
+                new DiscordButtonComponent(ButtonStyle.Secondary, "47896H", "", false, new DiscordComponentEmoji(868814261923762176)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "69874H", "", false, new DiscordComponentEmoji(868814261571432459))
+            })
+            .AddComponents(new DiscordComponent[]
+            {
+                new DiscordButtonComponent(ButtonStyle.Secondary, "41236H", "", false, new DiscordComponentEmoji(868814261919580190)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "63214H", "", false, new DiscordComponentEmoji(868814262032818176))
+            })
+            .AddComponents(new DiscordComponent[]
+            {
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "21478H", "", false, new DiscordComponentEmoji(868814261886021672)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "23698H", "", false, new DiscordComponentEmoji(868814262066376724)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692))
+            });
+
+        public static DiscordMessageBuilder goldlewisAirMsg = new DiscordMessageBuilder()
+            /*embed*/
+            .WithEmbed(GenericEmbedBuilder.Create()
+                        .WithImageUrl("https://cdn.discordapp.com/attachments/377843610219053059/869983493428490240/Behemoth_Typhoon___DPAD_Ver.png") // PseudoWoodo's awesome behemoth selector \o/
+                        .WithDescription("In this Behemoth Typhoon: you select which version of Behemoth Typhoon you want to check.\nCurrently selecting air moves."))
+            // the whole shebang lmao
+            .AddComponents(new DiscordComponent[]
+            {
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "j.87412H", "", false, new DiscordComponentEmoji(868814261902790656)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "j.89632H", "", false, new DiscordComponentEmoji(868814261625978891)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Success, "air_ok", "Air moves enabled", true)
+            })
+            .AddComponents(new DiscordComponent[]
+            {
+                new DiscordButtonComponent(ButtonStyle.Secondary, "j.47896H", "", false, new DiscordComponentEmoji(868814261923762176)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "j.69874H", "", false, new DiscordComponentEmoji(868814261571432459))
+            })
+            .AddComponents(new DiscordComponent[]
+            {
+                new DiscordButtonComponent(ButtonStyle.Secondary, "j.41236H", "", false, new DiscordComponentEmoji(868814261919580190)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "j.63214H", "", false, new DiscordComponentEmoji(868814262032818176))
+            })
+            .AddComponents(new DiscordComponent[]
+            {
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "j.21478H", "", false, new DiscordComponentEmoji(868814261886021672)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "j.23698H", "", false, new DiscordComponentEmoji(868814262066376724)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692))
+            });
+        #endregion
     }
 }

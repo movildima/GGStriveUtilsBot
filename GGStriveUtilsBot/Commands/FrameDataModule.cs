@@ -22,7 +22,7 @@ namespace GGStriveUtilsBot.Commands
             await ctx.TriggerTypingAsync();
 
             var result = await Utils.FrameDataEmbedBuilder.selectEmbed(ctx.Client, ctx.User, ctx.Channel, Move);
-            if(result != null)
+            if (result != null)
             {
                 await ctx.RespondAsync(result);
             }

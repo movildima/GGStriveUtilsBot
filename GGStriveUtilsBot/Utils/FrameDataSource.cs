@@ -29,7 +29,8 @@ public enum MoveDataResult
     Success,
     NoResult,
     ExtraResults,
-    TooManyResults
+    TooManyResults,
+    SpecialBehemoth
 }
 
 public class IconData
