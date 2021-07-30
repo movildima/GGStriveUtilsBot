@@ -162,42 +162,20 @@ namespace GGStriveUtilsBot.Utils
 
         public static DiscordMessageBuilder buildBehemothSelector(bool buildAir)
         {
-            if (!buildAir)
-            {
-                return goldlewisGroundMsg;
-            }
-            else
-            {
-                return goldlewisAirMsg;
-            }
-        }
-
-        public static List<string> emoteList = new List<string>()
-            {
-                "1️⃣",
-                "2️⃣",
-                "3️⃣",
-                "4️⃣",
-                "5️⃣",
-                "6️⃣",
-                "7️⃣",
-                "8️⃣"
-            };
-
-        #region Behemoth Typhoon selector message builders
-        public static DiscordMessageBuilder goldlewisGroundMsg = new DiscordMessageBuilder()
+            DiscordMessageBuilder goldlewisGroundMsg = new DiscordMessageBuilder()
             /*embed*/
             .WithEmbed(GenericEmbedBuilder.Create()
-                        .WithImageUrl("https://cdn.discordapp.com/attachments/377843610219053059/869983493428490240/Behemoth_Typhoon___DPAD_Ver.png") // PseudoWoodo's awesome behemoth selector \o/
-                        .WithDescription("In this Behemoth Typhoon: you select which version of Behemoth Typhoon you want to check.\nPress the green button to switch to air versions of the move."))
+                        .WithImageUrl("https://cdn.discordapp.com/attachments/377843610219053059/869983493428490240/Behemoth_Typhoon___DPAD_Ver.png") /* PseudoWoodo's awesome behemoth selector \o/ */
+                        .WithAuthor("In this Behemoth Typhoon", "https://www.dustloop.com/wiki/index.php?title=GGST/Goldlewis_Dickinson#Note_on_Behemoth_Typhoon",
+                                    DustloopDataFetcher.iconSource.Where(f => f.name == "Goldlewis Dickinson" && f.iconLoaded).Count() == 1 ? DustloopDataFetcher.iconSource.FirstOrDefault(f => f.name == "Goldlewis Dickinson").iconFull : null)
+                        .WithDescription("You select which version of Behemoth Typhoon you want to check.\nCurrently selecting ground moves."))
             // the whole shebang lmao
             .AddComponents(new DiscordComponent[]
             {
                 new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "87412H", "", false, new DiscordComponentEmoji(868814261902790656)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "89632H", "", false, new DiscordComponentEmoji(868814261625978891)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Success, "air_ok", "Switch to air moves", false)
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692))
             })
             .AddComponents(new DiscordComponent[]
             {
@@ -219,21 +197,26 @@ namespace GGStriveUtilsBot.Utils
                 new DiscordButtonComponent(ButtonStyle.Secondary, "21478H", "", false, new DiscordComponentEmoji(868814261886021672)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "23698H", "", false, new DiscordComponentEmoji(868814262066376724)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692))
+            })
+            .AddComponents(new DiscordComponent[]
+            {
+                new DiscordButtonComponent(ButtonStyle.Success, "air_ok", "Switch to air moves", false)
             });
 
-        public static DiscordMessageBuilder goldlewisAirMsg = new DiscordMessageBuilder()
+            DiscordMessageBuilder goldlewisAirMsg = new DiscordMessageBuilder()
             /*embed*/
             .WithEmbed(GenericEmbedBuilder.Create()
-                        .WithImageUrl("https://cdn.discordapp.com/attachments/377843610219053059/869983493428490240/Behemoth_Typhoon___DPAD_Ver.png") // PseudoWoodo's awesome behemoth selector \o/
-                        .WithDescription("In this Behemoth Typhoon: you select which version of Behemoth Typhoon you want to check.\nCurrently selecting air moves."))
+                        .WithImageUrl("https://cdn.discordapp.com/attachments/377843610219053059/869983493428490240/Behemoth_Typhoon___DPAD_Ver.png") /* PseudoWoodo's awesome behemoth selector \o/ */
+                        .WithAuthor("In this Behemoth Typhoon", "https://www.dustloop.com/wiki/index.php?title=GGST/Goldlewis_Dickinson#Note_on_Behemoth_Typhoon",
+                                    DustloopDataFetcher.iconSource.Where(f => f.name == "Goldlewis Dickinson" && f.iconLoaded).Count() == 1 ? DustloopDataFetcher.iconSource.FirstOrDefault(f => f.name == "Goldlewis Dickinson").iconFull : null)
+                        .WithDescription("You select which version of Behemoth Typhoon you want to check.\nCurrently selecting air moves."))
             // the whole shebang lmao
             .AddComponents(new DiscordComponent[]
             {
                 new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "j.87412H", "", false, new DiscordComponentEmoji(868814261902790656)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "j.89632H", "", false, new DiscordComponentEmoji(868814261625978891)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Success, "air_ok", "Air moves enabled", true)
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692))
             })
             .AddComponents(new DiscordComponent[]
             {
@@ -255,7 +238,32 @@ namespace GGStriveUtilsBot.Utils
                 new DiscordButtonComponent(ButtonStyle.Secondary, "j.21478H", "", false, new DiscordComponentEmoji(868814261886021672)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "j.23698H", "", false, new DiscordComponentEmoji(868814262066376724)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692))
+            })
+            .AddComponents(new DiscordComponent[]
+            {
+                new DiscordButtonComponent(ButtonStyle.Success, "air_ok", "Air moves enabled", true)
             });
-        #endregion
+
+            if (!buildAir)
+            {
+                return goldlewisGroundMsg;
+            }
+            else
+            {
+                return goldlewisAirMsg;
+            }
+        }
+
+        public static List<string> emoteList = new List<string>()
+            {
+                "1️⃣",
+                "2️⃣",
+                "3️⃣",
+                "4️⃣",
+                "5️⃣",
+                "6️⃣",
+                "7️⃣",
+                "8️⃣"
+            };
     }
 }
