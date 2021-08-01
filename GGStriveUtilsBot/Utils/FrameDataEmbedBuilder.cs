@@ -17,7 +17,17 @@ namespace GGStriveUtilsBot.Utils
 
         public static async Task<DiscordEmbed> selectEmbed(DiscordClient client, DiscordUser user, DiscordChannel channel, string Move)
         {
-            (Character? character, string move, bool isNumpad) = Utils.InputParser.parseFrameDataInput(Move);
+            (Character? character, string move, string level, bool isNumpad) = Utils.InputParser.parseFrameDataInput(Move);
+
+            // Use the level to modify move if applicable
+            if (level.Length > 0 && isNumpad) {
+                move = move + " " + level;
+#if DEBUG
+                Console.WriteLine("Final Move: " + move);
+#endif
+            }
+
+
 
             var results = DustloopDataFetcher.fetchMove(character, move, isNumpad);
             var interactivity = client.GetInteractivity();
