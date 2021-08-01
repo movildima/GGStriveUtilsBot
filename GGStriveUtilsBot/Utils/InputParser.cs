@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using DSharpPlus.SlashCommands;
 
-namespace GGStriveUtilsBot.Utils {
-    static class InputParser {
+namespace GGStriveUtilsBot.Utils
+{
+    static class InputParser
+    {
         // Part of regex that captures both shortened and full names
         static private string charaPattern = String.Join(
             "",
@@ -44,9 +46,11 @@ namespace GGStriveUtilsBot.Utils {
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         // Returns the Character enum, move name string, move level string, and a bool indicating numpad format
-        public static (Character? character, string move, string level, bool isNumpad) parseFrameDataInput(string input) {
+        public static (Character? character, string move, string level, bool isNumpad) parseFrameDataInput(string input)
+        {
             MatchCollection matches = charaMoveRegex.Matches(input);
-            if (matches.Count == 0) {
+            if (matches.Count == 0)
+            {
 #if DEBUG
                 Console.WriteLine("\nUnable to parse.");
 #endif
@@ -57,8 +61,10 @@ namespace GGStriveUtilsBot.Utils {
             GroupCollection groups = match.Groups;
 
             Character? character = null;
-            foreach (var v in Enum.GetValues(typeof(Character))) {
-                if (groups[v.ToString()].Length > 0) {
+            foreach (var v in Enum.GetValues(typeof(Character)))
+            {
+                if (groups[v.ToString()].Length > 0)
+                {
                     character = (Character)Enum.Parse(typeof(Character), v.ToString());
                 }
             }
@@ -79,11 +85,15 @@ namespace GGStriveUtilsBot.Utils {
 
             // Correct the case where a user inputs j2K instead of j.2K, cS instead of c.S, etc.
             MatchCollection prefixMoveMatches = prefixMoveRegex.Matches(move);
-            if (prefixMoveMatches.Count > 0) {
+            if (prefixMoveMatches.Count > 0)
+            {
                 isNumpad = true;
-                if (move.StartsWith("bt")) {
+                if (move.StartsWith("bt"))
+                {
                     move = move.Insert(2, ".");
-                } else {
+                }
+                else
+                {
                     move = move.Insert(1, ".");
                 }
             }
@@ -91,36 +101,36 @@ namespace GGStriveUtilsBot.Utils {
             // Special exceptions and corrections for common shorthand notations
             // Assumes "level 1" for moves that have varying levels belonging to Nago/Goldlewis
             // Assumes 214[k] for Zato's "Break the Law" move
-            if (character.HasValue) {
-                if (character == Character.Nago && level.Length == 0) {
-                    List<String> levelMoves = new List<string>(){
-                        "j.h", "2h", "6h", "5h"
-                    };
-                    if (levelMoves.Any(s => s.Equals(move))) {
-                        level = "level 1";
-                    }
-                } else if (character == Character.Goldlewis && level.Length == 0) {
-                    List<String> levelMoves = new List<string>() {
-                        "thunderbird", "skyfish", "burn it down", "down with the system",
-                        "214s", "236s", "236236k", "632146p"
-                    };
-                    if (levelMoves.Any(s => s.Equals(move))) {
-                        level = "level 1";
-                    }
-                } else if (character == Character.Zato) {
-                    if (move.Trim().Equals("214k")) {
-                        move = "214[k]";
-                    }
-                }
-            } 
-            else if (level.Length == 0) {
-                List<String> levelMoves = new List<string>() {
-                    "thunderbird", "skyfish", "burn it down", "down with the system"
-                };
-                if (levelMoves.Any(s => s.Equals(move))) {
-                    level = "level 1";
-                }
-            }
+            //if (character.HasValue) {
+            //    if (character == Character.Nago && level.Length == 0) {
+            //        List<String> levelMoves = new List<string>(){
+            //            "j.h", "2h", "6h", "5h"
+            //        };
+            //        if (levelMoves.Any(s => s.Equals(move))) {
+            //            level = "level 1";
+            //        }
+            //    } else if (character == Character.Goldlewis && level.Length == 0) {
+            //        List<String> levelMoves = new List<string>() {
+            //            "thunderbird", "skyfish", "burn it down", "down with the system",
+            //            "214s", "236s", "236236k", "632146p"
+            //        };
+            //        if (levelMoves.Any(s => s.Equals(move))) {
+            //            level = "level 1";
+            //        }
+            //    } else if (character == Character.Zato) {
+            //        if (move.Trim().Equals("214k")) {
+            //            move = "214[k]";
+            //        }
+            //    }
+            //} 
+            //else if (level.Length == 0) {
+            //    List<String> levelMoves = new List<string>() {
+            //        "thunderbird", "skyfish", "burn it down", "down with the system"
+            //    };
+            //    if (levelMoves.Any(s => s.Equals(move))) {
+            //        level = "level 1";
+            //    }
+            //}
 
             move = move.Trim();
             level = level.Trim();

@@ -74,43 +74,80 @@ namespace GGStriveUtilsBot.Utils
             }
         }
 
-        private static string moveShorthand(Character? character, string move)
+        private static (string, string) moveShorthand(Character? character, string move, string level)
         {
             move = move.ToLower();
+            level = level.ToLower();
             //dp inputs
-            if(move == "dp" || Levenshtein.Distance(move, "dragon punch") < LDistance)
+            if (move == "dp" || Levenshtein.Distance(move, "dragon punch") < LDistance)
             {
-                if(character.HasValue)
+                if (character.HasValue)
                 {
                     Character chara = (Character)character;
-                    switch(chara)
+                    switch (chara)
                     {
                         case Character.Sol:
-                            return "Volcanic Viper";
+                            return ("Volcanic Viper", "");
                         case Character.Ky:
-                            return "Vapor Thrust";
+                            return ("Vapor Thrust", "");
                         case Character.Gio:
-                            return "Sol Nascente";
+                            return ("Sol Nascente", "");
                         case Character.Leo:
-                            return "Eisen Sturm";
+                            return ("Eisen Sturm", "");
                         case Character.Chipp:
-                            return "Beta Blade";
+                            return ("Beta Blade", "");
                     }
                 }
             }
+            //nago level moves
+            {
+                if (character.HasValue)
+                {
+                    Character chara = (Character)character;
+                    List<string> levelMoves = new List<string>(){
+                        "j.h", "2h", "6h", "5h"
+                    };
+                    if (chara == Character.Nago && levelMoves.Any(s => s.Equals(move)) && level.Length == 0)
+                        return (move, "level");
+                }
+            }
+            //goldlewis level moves
+            {
+                List<string> levelMoves = new List<string>() {
+                        "thunderbird", "skyfish", "burn it down",
+                        "214s", "236s", "236236k"
+                    };
+                if ((levelMoves.GetRange(0, 3).Any(f => Levenshtein.Distance(f, move) < LDistance) ||
+                    levelMoves.GetRange(3, 3).Any(f => f == move)) &&
+                    level.Length == 0)
+                    return (move, "level");
+            }
             //totsugeki
             if (Levenshtein.Distance(move, "totsugeki") < LDistance)
-                return "Mr. Dolphin";
+                return ("mr. dolphin", "");
             //heavenly potemkin buster
             if (move == "hpb")
-                return "Heavenly Potemkin Buster";
+                return ("heavenly potemkin buster", "");
+            //fdb
+            if (move == "fdb")
+                return ("f.d.b.", "");
             //behemoth typhoon
             if (Levenshtein.Distance(move, "behemoth") < LDistance || Levenshtein.Distance(move, "behemoth typhoon") < LDistance)
-                return "Behemoth Typhoon";
-            return move;
+                return ("behemoth typhoon", "");
+            //zato break the law fix
+            {
+                if (character.HasValue)
+                {
+                    Character chara = (Character)character;
+                    if (chara == Character.Zato && move == "214k")
+                        return ("214[k]", "");
+                }
+            }
+
+            return (move, level);
         }
 
-        public static MoveListInternal fetchMove(Character? character, string move, bool isNumpad)
+        public static MoveListInternal fetchMove(Character? character, string move, string level, bool isNumpad)
         {
             List<MoveData> results1 = new List<MoveData>();
             List<MoveData> results2 = new List<MoveData>();
@@ -127,12 +164,20 @@ namespace GGStriveUtilsBot.Utils
             //    if (results1.Count > 50)
             //        break;
             //}
-            move = moveShorthand(character, move); // transform move based on a list of shorthands
 
-            results1.AddRange(dataSource.Where(f => (isNumpad && f.input.ToLower() == move) || // numpad notation
-                                                    (!isNumpad && Levenshtein.Distance(f.name.ToLower(), move.ToLower()) < LDistance) || //typos
-                                                    (f.name.ToLower().Contains(move.ToLower())) || // direct match
-                                                    (move == "5s" && (f.input == "c.S" || f.input == "f.S")))); // 5S fix
+            (move, level) = moveShorthand(character, move, level); // transform move and level based on a list of shorthands
+
+            if (level.Length == 0)
+                results1.AddRange(dataSource.Where(f => (isNumpad && f.input.ToLower() == move) || // numpad notation
+                                                        (!isNumpad && Levenshtein.Distance(f.name.ToLower(), move) < LDistance) || //typos
+                                                        (f.name.ToLower().Contains(move)) || // direct match
+                                                        (move == "5s" && (f.input == "c.S" || f.input == "f.S")))); // 5S fix
+            else
+                results1.AddRange(dataSource.Where(f => (isNumpad && f.input.ToLower().Contains(move + " " + level)) || // numpad notation
+                                                        (!isNumpad && Levenshtein.Distance(f.name.ToLower(), move) < LDistance && f.input.ToLower().EndsWith(level)) || // typos
+                                                        (!isNumpad && f.name.ToLower().Contains(move) && f.input.ToLower().EndsWith(level)) || // direct match
+                                                        (!isNumpad && Levenshtein.Distance(f.name.ToLower(), move) < LDistance && f.input.ToLower().Contains(level)))); // all levels
+
             //remove moves that don't match the character
             if (character.HasValue)
             {
