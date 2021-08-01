@@ -91,36 +91,36 @@ namespace GGStriveUtilsBot.Utils {
             // Special exceptions and corrections for common shorthand notations
             // Assumes "level 1" for moves that have varying levels belonging to Nago/Goldlewis
             // Assumes 214[k] for Zato's "Break the Law" move
-            if (character.HasValue) {
-                if (character == Character.Nago && level.Length == 0) {
-                    List<String> levelMoves = new List<string>(){
-                        "j.h", "2h", "6h", "5h"
-                    };
-                    if (levelMoves.Any(s => s.Equals(move))) {
-                        level = "level 1";
-                    }
-                } else if (character == Character.Goldlewis && level.Length == 0) {
-                    List<String> levelMoves = new List<string>() {
-                        "thunderbird", "skyfish", "burn it down", "down with the system",
-                        "214s", "236s", "236236k", "632146p"
-                    };
-                    if (levelMoves.Any(s => s.Equals(move))) {
-                        level = "level 1";
-                    }
-                } else if (character == Character.Zato) {
-                    if (move.Trim().Equals("214k")) {
-                        move = "214[k]";
-                    }
-                }
-            } 
-            else if (level.Length == 0) {
-                List<String> levelMoves = new List<string>() {
-                    "thunderbird", "skyfish", "burn it down", "down with the system"
-                };
-                if (levelMoves.Any(s => s.Equals(move))) {
-                    level = "level 1";
-                }
-            }
+            //if (character.HasValue) {
+            //    if (character == Character.Nago && level.Length == 0) {
+            //        List<String> levelMoves = new List<string>(){
+            //            "j.h", "2h", "6h", "5h"
+            //        };
+            //        if (levelMoves.Any(s => s.Equals(move))) {
+            //            level = "level 1";
+            //        }
+            //    } else if (character == Character.Goldlewis && level.Length == 0) {
+            //        List<String> levelMoves = new List<string>() {
+            //            "thunderbird", "skyfish", "burn it down", "down with the system",
+            //            "214s", "236s", "236236k", "632146p"
+            //        };
+            //        if (levelMoves.Any(s => s.Equals(move))) {
+            //            level = "level 1";
+            //        }
+            //    } else if (character == Character.Zato) {
+            //        if (move.Trim().Equals("214k")) {
+            //            move = "214[k]";
+            //        }
+            //    }
+            //} 
+            //else if (level.Length == 0) {
+            //    List<String> levelMoves = new List<string>() {
+            //        "thunderbird", "skyfish", "burn it down", "down with the system"
+            //    };
+            //    if (levelMoves.Any(s => s.Equals(move))) {
+            //        level = "level 1";
+            //    }
+            //}
 
             move = move.Trim();
             level = level.Trim();

@@ -19,17 +19,7 @@ namespace GGStriveUtilsBot.Utils
         {
             (Character? character, string move, string level, bool isNumpad) = Utils.InputParser.parseFrameDataInput(Move);
 
-            // Use the level to modify move if applicable
-            if (level.Length > 0 && isNumpad) {
-                move = move + " " + level;
-#if DEBUG
-                Console.WriteLine("Final Move: " + move);
-#endif
-            }
-
-
-
-            var results = DustloopDataFetcher.fetchMove(character, move, isNumpad);
+            var results = DustloopDataFetcher.fetchMove(character, move, level, isNumpad);
             var interactivity = client.GetInteractivity();
 
             switch (results.result)
