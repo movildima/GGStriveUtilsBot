@@ -22,7 +22,7 @@ namespace GGStriveUtilsBot.Utils
             @"(?<Nago>nago)(?:riyuki)?|",
             @"(?<Pot>pot)(?:emkin)?|",
             @"(?<Gio>gio)(?:vanna)?|",
-            @"(?<Millia>millia)(?:\s+rage)?|",
+            @"(?<Millia>mill?ia)(?:\s+rage)?|",
             @"(?<Leo>leo)(?:\s+whitefang)?|",
             @"(?<Chipp>chipp)(?:\s+zanuff)?|",
             @"(?<Anji>anji)(?:\s+mito)?|",
