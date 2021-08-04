@@ -14,6 +14,7 @@ public class MoveData
     public string onBlock { get; set; }
     public string onHit { get; set; }
     public string invuln { get; set; }
+    public string type { get; set; }
     public bool imgLoaded { get; set; } = false;
     public string imgFull { get; set; }
 }

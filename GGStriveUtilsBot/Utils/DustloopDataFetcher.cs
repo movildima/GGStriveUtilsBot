@@ -14,7 +14,7 @@ namespace GGStriveUtilsBot.Utils
 {
     static class DustloopDataFetcher
     {
-        static private string mainQuery = "https://www.dustloop.com/wiki/index.php?title=Special:CargoExport&tables=MoveData_GGST&&fields=chara%2C+input%2C+name%2C+images%2C+damage%2C+guard%2C+startup%2C+active%2C+recovery%2C+onBlock%2C+onHit%2C+invuln&&order+by=%60chara%60%2C%60input%60%2C%60name%60%2C%60cargo__MoveData_GGST%60.%60images__full%60%2C%60damage%60&limit=1000&format=json";
+        static private string mainQuery = "https://www.dustloop.com/wiki/index.php?title=Special:CargoExport&tables=MoveData_GGST&&fields=chara%2C+input%2C+name%2C+images%2C+damage%2C+guard%2C+startup%2C+active%2C+recovery%2C+onBlock%2C+onHit%2C+invuln%2C+type&&order+by=%60chara%60%2C%60input%60%2C%60name%60%2C%60cargo__MoveData_GGST%60.%60images__full%60%2C%60damage%60&limit=1000&format=json";
         static private string imgQuery = "https://dustloop.com/wiki/api.php?action=query&format=json&prop=imageinfo&titles=File:{0}&iiprop=url";
         static private string iconQuery = "https://www.dustloop.com/wiki/index.php?title=Special:CargoExport&tables=ggstCharacters&&fields=name%2Cicon&&order+by=%60name%60%2C%60icon%60&limit=1000&format=json";
         const int LDistance = 3; //google Levenshtein distance for more info
@@ -144,7 +144,9 @@ namespace GGStriveUtilsBot.Utils
                         return ("214[k]", "");
                 }
             }
-
+            //overdrive search
+            if (Levenshtein.Distance(move, "overdrive") < LDistance || move == "super")
+                return ("super", level);
             return (move, level);
         }
 
@@ -168,17 +170,19 @@ namespace GGStriveUtilsBot.Utils
 
             (move, level) = moveShorthand(character, move, level); // transform move and level based on a list of shorthands
 
-            if (level.Length == 0)
+            if (move == "super")
+                results1.AddRange(dataSource.Where(f => move == f.type)); // overdrive search
+            else if (level.Length == 0)
                 results1.AddRange(dataSource.Where(f => (isNumpad && f.input.ToLower() == move) || // numpad notation
                                                         (!isNumpad && Levenshtein.Distance(f.name.ToLower(), move) < LDistance) || //typos
                                                         (f.name.ToLower().Contains(move)) || // direct match
                                                         (move == "5s" && (f.input == "c.S" || f.input == "f.S")))); // 5S fix
-            else
+            else if (level.Length > 0)
                 results1.AddRange(dataSource.Where(f => (isNumpad && f.input.ToLower().Contains(move + " " + level)) || // numpad notation
                                                         (!isNumpad && Levenshtein.Distance(f.name.ToLower(), move) < LDistance && f.input.ToLower().EndsWith(level)) || // typos
                                                         (!isNumpad && f.name.ToLower().Contains(move) && f.input.ToLower().EndsWith(level)) || // direct match
                                                         (!isNumpad && Levenshtein.Distance(f.name.ToLower(), move) < LDistance && f.input.ToLower().Contains(level)))); // all levels
-
+            
             //remove moves that don't match the character
             if (character.HasValue)
             {
