@@ -132,6 +132,9 @@ namespace GGStriveUtilsBot.Utils
             //fdb
             if (move == "fdb")
                 return ("f.d.b.", "");
+            //hmc
+            if (move == "hmc")
+                return ("heavy mob cemetery", "");
             //behemoth typhoon
             if (Levenshtein.Distance(move, "behemoth") < LDistance || Levenshtein.Distance(move, "behemoth typhoon") < LDistance)
                 return ("behemoth typhoon", "");
