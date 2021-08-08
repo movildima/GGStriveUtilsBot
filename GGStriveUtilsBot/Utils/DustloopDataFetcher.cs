@@ -36,15 +36,29 @@ namespace GGStriveUtilsBot.Utils
 #if !DEBUG
             foreach (var dataMove in dataSource) //load images
             {
-                loadImage(dataMove);
-                Console.WriteLine(string.Format("Image: {0} loaded", dataMove.imgFull));
+                try
+                {
+                    loadImage(dataMove);
+                    Console.WriteLine(string.Format("Image: {0} loaded", dataMove.imgFull));
+                }
+                catch
+                {
+                    Console.WriteLine(string.Format("Error: Image: {0} failed to load", dataMove.imgFull));
+                }
             }
             Console.WriteLine("Images loaded");
 #endif
             foreach (var icon in iconSource) //load icons
             {
-                loadIcon(icon);
-                Console.WriteLine(string.Format("Icon for {0} loaded", icon.name));
+                try
+                {
+                    loadIcon(icon);
+                    Console.WriteLine(string.Format("Icon for {0} loaded", icon.name));
+                }
+                catch
+                {
+                    Console.WriteLine(string.Format("Error: Icon for {0} failed to load", icon.iconFull));
+                }
             }
             Console.WriteLine("Icons loaded");
         }
