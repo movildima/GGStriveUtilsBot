@@ -99,6 +99,36 @@ namespace GGStriveUtilsBot.Utils
                     }
                 }
             }
+            //command grabs
+            if (Levenshtein.Distance(move, "command grab") < LDistance || move == "cmd grab" || move == "cmdgb" ||
+                Levenshtein.Distance(move, "command throw") < LDistance || move == "cmd throw" || move == "cmdtr")
+            {
+                if (character.HasValue)
+                {
+                    Character chara = (Character)character;
+                    switch (chara)
+                    {
+                        case Character.Axl:
+                            return ("Winter Mantis", "");
+                        case Character.Chipp:
+                            return ("Genrouzan", "");
+                        case Character.Faust:
+                            return ("Snip Snip Snip", "");
+                        case Character.Leo:
+                            return ("Gländzendes Dunkel", "");
+                        case Character.May:
+                            return ("Overhead Kiss", "");
+                        case Character.Nago:
+                            return ("Bloodsucking Universe", "");
+                        case Character.Pot:
+                            return ("Potemkin Buster", "");
+                        case Character.Sol:
+                            return ("Wild Throw", "");
+                        case Character.Zato:
+                            return ("Damned Fang", "");
+                    }
+                }
+            }
             //nago level moves
             {
                 if (character.HasValue)
@@ -136,7 +166,9 @@ namespace GGStriveUtilsBot.Utils
             if (move == "hmc")
                 return ("heavy mob cemetery", "");
             //behemoth typhoon
-            if (Levenshtein.Distance(move, "behemoth") < LDistance || Levenshtein.Distance(move, "behemoth typhoon") < LDistance)
+            if (Levenshtein.Distance(move, "behemoth") < LDistance ||
+                Levenshtein.Distance(move, "behemoth typhoon") < LDistance ||
+                move == "bt")
                 return ("behemoth typhoon", "");
             //zato break the law fix
             {
