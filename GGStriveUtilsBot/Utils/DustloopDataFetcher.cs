@@ -167,6 +167,9 @@ namespace GGStriveUtilsBot.Utils
                     level.Length == 0))
                     return (move, "level");
             }
+            //rensen
+            if (Levenshtein.Distance(move, "rensen") < LDistance || Levenshtein.Distance(move, "rensengeki") < LDistance)
+                return ("sickle flash", "");
             //totsugeki
             if (Levenshtein.Distance(move, "totsugeki") < LDistance)
                 return ("mr. dolphin", "");
