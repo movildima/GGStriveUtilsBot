@@ -35,31 +35,11 @@ namespace GGStriveUtilsBot.Utils
             //preload images and icons, takes a while but makes requests much faster, disabled while debugging
 #if !DEBUG
             foreach (var dataMove in dataSource) //load images
-            {
-                try
-                {
-                    loadImage(dataMove);
-                    Console.WriteLine(string.Format("Image: {0} loaded", dataMove.imgFull));
-                }
-                catch
-                {
-                    Console.WriteLine(string.Format("Error: Image: {0} failed to load", dataMove.name));
-                }
-            }
+                loadImage(dataMove);
             Console.WriteLine("Images loaded");
 #endif
             foreach (var icon in iconSource) //load icons
-            {
-                try
-                {
                     loadIcon(icon);
-                    Console.WriteLine(string.Format("Icon for {0} loaded", icon.name));
-                }
-                catch
-                {
-                    Console.WriteLine(string.Format("Error: Icon for {0} failed to load", icon.name));
-                }
-            }
             Console.WriteLine("Icons loaded");
         }
 
@@ -67,11 +47,21 @@ namespace GGStriveUtilsBot.Utils
         {
             if (!dataMove.imgLoaded)
             {
-                var r = new WebClient().DownloadString(String.Format(imgQuery, dataMove.images[0]));
-                if (JObject.Parse(r).SelectToken("query.pages.*.imageinfo[0].url") != null) //check if image is available
+                try
                 {
-                    dataMove.imgFull = JObject.Parse(r).SelectToken("query.pages.*.imageinfo[0].url").Value<string>(); //I hate this
-                    dataMove.imgLoaded = true;
+                    var r = new WebClient().DownloadString(String.Format(imgQuery, dataMove.images[0]));
+                    if (JObject.Parse(r).SelectToken("query.pages.*.imageinfo[0].url") != null) //check if image is available
+                    {
+                        dataMove.imgFull = JObject.Parse(r).SelectToken("query.pages.*.imageinfo[0].url").Value<string>(); //I hate this
+                        dataMove.imgLoaded = true;
+                        Console.WriteLine(string.Format("Image: {0} loaded", dataMove.imgFull));
+                    }
+                    else
+                        Console.WriteLine(string.Format("Error: Image: {0} failed to load", dataMove.name));
+                }
+                catch
+                {
+                    Console.WriteLine(string.Format("Error: Image: {0} failed to load", dataMove.name));
                 }
             }
         }
@@ -79,11 +69,20 @@ namespace GGStriveUtilsBot.Utils
         {
             if (!icon.iconLoaded)
             {
-                var r = new WebClient().DownloadString(String.Format(imgQuery, icon.icon));
-                if (JObject.Parse(r).SelectToken("query.pages.*.imageinfo[0].url") != null)
+                try
                 {
-                    icon.iconFull = JObject.Parse(r).SelectToken("query.pages.*.imageinfo[0].url").Value<string>(); //I hate this
-                    icon.iconLoaded = true;
+                    var r = new WebClient().DownloadString(String.Format(imgQuery, icon.icon));
+                    if (JObject.Parse(r).SelectToken("query.pages.*.imageinfo[0].url") != null)
+                    {
+                        icon.iconFull = JObject.Parse(r).SelectToken("query.pages.*.imageinfo[0].url").Value<string>(); //I hate this
+                        icon.iconLoaded = true;
+                    }
+                    else
+                        Console.WriteLine(string.Format("Error: Image: {0} failed to load", icon.name));
+                }
+                catch
+                {
+                    Console.WriteLine(string.Format("Error: Image: {0} failed to load", icon.name));
                 }
             }
         }
@@ -92,6 +91,7 @@ namespace GGStriveUtilsBot.Utils
         {
             move = move.ToLower();
             level = level.ToLower();
+
             //dp inputs
             if (move == "dp" || Levenshtein.Distance(move, "dragon punch") < LDistance)
             {
@@ -113,6 +113,7 @@ namespace GGStriveUtilsBot.Utils
                     }
                 }
             }
+
             //command grabs
             if (Levenshtein.Distance(move, "command grab") < LDistance || move == "cmd grab" || move == "cmdgb" ||
                 Levenshtein.Distance(move, "command throw") < LDistance || move == "cmd throw" || move == "cmdtr")
@@ -143,6 +144,7 @@ namespace GGStriveUtilsBot.Utils
                     }
                 }
             }
+
             //nago level moves
             {
                 if (character.HasValue)
@@ -155,6 +157,7 @@ namespace GGStriveUtilsBot.Utils
                         return (move, "level");
                 }
             }
+
             //goldlewis level moves
             {
                 List<string> levelMoves = new List<string>() {
@@ -167,26 +170,33 @@ namespace GGStriveUtilsBot.Utils
                     level.Length == 0))
                     return (move, "level");
             }
+
             //rensen
             if (Levenshtein.Distance(move, "rensen") < LDistance || Levenshtein.Distance(move, "rensengeki") < LDistance)
                 return ("sickle flash", "");
+
             //totsugeki
             if (Levenshtein.Distance(move, "totsugeki") < LDistance)
                 return ("mr. dolphin", "");
+
             //heavenly potemkin buster
             if (move == "hpb")
                 return ("heavenly potemkin buster", "");
+
             //fdb
             if (move == "fdb")
                 return ("f.d.b.", "");
+
             //hmc
             if (move == "hmc")
                 return ("heavy mob cemetery", "");
+
             //behemoth typhoon
             if (Levenshtein.Distance(move, "behemoth") < LDistance ||
                 Levenshtein.Distance(move, "behemoth typhoon") < LDistance ||
                 move == "bt")
                 return ("behemoth typhoon", "");
+
             //zato break the law fix
             {
                 if (character.HasValue)
@@ -196,9 +206,11 @@ namespace GGStriveUtilsBot.Utils
                         return ("214[k]", "");
                 }
             }
+
             //overdrive search
             if (Levenshtein.Distance(move, "overdrive") < LDistance || move == "super")
                 return ("super", level);
+
             return (move, level);
         }
 
@@ -234,7 +246,7 @@ namespace GGStriveUtilsBot.Utils
                                                         (!isNumpad && Levenshtein.Distance(f.name.ToLower(), move) < LDistance && f.input.ToLower().EndsWith(level)) || // typos
                                                         (!isNumpad && f.name.ToLower().Contains(move) && f.input.ToLower().EndsWith(level)) || // direct match
                                                         (!isNumpad && Levenshtein.Distance(f.name.ToLower(), move) < LDistance && f.input.ToLower().Contains(level)))); // all levels
-            
+
             //remove moves that don't match the character
             if (character.HasValue)
             {
@@ -245,11 +257,12 @@ namespace GGStriveUtilsBot.Utils
             }
             else
                 results2.AddRange(results1);
-            //load the image, if debugging
-#if DEBUG
-            foreach (var dataMove in results2)
-                loadImage(dataMove);
-#endif
+
+            //try to load an image if it's not present
+            if (results2.Any(f => !f.imgLoaded))
+                foreach (var dataMove in results2.Where(f => !f.imgLoaded))
+                    loadImage(dataMove);
+
             //construct the result
             MoveListInternal r = new MoveListInternal();
             r.moves = results2;
