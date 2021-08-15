@@ -9,7 +9,7 @@ using DSharpPlus.SlashCommands;
 
 namespace GGStriveUtilsBot.SlashCommands
 {
-    class FrameDataSlashModule : SlashCommandModule
+    class FrameDataSlashModule : ApplicationCommandModule
     {
         [SlashCommand("framedata", "Fetch frame data of a specified move from Dustloop wiki.")]
         public async Task FrameDataCommand(InteractionContext ctx, [Option("Character", "Character in question")] Character character, [Option("Move", "Move name or numpad notation of it")] string move)

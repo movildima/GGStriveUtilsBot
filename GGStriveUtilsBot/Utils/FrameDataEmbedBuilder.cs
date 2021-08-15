@@ -172,31 +172,31 @@ namespace GGStriveUtilsBot.Utils
             // the whole shebang lmao
             .AddComponents(new DiscordComponent[]
             {
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty1", "", true, new DiscordComponentEmoji(869984289259929692)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "87412H", "", false, new DiscordComponentEmoji(868814261902790656)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "89632H", "", false, new DiscordComponentEmoji(868814261625978891)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692))
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty2", "", true, new DiscordComponentEmoji(869984289259929692))
             })
             .AddComponents(new DiscordComponent[]
             {
                 new DiscordButtonComponent(ButtonStyle.Secondary, "47896H", "", false, new DiscordComponentEmoji(868814261923762176)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty3", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty4", "", true, new DiscordComponentEmoji(869984289259929692)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "69874H", "", false, new DiscordComponentEmoji(868814261571432459))
             })
             .AddComponents(new DiscordComponent[]
             {
                 new DiscordButtonComponent(ButtonStyle.Secondary, "41236H", "", false, new DiscordComponentEmoji(868814261919580190)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty5", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty6", "", true, new DiscordComponentEmoji(869984289259929692)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "63214H", "", false, new DiscordComponentEmoji(868814262032818176))
             })
             .AddComponents(new DiscordComponent[]
             {
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty7", "", true, new DiscordComponentEmoji(869984289259929692)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "21478H", "", false, new DiscordComponentEmoji(868814261886021672)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "23698H", "", false, new DiscordComponentEmoji(868814262066376724)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692))
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty8", "", true, new DiscordComponentEmoji(869984289259929692))
             })
             .AddComponents(new DiscordComponent[]
             {
@@ -213,31 +213,31 @@ namespace GGStriveUtilsBot.Utils
             // the whole shebang lmao
             .AddComponents(new DiscordComponent[]
             {
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty1", "", true, new DiscordComponentEmoji(869984289259929692)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "j.87412H", "", false, new DiscordComponentEmoji(868814261902790656)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "j.89632H", "", false, new DiscordComponentEmoji(868814261625978891)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692))
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty2", "", true, new DiscordComponentEmoji(869984289259929692))
             })
             .AddComponents(new DiscordComponent[]
             {
                 new DiscordButtonComponent(ButtonStyle.Secondary, "j.47896H", "", false, new DiscordComponentEmoji(868814261923762176)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty3", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty4", "", true, new DiscordComponentEmoji(869984289259929692)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "j.69874H", "", false, new DiscordComponentEmoji(868814261571432459))
             })
             .AddComponents(new DiscordComponent[]
             {
                 new DiscordButtonComponent(ButtonStyle.Secondary, "j.41236H", "", false, new DiscordComponentEmoji(868814261919580190)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty5", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty6", "", true, new DiscordComponentEmoji(869984289259929692)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "j.63214H", "", false, new DiscordComponentEmoji(868814262032818176))
             })
             .AddComponents(new DiscordComponent[]
             {
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty7", "", true, new DiscordComponentEmoji(869984289259929692)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "j.21478H", "", false, new DiscordComponentEmoji(868814261886021672)),
                 new DiscordButtonComponent(ButtonStyle.Secondary, "j.23698H", "", false, new DiscordComponentEmoji(868814262066376724)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty", "", true, new DiscordComponentEmoji(869984289259929692))
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty8", "", true, new DiscordComponentEmoji(869984289259929692))
             })
             .AddComponents(new DiscordComponent[]
             {
