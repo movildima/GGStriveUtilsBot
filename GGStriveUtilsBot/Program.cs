@@ -53,6 +53,8 @@ namespace GGStriveUtilsBot
             commands.RegisterCommands<Commands.FrameDataModule>();
             commands.RegisterCommands<Commands.UpdateDataModule>();
 
+            commands.SetHelpFormatter<CustomHelpFormatter>();
+
             slash.RegisterCommands<SlashCommands.FrameDataSlashModule>();
 
             //download frame data
