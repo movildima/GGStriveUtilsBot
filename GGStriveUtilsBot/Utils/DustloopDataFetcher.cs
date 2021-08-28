@@ -39,7 +39,7 @@ namespace GGStriveUtilsBot.Utils
             Console.WriteLine("Images loaded");
 #endif
             foreach (var icon in iconSource) //load icons
-                    loadIcon(icon);
+                loadIcon(icon);
             Console.WriteLine("Icons loaded");
         }
 
@@ -141,6 +141,8 @@ namespace GGStriveUtilsBot.Utils
                             return ("Wild Throw", "");
                         case Character.Zato:
                             return ("Damned Fang", "");
+                        case Character.Jacko:
+                            return ("Forever Elysion Driver", "");
                     }
                 }
             }
