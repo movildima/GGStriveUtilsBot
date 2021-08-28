@@ -27,6 +27,7 @@ namespace GGStriveUtilsBot.Utils
                 case MoveDataResult.Success:
                     return build1XEmbed(results.moves[0]);
                 case MoveDataResult.NoResult:
+                    await Commands.ErrorChannel.sendMessage(results, Move, client, user);
                     return buildNoResultEmbed();
                 case MoveDataResult.ExtraResults:
                     var response = await channel.SendMessageAsync(buildXEmbed(results.moves));
@@ -49,6 +50,7 @@ namespace GGStriveUtilsBot.Utils
                         return null;
                     }
                 case MoveDataResult.TooManyResults:
+                    await Commands.ErrorChannel.sendMessage(results, Move, client, user);
                     return buildTooManyEmbed();
                 case MoveDataResult.SpecialBehemoth:
                     var buttonResponse = await channel.SendMessageAsync(buildBehemothSelector(false));

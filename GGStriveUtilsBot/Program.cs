@@ -51,14 +51,23 @@ namespace GGStriveUtilsBot
             slash = discord.UseSlashCommands();
 
             commands.RegisterCommands<Commands.FrameDataModule>();
-            commands.RegisterCommands<Commands.UpdateDataModule>();
+            commands.RegisterCommands<Commands.AdminUtilsModule>();
 
             slash.RegisterCommands<SlashCommands.FrameDataSlashModule>();
 
             //download frame data
             Utils.DustloopDataFetcher.Initialize();
-            
+
+            //connect
             await discord.ConnectAsync(new DiscordActivity("Asuka R. Kreutz Radio Station", ActivityType.ListeningTo));
+
+            //load bad requests channel
+            if (File.Exists("bad-requests.txt"))
+            {
+                Commands.ErrorChannel.isSet = true;
+                Commands.ErrorChannel.channel = await discord.GetChannelAsync(Convert.ToUInt64(System.IO.File.ReadAllText("bad-requests.txt")));
+            }
+
             await Task.Delay(-1);
         }
     }
