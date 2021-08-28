@@ -191,6 +191,10 @@ namespace GGStriveUtilsBot.Utils
             if (move == "hmc")
                 return ("heavy mob cemetery", "");
 
+            //fed
+            if (move == "fed")
+                return ("forever elysion driver", "");
+
             //behemoth typhoon
             if (Levenshtein.Distance(move, "behemoth") < LDistance ||
                 Levenshtein.Distance(move, "behemoth typhoon") < LDistance ||

@@ -74,5 +74,7 @@ public enum Character
     [ChoiceName("Axl Low")]
     Axl,
     [ChoiceName("Goldlewis Dickinson")]
-    Goldlewis
+    Goldlewis,
+    [ChoiceName("Jack-O")]
+    Jacko
 }
