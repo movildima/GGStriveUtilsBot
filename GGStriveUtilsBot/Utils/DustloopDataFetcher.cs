@@ -197,6 +197,10 @@ namespace GGStriveUtilsBot.Utils
             if (move == "fed")
                 return ("forever elysion driver", "");
 
+            //stroke the big tree
+            if (move == "stbt" || move == "cbt") // don't tell mom
+                return ("stroke the big tree", "");
+
             //behemoth typhoon
             if (Levenshtein.Distance(move, "behemoth") < LDistance ||
                 Levenshtein.Distance(move, "behemoth typhoon") < LDistance ||
