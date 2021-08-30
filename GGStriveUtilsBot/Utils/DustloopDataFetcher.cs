@@ -54,7 +54,7 @@ namespace GGStriveUtilsBot.Utils
                     {
                         dataMove.imgFull = JObject.Parse(r).SelectToken("query.pages.*.imageinfo[0].url").Value<string>(); //I hate this
                         dataMove.imgLoaded = true;
-                        Console.WriteLine(string.Format("Image: {0} loaded", dataMove.name));
+                        Console.WriteLine(string.Format("Image: {0} loaded", dataMove.name.Length != 0 ? dataMove.name : dataMove.input.ToString()));
                     }
                     else
                         Console.WriteLine(string.Format("Error: Image: {0} failed to load", dataMove.name));
