@@ -54,7 +54,7 @@ namespace GGStriveUtilsBot.Utils
                     {
                         dataMove.imgFull = JObject.Parse(r).SelectToken("query.pages.*.imageinfo[0].url").Value<string>(); //I hate this
                         dataMove.imgLoaded = true;
-                        Console.WriteLine(string.Format("Image: {0} loaded", dataMove.imgFull));
+                        Console.WriteLine(string.Format("Image: {0} loaded", dataMove.name));
                     }
                     else
                         Console.WriteLine(string.Format("Error: Image: {0} failed to load", dataMove.name));
@@ -76,6 +76,7 @@ namespace GGStriveUtilsBot.Utils
                     {
                         icon.iconFull = JObject.Parse(r).SelectToken("query.pages.*.imageinfo[0].url").Value<string>(); //I hate this
                         icon.iconLoaded = true;
+                        Console.WriteLine(string.Format("Image: {0} loaded", icon.name));
                     }
                     else
                         Console.WriteLine(string.Format("Error: Image: {0} failed to load", icon.name));
