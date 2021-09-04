@@ -144,6 +144,8 @@ namespace GGStriveUtilsBot.Utils
                             return ("Damned Fang", "");
                         case Character.Jacko:
                             return ("Forever Elysion Driver", "");
+                        case Character.Ino:
+                            return ("Megalomania", "");
                     }
                 }
             }
@@ -201,6 +203,10 @@ namespace GGStriveUtilsBot.Utils
             //stroke the big tree
             if (move == "stbt" || move == "cbt") // don't tell mom
                 return ("stroke the big tree", "");
+
+            // kamuriyuki / Nago spin special
+            if (move == "beyblade")
+                return ("kamuriyuki", "");
 
             //behemoth typhoon
             if (Levenshtein.Distance(move, "behemoth") < LDistance ||

@@ -74,7 +74,6 @@ namespace GGStriveUtilsBot.Utils
             var literal = groups["literal"].Value.ToString().ToLower();
             // denotes a move in numpad notation ("236P")
             var numpad = groups["numpad"].Value.ToString().ToLower();
-            numpad = numpad.Replace("hs", "h");
             // denotes the "level" modifier for certain moves such as,
             // Goldlewis 214S Levels 1/2/3, Nago 5H Levels 1/2/3
             // Also used to denote Behemoth Typhoon shorthand half-circle notation
@@ -99,39 +98,9 @@ namespace GGStriveUtilsBot.Utils
                 }
             }
 
-            // Special exceptions and corrections for common shorthand notations
-            // Assumes "level 1" for moves that have varying levels belonging to Nago/Goldlewis
-            // Assumes 214[k] for Zato's "Break the Law" move
-            //if (character.HasValue) {
-            //    if (character == Character.Nago && level.Length == 0) {
-            //        List<String> levelMoves = new List<string>(){
-            //            "j.h", "2h", "6h", "5h"
-            //        };
-            //        if (levelMoves.Any(s => s.Equals(move))) {
-            //            level = "level 1";
-            //        }
-            //    } else if (character == Character.Goldlewis && level.Length == 0) {
-            //        List<String> levelMoves = new List<string>() {
-            //            "thunderbird", "skyfish", "burn it down", "down with the system",
-            //            "214s", "236s", "236236k", "632146p"
-            //        };
-            //        if (levelMoves.Any(s => s.Equals(move))) {
-            //            level = "level 1";
-            //        }
-            //    } else if (character == Character.Zato) {
-            //        if (move.Trim().Equals("214k")) {
-            //            move = "214[k]";
-            //        }
-            //    }
-            //} 
-            //else if (level.Length == 0) {
-            //    List<String> levelMoves = new List<string>() {
-            //        "thunderbird", "skyfish", "burn it down", "down with the system"
-            //    };
-            //    if (levelMoves.Any(s => s.Equals(move))) {
-            //        level = "level 1";
-            //    }
-            //}
+            if (isNumpad) {
+                move = move.Replace("hs", "h");
+            }
 
             move = move.Trim();
             level = level.Trim();
