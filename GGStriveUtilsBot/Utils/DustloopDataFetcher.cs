@@ -115,6 +115,12 @@ namespace GGStriveUtilsBot.Utils
                 }
             }
 
+            //normal grabs
+            if (move == "4d" || move == "6d")
+                return ("ground throw", "");
+            if (move == "j.4d" || move == "j.6d")
+                return ("air throw", "");
+
             //command grabs
             if (Levenshtein.Distance(move, "command grab") < LDistance || move == "cmd grab" || move == "cmdgb" ||
                 Levenshtein.Distance(move, "command throw") < LDistance || move == "cmd throw" || move == "cmdtr")
@@ -189,7 +195,7 @@ namespace GGStriveUtilsBot.Utils
                 return ("heavenly potemkin buster", "");
 
             //fdb
-            if (move == "fdb")
+            if (move == "fdb" || move == "flick")
                 return ("f.d.b.", "");
 
             //hmc
@@ -200,11 +206,23 @@ namespace GGStriveUtilsBot.Utils
             if (move == "fed")
                 return ("forever elysion driver", "");
 
+            //leap
+            if (move == "frog")
+                return ("leap", "");
+
+            //invite hell
+            if (move == "drill")
+                return ("invite hell", "");
+
+            //rtl
+            if (move == "rtl")
+                return ("ride the lightning", "");
+
             //stroke the big tree
             if (move == "stbt" || move == "cbt") // don't tell mom
                 return ("stroke the big tree", "");
 
-            // kamuriyuki / Nago spin special
+            //kamuriyuki / Nago spin special
             if (move == "beyblade")
                 return ("kamuriyuki", "");
 
