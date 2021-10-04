@@ -19,7 +19,7 @@ namespace GGStriveUtilsBot.Commands
         [Command("framedata"), Aliases("f"), Description("Fetch frame data of a specified move from Dustloop wiki.")]
         public async Task FrameDataCommand(CommandContext ctx, [RemainingText, Description("Character name followed by move, or just a move name(move can be indicated by name or in numpad notation)")] string Move)
         {
-            await ctx.TriggerTypingAsync();
+            //await ctx.TriggerTypingAsync();
 
             var result = await Utils.FrameDataEmbedBuilder.selectEmbed(ctx.Client, ctx.User, ctx.Channel, Move);
             if (result != null)
