@@ -236,6 +236,18 @@ namespace GGStriveUtilsBot.Utils
                 move == "bt")
                 return (character, "behemoth typhoon", "");
 
+            //resshou (chipp rekka mid)
+            if (move == "sushi")
+                return (character, "resshou", "");
+
+            //rokusai (chipp rekka low)
+            if (move == "sukiyaki")
+                return (character, "rokusai", "");
+
+            //senshuu (chipp rekka overhead)
+            if (move == "banzai")
+                return (character, "senshuu", "");
+
             //zato break the law fix
             {
                 if (character.HasValue)
