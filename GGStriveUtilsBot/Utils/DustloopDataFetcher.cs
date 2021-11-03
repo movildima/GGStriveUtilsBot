@@ -88,7 +88,7 @@ namespace GGStriveUtilsBot.Utils
             }
         }
 
-        private static (string, string) moveShorthand(Character? character, string move, string level)
+        private static (Character?, string, string) moveShorthand(Character? character, string move, string level)
         {
             move = move.ToLower();
             level = level.ToLower();
@@ -102,24 +102,24 @@ namespace GGStriveUtilsBot.Utils
                     switch (chara)
                     {
                         case Character.Sol:
-                            return ("Volcanic Viper", "");
+                            return (character, "Volcanic Viper", "");
                         case Character.Ky:
-                            return ("Vapor Thrust", "");
+                            return (character, "Vapor Thrust", "");
                         case Character.Gio:
-                            return ("Sol Nascente", "");
+                            return (character, "Sol Nascente", "");
                         case Character.Leo:
-                            return ("Eisen Sturm", "");
+                            return (character, "Eisen Sturm", "");
                         case Character.Chipp:
-                            return ("Beta Blade", "");
+                            return (character, "Beta Blade", "");
                     }
                 }
             }
 
             //normal grabs
             if (move == "4d" || move == "6d")
-                return ("ground throw", "");
+                return (character, "ground throw", "");
             if (move == "j.4d" || move == "j.6d")
-                return ("air throw", "");
+                return (character, "air throw", "");
 
             //command grabs
             if (Levenshtein.Distance(move, "command grab") < LDistance || move == "cmd grab" || move == "cmdgb" ||
@@ -131,27 +131,27 @@ namespace GGStriveUtilsBot.Utils
                     switch (chara)
                     {
                         case Character.Axl:
-                            return ("Winter Mantis", "");
+                            return (character, "Winter Mantis", "");
                         case Character.Chipp:
-                            return ("Genrouzan", "");
+                            return (character, "Genrouzan", "");
                         case Character.Faust:
-                            return ("Snip Snip Snip", "");
+                            return (character, "Snip Snip Snip", "");
                         case Character.Leo:
-                            return ("Gländzendes Dunkel", "");
+                            return (character, "Gländzendes Dunkel", "");
                         case Character.May:
-                            return ("Overhead Kiss", "");
+                            return (character, "Overhead Kiss", "");
                         case Character.Nago:
-                            return ("Bloodsucking Universe", "");
+                            return (character, "Bloodsucking Universe", "");
                         case Character.Pot:
-                            return ("Potemkin Buster", "");
+                            return (character, "Potemkin Buster", "");
                         case Character.Sol:
-                            return ("Wild Throw", "");
+                            return (character, "Wild Throw", "");
                         case Character.Zato:
-                            return ("Damned Fang", "");
+                            return (character, "Damned Fang", "");
                         case Character.Jacko:
-                            return ("Forever Elysion Driver", "");
+                            return (character, "Forever Elysion Driver", "");
                         case Character.Ino:
-                            return ("Megalomania", "");
+                            return (character, "Megalomania", "");
                     }
                 }
             }
@@ -165,7 +165,7 @@ namespace GGStriveUtilsBot.Utils
                         "j.h", "2h", "6h", "5h"
                     };
                     if (chara == Character.Nago && levelMoves.Any(s => s.Equals(move)) && level.Length == 0)
-                        return (move, "level");
+                        return (character, move, "level");
                 }
             }
 
@@ -179,58 +179,62 @@ namespace GGStriveUtilsBot.Utils
                     (levelMoves.GetRange(3, 3).Any(f => f == move) &&
                     character.HasValue ? (Character)character == Character.Goldlewis : false &&
                     level.Length == 0))
-                    return (move, "level");
+                    return (character, move, "level");
             }
 
             //rensen
             if (Levenshtein.Distance(move, "rensen") < LDistance || Levenshtein.Distance(move, "rensengeki") < LDistance)
-                return ("sickle flash", "");
+                return (character, "sickle flash", "");
 
             //totsugeki
             if (Levenshtein.Distance(move, "totsugeki") < LDistance)
-                return ("mr. dolphin", "");
+                return (character, "mr. dolphin", "");
 
             //heavenly potemkin buster
             if (move == "hpb")
-                return ("heavenly potemkin buster", "");
+                return (character, "heavenly potemkin buster", "");
 
             //fdb
             if (move == "fdb" || move == "flick")
-                return ("f.d.b.", "");
+                return (character, "f.d.b.", "");
+
+            //hfb
+            if (move == "hfb")
+                return (character, "hammerfall break", "");
 
             //hmc
             if (move == "hmc")
-                return ("heavy mob cemetery", "");
+                return (character, "heavy mob cemetery", "");
 
             //fed
             if (move == "fed")
-                return ("forever elysion driver", "");
+                return (character, "forever elysion driver", "");
 
             //leap
             if (move == "frog")
-                return ("leap", "");
+                return (character, "leap", "");
 
             //invite hell
             if (move == "drill")
-                return ("invite hell", "");
+                return (character, "invite hell", "");
 
             //rtl
             if (move == "rtl")
-                return ("ride the lightning", "");
+                return (character, "ride the lightning", "");
 
             //stroke the big tree
             if (move == "stbt" || move == "cbt") // don't tell mom
-                return ("stroke the big tree", "");
+                return (character, "stroke the big tree", "");
 
             //kamuriyuki / Nago spin special
             if (move == "beyblade")
-                return ("kamuriyuki", "");
+                return (character, "kamuriyuki", "");
 
             //behemoth typhoon
             if (Levenshtein.Distance(move, "behemoth") < LDistance ||
                 Levenshtein.Distance(move, "behemoth typhoon") < LDistance ||
                 move == "bt")
-                return ("behemoth typhoon", "");
+                return (character, "behemoth typhoon", "");
 
             //zato break the law fix
             {
@@ -238,15 +242,25 @@ namespace GGStriveUtilsBot.Utils
                 {
                     Character chara = (Character)character;
                     if (chara == Character.Zato && move == "214k")
-                        return ("214[k]", "");
+                        return (character, "214[k]", "");
+                }
+            }
+
+            //sol nascente fix
+            {
+                if (character.HasValue)
+                {
+                    Character chara = (Character)character;
+                    if (chara == Character.Sol && Levenshtein.Distance(move, "nascente") < LDistance)
+                        return (Character.Gio, "sol nascente", "");
                 }
             }
 
             //overdrive search
             if (Levenshtein.Distance(move, "overdrive") < LDistance || move == "super")
-                return ("super", level);
+                return (character, "super", level);
 
-            return (move, level);
+            return (character, move, level);
         }
 
         public static MoveListInternal fetchMove(Character? character, string move, string level, bool isNumpad)
@@ -267,20 +281,20 @@ namespace GGStriveUtilsBot.Utils
             //        break;
             //}
 
-            (move, level) = moveShorthand(character, move, level); // transform move and level based on a list of shorthands
+            (character, move, level) = moveShorthand(character, move, level); // transform move and level based on a list of shorthands
 
             if (move == "super")
                 results1.AddRange(dataSource.Where(f => move == f.type)); // overdrive search
             else if (level.Length == 0)
                 results1.AddRange(dataSource.Where(f => (isNumpad && f.input.ToLower() == move) || // numpad notation
-                                                        (!isNumpad && Levenshtein.Distance(f.name.ToLower(), move) < LDistance) || //typos
-                                                        (f.name.ToLower().Contains(move)) || // direct match
+                                                        (!isNumpad && f.name != null && Levenshtein.Distance(f.name.ToLower(), move) < LDistance) || //typos
+                                                        (f.name != null && f.name.ToLower().Contains(move)) || // direct match
                                                         (move == "5s" && (f.input == "c.S" || f.input == "f.S")))); // 5S fix
             else if (level.Length > 0)
                 results1.AddRange(dataSource.Where(f => (isNumpad && f.input.ToLower().Contains(move + " " + level)) || // numpad notation
-                                                        (!isNumpad && Levenshtein.Distance(f.name.ToLower(), move) < LDistance && f.input.ToLower().EndsWith(level)) || // typos
-                                                        (!isNumpad && f.name.ToLower().Contains(move) && f.input.ToLower().EndsWith(level)) || // direct match
-                                                        (!isNumpad && Levenshtein.Distance(f.name.ToLower(), move) < LDistance && f.input.ToLower().Contains(level)))); // all levels
+                                                        (!isNumpad && f.name != null && Levenshtein.Distance(f.name.ToLower(), move) < LDistance && f.input.ToLower().EndsWith(level)) || // typos
+                                                        (!isNumpad && f.name != null && f.name.ToLower().Contains(move) && f.input.ToLower().EndsWith(level)) || // direct match
+                                                        (!isNumpad && f.name != null && Levenshtein.Distance(f.name.ToLower(), move) < LDistance && f.input.ToLower().Contains(level)))); // all levels
 
             //remove moves that don't match the character
             if (character.HasValue)
