@@ -237,15 +237,15 @@ namespace GGStriveUtilsBot.Utils
                 return (character, "behemoth typhoon", "");
 
             //resshou (chipp rekka mid)
-            if (move == "sushi")
+            if (Levenshtein.Distance(move, "sushi") < LDistance)
                 return (character, "resshou", "");
 
             //rokusai (chipp rekka low)
-            if (move == "sukiyaki")
+            if (Levenshtein.Distance(move, "sukiyaki") < LDistance)
                 return (character, "rokusai", "");
 
             //senshuu (chipp rekka overhead)
-            if (move == "banzai")
+            if (Levenshtein.Distance(move, "banzai") < LDistance)
                 return (character, "senshuu", "");
 
             //zato break the law fix
