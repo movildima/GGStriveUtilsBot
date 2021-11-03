@@ -286,12 +286,12 @@ namespace GGStriveUtilsBot.Utils
             if (move == "super")
                 results1.AddRange(dataSource.Where(f => move == f.type)); // overdrive search
             else if (level.Length == 0)
-                results1.AddRange(dataSource.Where(f => (isNumpad && f.input.ToLower() == move) || // numpad notation
+                results1.AddRange(dataSource.Where(f => (isNumpad && f.input != null && f.input.ToLower() == move) || // numpad notation
                                                         (!isNumpad && f.name != null && Levenshtein.Distance(f.name.ToLower(), move) < LDistance) || //typos
                                                         (f.name != null && f.name.ToLower().Contains(move)) || // direct match
                                                         (move == "5s" && (f.input == "c.S" || f.input == "f.S")))); // 5S fix
             else if (level.Length > 0)
-                results1.AddRange(dataSource.Where(f => (isNumpad && f.input.ToLower().Contains(move + " " + level)) || // numpad notation
+                results1.AddRange(dataSource.Where(f => (isNumpad && f.input != null && f.input.ToLower().Contains(move + " " + level)) || // numpad notation
                                                         (!isNumpad && f.name != null && Levenshtein.Distance(f.name.ToLower(), move) < LDistance && f.input.ToLower().EndsWith(level)) || // typos
                                                         (!isNumpad && f.name != null && f.name.ToLower().Contains(move) && f.input.ToLower().EndsWith(level)) || // direct match
                                                         (!isNumpad && f.name != null && Levenshtein.Distance(f.name.ToLower(), move) < LDistance && f.input.ToLower().Contains(level)))); // all levels
