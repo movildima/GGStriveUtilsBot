@@ -150,7 +150,14 @@ namespace GGStriveUtilsBot.Utils
         {
             var embed = GenericEmbedBuilder.Create();
             embed = embed.WithTitle("No results found!");
-            embed = embed.WithDescription("Double check your request for errors.");
+            embed = embed.WithDescription(
+                String.Join(
+                    "",
+                    "Double check your request for errors.\n",
+                    "\nTo see the expected format:\n",
+                    "`!help f`\n"
+                )
+            );
             return embed.Build();
         }
 

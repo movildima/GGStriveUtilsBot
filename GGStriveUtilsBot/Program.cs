@@ -48,6 +48,8 @@ namespace GGStriveUtilsBot
 #endif
             });
 
+            commands.SetHelpFormatter<Utils.CustomHelpFormatter>();
+
             slash = discord.UseSlashCommands();
 
             commands.RegisterCommands<Commands.FrameDataModule>();
