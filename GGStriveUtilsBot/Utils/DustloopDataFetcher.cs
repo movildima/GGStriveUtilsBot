@@ -230,6 +230,15 @@ namespace GGStriveUtilsBot.Utils
             if (move == "beyblade")
                 return (character, "kamuriyuki", "");
 
+            //zarameyuki / gamma blade
+            if (move == "clone" && character.HasValue) {
+                if ((Character)character == Character.Nago) {
+                    return (character, "zarameyuki", "");
+                } else if ((Character)character == Character.Chipp) {
+                    return (character, "gamma blade", "");
+                }
+            }
+
             //behemoth typhoon
             if (Levenshtein.Distance(move, "behemoth") < LDistance ||
                 Levenshtein.Distance(move, "behemoth typhoon") < LDistance ||
