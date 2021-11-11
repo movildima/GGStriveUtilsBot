@@ -230,15 +230,6 @@ namespace GGStriveUtilsBot.Utils
             if (move == "beyblade")
                 return (character, "kamuriyuki", "");
 
-            //zarameyuki / gamma blade
-            if (move == "clone" && character.HasValue) {
-                if ((Character)character == Character.Nago) {
-                    return (character, "zarameyuki", "");
-                } else if ((Character)character == Character.Chipp) {
-                    return (character, "gamma blade", "");
-                }
-            }
-
             //behemoth typhoon
             if (Levenshtein.Distance(move, "behemoth") < LDistance ||
                 Levenshtein.Distance(move, "behemoth typhoon") < LDistance ||
@@ -257,23 +248,27 @@ namespace GGStriveUtilsBot.Utils
             if (Levenshtein.Distance(move, "banzai") < LDistance)
                 return (character, "senshuu", "");
 
-            //zato break the law fix
+            //character-specific fixes
             {
                 if (character.HasValue)
                 {
                     Character chara = (Character)character;
+
+                    //zato break the law fix
                     if (chara == Character.Zato && move == "214k")
                         return (character, "214[k]", "");
-                }
-            }
-
-            //sol nascente fix
-            {
-                if (character.HasValue)
-                {
-                    Character chara = (Character)character;
-                    if (chara == Character.Sol && Levenshtein.Distance(move, "nascente") < LDistance)
+                    //gio sol nascente fix
+                    else if (chara == Character.Sol && Levenshtein.Distance(move, "nascente") < LDistance)
                         return (Character.Gio, "sol nascente", "");
+                    //leo parry attack fix
+                    else if (chara == Character.Leo && (move == "[s]h" || move == "[h]s"))
+                        return (character, "[s/h] h/s", "");
+                    //zarameyuki (nago clone)
+                    else if (chara == Character.Nago && move == "clone")
+                        return (character, "zarameyuki", "");
+                    //gamma blade (chipp clone)
+                    else if (chara == Character.Chipp && move == "clone")
+                        return (character, "gamma blade", "");
                 }
             }
 
