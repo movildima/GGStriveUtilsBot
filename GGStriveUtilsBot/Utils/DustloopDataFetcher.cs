@@ -175,10 +175,9 @@ namespace GGStriveUtilsBot.Utils
                         "thunderbird", "skyfish", "burn it down",
                         "214s", "236s", "236236k"
                     };
-                if (levelMoves.GetRange(0, 3).Any(f => Levenshtein.Distance(f, move) < LDistance) ||
-                    (levelMoves.GetRange(3, 3).Any(f => f == move) &&
-                    character.HasValue ? (Character)character == Character.Goldlewis : false &&
-                    level.Length == 0))
+                if ((levelMoves.GetRange(0, 3).Any(f => Levenshtein.Distance(f, move) < LDistance) ||
+                    (levelMoves.GetRange(3, 3).Any(f => f == move) && character.HasValue ? (Character)character == Character.Goldlewis : false)) &&
+                    level.Length == 0)
                     return (character, move, "level", isNumpad);
             }
 
