@@ -59,7 +59,7 @@ namespace GGStriveUtilsBot.Utils
                     else
                         Console.WriteLine(string.Format("Error: Image: {0} failed to load", dataMove.name));
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     Console.WriteLine(string.Format("Error: " + e.StackTrace + "\nImage: {0} failed to load", dataMove.name != null ? dataMove.name : dataMove.input.ToString()));
                 }
@@ -180,6 +180,52 @@ namespace GGStriveUtilsBot.Utils
                     character.HasValue ? (Character)character == Character.Goldlewis : false &&
                     level.Length == 0))
                     return (character, move, "level");
+            }
+
+            //bt shorthands
+            {
+                if (character.HasValue)
+                {
+                    Character chara = (Character)character;
+                    if (chara == Character.Goldlewis)
+                    {
+                        //ground
+                        if (move == "842h")
+                            return (character, "87412h", "");
+                        if (move == "862h")
+                            return (character, "89632h", "");
+                        if (move == "486h")
+                            return (character, "47896h", "");
+                        if (move == "684h")
+                            return (character, "69874h", "");
+                        if (move == "426h")
+                            return (character, "41236h", "");
+                        if (move == "624h")
+                            return (character, "63214h", "");
+                        if (move == "248h")
+                            return (character, "21478h", "");
+                        if (move == "268h")
+                            return (character, "23698h", "");
+                        //air
+                        var m = move.Replace(".", string.Empty);
+                        if (m == "j842h")
+                            return (character, "j.87412h", "");
+                        if (m == "j862h")
+                            return (character, "j.89632h", "");
+                        if (m == "j486h")
+                            return (character, "j.47896h", "");
+                        if (m == "j684h")
+                            return (character, "j.69874h", "");
+                        if (m == "j426h")
+                            return (character, "j.41236h", "");
+                        if (m == "j624h")
+                            return (character, "j.63214h", "");
+                        if (m == "j248h")
+                            return (character, "j.21478h", "");
+                        if (m == "j268h")
+                            return (character, "j.23698h", "");
+                    }
+                }
             }
 
             //rensen
