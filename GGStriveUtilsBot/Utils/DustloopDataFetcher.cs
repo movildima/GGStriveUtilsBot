@@ -88,7 +88,7 @@ namespace GGStriveUtilsBot.Utils
             }
         }
 
-        private static (Character?, string, string) moveShorthand(Character? character, string move, string level)
+        private static (Character?, string, string, bool) moveShorthand(Character? character, string move, string level, bool isNumpad)
         {
             move = move.ToLower();
             level = level.ToLower();
@@ -102,24 +102,24 @@ namespace GGStriveUtilsBot.Utils
                     switch (chara)
                     {
                         case Character.Sol:
-                            return (character, "Volcanic Viper", "");
+                            return (character, "Volcanic Viper", "", false);
                         case Character.Ky:
-                            return (character, "Vapor Thrust", "");
+                            return (character, "Vapor Thrust", "", false);
                         case Character.Gio:
-                            return (character, "Sol Nascente", "");
+                            return (character, "Sol Nascente", "", false);
                         case Character.Leo:
-                            return (character, "Eisen Sturm", "");
+                            return (character, "Eisen Sturm", "", false);
                         case Character.Chipp:
-                            return (character, "Beta Blade", "");
+                            return (character, "Beta Blade", "", false);
                     }
                 }
             }
 
             //normal grabs
             if (move == "4d" || move == "6d")
-                return (character, "ground throw", "");
+                return (character, "ground throw", "", false);
             if (move == "j.4d" || move == "j.6d")
-                return (character, "air throw", "");
+                return (character, "air throw", "", false);
 
             //command grabs
             if (Levenshtein.Distance(move, "command grab") < LDistance || move == "cmd grab" || move == "cmdgb" ||
@@ -131,27 +131,27 @@ namespace GGStriveUtilsBot.Utils
                     switch (chara)
                     {
                         case Character.Axl:
-                            return (character, "Winter Mantis", "");
+                            return (character, "Winter Mantis", "", false);
                         case Character.Chipp:
-                            return (character, "Genrouzan", "");
+                            return (character, "Genrouzan", "", false);
                         case Character.Faust:
-                            return (character, "Snip Snip Snip", "");
+                            return (character, "Snip Snip Snip", "", false);
                         case Character.Leo:
-                            return (character, "Gländzendes Dunkel", "");
+                            return (character, "Gländzendes Dunkel", "", false);
                         case Character.May:
-                            return (character, "Overhead Kiss", "");
+                            return (character, "Overhead Kiss", "", false);
                         case Character.Nago:
-                            return (character, "Bloodsucking Universe", "");
+                            return (character, "Bloodsucking Universe", "", false);
                         case Character.Pot:
-                            return (character, "Potemkin Buster", "");
+                            return (character, "Potemkin Buster", "", false);
                         case Character.Sol:
-                            return (character, "Wild Throw", "");
+                            return (character, "Wild Throw", "", false);
                         case Character.Zato:
-                            return (character, "Damned Fang", "");
+                            return (character, "Damned Fang", "", false);
                         case Character.Jacko:
-                            return (character, "Forever Elysion Driver", "");
+                            return (character, "Forever Elysion Driver", "", false);
                         case Character.Ino:
-                            return (character, "Megalomania", "");
+                            return (character, "Megalomania", "", false);
                     }
                 }
             }
@@ -165,7 +165,7 @@ namespace GGStriveUtilsBot.Utils
                         "j.h", "2h", "6h", "5h"
                     };
                     if (chara == Character.Nago && levelMoves.Any(s => s.Equals(move)) && level.Length == 0)
-                        return (character, move, "level");
+                        return (character, move, "level", isNumpad);
                 }
             }
 
@@ -179,7 +179,7 @@ namespace GGStriveUtilsBot.Utils
                     (levelMoves.GetRange(3, 3).Any(f => f == move) &&
                     character.HasValue ? (Character)character == Character.Goldlewis : false &&
                     level.Length == 0))
-                    return (character, move, "level");
+                    return (character, move, "level", isNumpad);
             }
 
             //bt shorthands
@@ -191,108 +191,128 @@ namespace GGStriveUtilsBot.Utils
                     {
                         //ground
                         if (move == "842h")
-                            return (character, "87412h", "");
+                            return (character, "87412h", "", true);
                         if (move == "862h")
-                            return (character, "89632h", "");
+                            return (character, "89632h", "", true);
                         if (move == "486h")
-                            return (character, "47896h", "");
+                            return (character, "47896h", "", true);
                         if (move == "684h")
-                            return (character, "69874h", "");
+                            return (character, "69874h", "", true);
                         if (move == "426h")
-                            return (character, "41236h", "");
+                            return (character, "41236h", "", true);
                         if (move == "624h")
-                            return (character, "63214h", "");
+                            return (character, "63214h", "", true);
                         if (move == "248h")
-                            return (character, "21478h", "");
+                            return (character, "21478h", "", true);
                         if (move == "268h")
-                            return (character, "23698h", "");
+                            return (character, "23698h", "", true);
                         //air
                         var m = move.Replace(".", string.Empty);
                         if (m == "j842h")
-                            return (character, "j.87412h", "");
+                            return (character, "j.87412h", "", true);
                         if (m == "j862h")
-                            return (character, "j.89632h", "");
+                            return (character, "j.89632h", "", true);
                         if (m == "j486h")
-                            return (character, "j.47896h", "");
+                            return (character, "j.47896h", "", true);
                         if (m == "j684h")
-                            return (character, "j.69874h", "");
+                            return (character, "j.69874h", "", true);
                         if (m == "j426h")
-                            return (character, "j.41236h", "");
+                            return (character, "j.41236h", "", true);
                         if (m == "j624h")
-                            return (character, "j.63214h", "");
+                            return (character, "j.63214h", "", true);
                         if (m == "j248h")
-                            return (character, "j.21478h", "");
+                            return (character, "j.21478h", "", true);
                         if (m == "j268h")
-                            return (character, "j.23698h", "");
+                            return (character, "j.23698h", "", true);
                     }
                 }
             }
 
             //rensen
             if (Levenshtein.Distance(move, "rensen") < LDistance || Levenshtein.Distance(move, "rensengeki") < LDistance)
-                return (character, "sickle flash", "");
+                return (character, "sickle flash", "", false);
 
             //totsugeki
             if (Levenshtein.Distance(move, "totsugeki") < LDistance)
-                return (character, "mr. dolphin", "");
+                return (character, "mr. dolphin", "", false);
 
             //heavenly potemkin buster
             if (move == "hpb")
-                return (character, "heavenly potemkin buster", "");
+                return (character, "heavenly potemkin buster", "", false);
 
             //fdb
             if (move == "fdb" || move == "flick")
-                return (character, "f.d.b.", "");
+                return (character, "f.d.b.", "", false);
 
             //hfb
             if (move == "hfb")
-                return (character, "hammerfall break", "");
+                return (character, "hammerfall break", "", false);
 
             //hmc
             if (move == "hmc")
-                return (character, "heavy mob cemetery", "");
+                return (character, "heavy mob cemetery", "", false);
 
             //fed
             if (move == "fed")
-                return (character, "forever elysion driver", "");
+                return (character, "forever elysion driver", "", false);
 
             //leap
             if (move == "frog")
-                return (character, "leap", "");
+                return (character, "leap", "", false);
 
             //invite hell
             if (move == "drill")
-                return (character, "invite hell", "");
+                return (character, "invite hell", "", false);
 
             //rtl
             if (move == "rtl")
-                return (character, "ride the lightning", "");
+                return (character, "ride the lightning", "", false);
 
             //stroke the big tree
             if (move == "stbt" || move == "cbt") // don't tell mom
-                return (character, "stroke the big tree", "");
+                return (character, "stroke the big tree", "", false);
+
+            //more stbt shorthands
+            if (character.HasValue)
+            {
+                Character chara = (Character)character;
+                if(chara == Character.Ino)
+                {
+                    if (move == "s stroke" || move == "slash stroke")
+                        return (character, "236s", "", true);
+                    if (move == "h stroke" || move == "hs stroke" || move == "heavy stroke" || move == "heavy slash stroke")
+                        return (character, "236h", "", true);
+                }
+            }
+            else
+            {
+                if (move == "s stroke" || move == "slash stroke")
+                    return (Character.Ino, "236s", "", true);
+                if (move == "h stroke" || move == "hs stroke" || move == "heavy stroke" || move == "heavy slash stroke")
+                    return (Character.Ino, "236h", "", true);
+            }
 
             //kamuriyuki / Nago spin special
             if (move == "beyblade")
-                return (character, "kamuriyuki", "");
+                return (character, "kamuriyuki", "", false);
 
             //behemoth typhoon
             if (Levenshtein.Distance(move, "behemoth") < LDistance ||
                 Levenshtein.Distance(move, "behemoth typhoon") < LDistance ||
                 move == "bt")
-                return (character, "behemoth typhoon", "");
+                return (character, "behemoth typhoon", "", false);
 
             //resshou (chipp rekka mid)
             if (Levenshtein.Distance(move, "sushi") < LDistance)
-                return (character, "resshou", "");
+                return (character, "resshou", "", false);
 
             //rokusai (chipp rekka low)
             if (Levenshtein.Distance(move, "sukiyaki") < LDistance)
-                return (character, "rokusai", "");
+                return (character, "rokusai", "", false);
 
             //senshuu (chipp rekka overhead)
             if (Levenshtein.Distance(move, "banzai") < LDistance)
-                return (character, "senshuu", "");
+                return (character, "senshuu", "", false);
 
             //character-specific fixes
             {
@@ -302,27 +322,27 @@ namespace GGStriveUtilsBot.Utils
 
                     //zato break the law fix
                     if (chara == Character.Zato && move == "214k")
-                        return (character, "214[k]", "");
+                        return (character, "214[k]", "", isNumpad);
                     //gio sol nascente fix
                     else if (chara == Character.Sol && Levenshtein.Distance(move, "nascente") < LDistance)
-                        return (Character.Gio, "sol nascente", "");
+                        return (Character.Gio, "sol nascente", "", isNumpad);
                     //leo parry attack fix
                     else if (chara == Character.Leo && (move == "[s]h" || move == "[h]s"))
-                        return (character, "[s/h] h/s", "");
+                        return (character, "[s/h] h/s", "", isNumpad);
                     //zarameyuki (nago clone)
                     else if (chara == Character.Nago && move == "clone")
-                        return (character, "zarameyuki", "");
+                        return (character, "zarameyuki", "", isNumpad);
                     //gamma blade (chipp clone)
                     else if (chara == Character.Chipp && move == "clone")
-                        return (character, "gamma blade", "");
+                        return (character, "gamma blade", "", isNumpad);
                 }
             }
 
             //overdrive search
             if (Levenshtein.Distance(move, "overdrive") < LDistance || move == "super")
-                return (character, "super", level);
+                return (character, "super", level, isNumpad);
 
-            return (character, move, level);
+            return (character, move, level, isNumpad);
         }
 
         public static MoveListInternal fetchMove(Character? character, string move, string level, bool isNumpad)
@@ -343,7 +363,7 @@ namespace GGStriveUtilsBot.Utils
             //        break;
             //}
 
-            (character, move, level) = moveShorthand(character, move, level); // transform move and level based on a list of shorthands
+            (character, move, level, isNumpad) = moveShorthand(character, move, level, isNumpad); // transform move and level based on a list of shorthands
 
             if (move == "super")
                 results1.AddRange(dataSource.Where(f => move == f.type)); // overdrive search
