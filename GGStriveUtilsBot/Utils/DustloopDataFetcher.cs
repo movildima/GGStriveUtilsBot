@@ -32,6 +32,14 @@ namespace GGStriveUtilsBot.Utils
             iconSource = JsonConvert.DeserializeObject<List<IconData>>(response);
             Console.WriteLine("Data loaded");
 
+            //replace line breaks with proper line breaks
+            var list = dataSource.Where(f => f.invuln != null && f.invuln.Contains("&lt;br/&gt;")).ToList();
+            foreach(var move in list)
+            {
+                move.invuln = move.invuln.Replace("&lt;br/&gt;", "\n");
+            }
+            Console.WriteLine("Line breaks cleared, found: " + list.Count);
+
             //preload images and icons, takes a while but makes requests much faster, disabled while debugging
 #if !DEBUG
             foreach (var dataMove in dataSource) //load images
