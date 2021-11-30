@@ -28,7 +28,8 @@ namespace GGStriveUtilsBot.Utils
             @"(?<Anji>anji)(?:\s+mito)?|",
             @"(?<Axl>axl)(?:\s+low)?|",
             @"(?<Goldlewis>gold)(?:lewis)?(?:\s+dickinson)?|",
-            @"(?<Jacko>jack-?o)",
+            @"(?<Jacko>jack-?o)|",
+            @"(?<HappyChaos>((happy(?:\s+chaos)?)|(hc)))",
             @"))?\s*"
             );
         // Part of regex that captures either move names or numpad notated moves

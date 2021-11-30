@@ -342,6 +342,9 @@ namespace GGStriveUtilsBot.Utils
                     //gamma blade (chipp clone)
                     else if (chara == Character.Chipp && move == "clone")
                         return (character, "gamma blade", "", isNumpad);
+                    //scapegoat (happy-chaos clone)
+                    else if (chara == Character.HappyChaos && move == "clone")
+                        return (character, "scapegoat", "", isNumpad);
                 }
             }
 
