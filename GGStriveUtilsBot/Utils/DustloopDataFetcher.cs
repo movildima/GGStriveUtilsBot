@@ -285,16 +285,37 @@ namespace GGStriveUtilsBot.Utils
             }
 
             //volcanic viper
-            if (move == "svv")
-                return (Character.Sol, "623s", "", true);
-            if (move == "hvv")
-                return (Character.Sol, "623h", "", true);
+            if (character.HasValue)
             {
-                var m = move.Replace(".", string.Empty);
-                if (m == "jsvv")
-                    return (Character.Sol, "j.623s", "", true);
-                if (m == "jhvv")
-                    return (Character.Sol, "j.623h", "", true);
+                Character chara = (Character)character;
+                if (chara == Character.Sol)
+                {
+                    if (move == "svv")
+                        return (Character.Sol, "623s", "", true);
+                    if (move == "hvv")
+                        return (Character.Sol, "623h", "", true);
+                    {
+                        var m = move.Replace(".", string.Empty);
+                        if (m == "jsvv")
+                            return (Character.Sol, "j.623s", "", true);
+                        if (m == "jhvv")
+                            return (Character.Sol, "j.623h", "", true);
+                    }
+                }
+            }
+            else
+            {
+                if (move == "svv")
+                    return (Character.Sol, "623s", "", true);
+                if (move == "hvv")
+                    return (Character.Sol, "623h", "", true);
+                {
+                    var m = move.Replace(".", string.Empty);
+                    if (m == "jsvv")
+                        return (Character.Sol, "j.623s", "", true);
+                    if (m == "jhvv")
+                        return (Character.Sol, "j.623h", "", true);
+                }
             }
 
             //stroke the big tree
