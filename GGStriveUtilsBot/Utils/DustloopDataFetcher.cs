@@ -34,7 +34,7 @@ namespace GGStriveUtilsBot.Utils
 
             //replace line breaks with proper line breaks
             var list = dataSource.Where(f => f.invuln != null && f.invuln.Contains("&lt;br/&gt;")).ToList();
-            foreach(var move in list)
+            foreach (var move in list)
             {
                 move.invuln = move.invuln.Replace("&lt;br/&gt;", "\n");
             }
@@ -275,6 +275,28 @@ namespace GGStriveUtilsBot.Utils
             if (move == "rtl")
                 return (character, "ride the lightning", "", false);
 
+            //calvados
+            if (character.HasValue)
+            {
+                Character chara = (Character)character;
+                if (chara == Character.Ram)
+                    if (move == "beam")
+                        return (character, "calvados", "", true);
+            }
+
+            //volcanic viper
+            if (move == "svv")
+                return (Character.Sol, "623s", "", true);
+            if (move == "hvv")
+                return (Character.Sol, "623h", "", true);
+            {
+                var m = move.Replace(".", string.Empty);
+                if (m == "jsvv")
+                    return (Character.Sol, "j.623s", "", true);
+                if (m == "jhvv")
+                    return (Character.Sol, "j.623h", "", true);
+            }
+
             //stroke the big tree
             if (move == "stbt" || move == "cbt") // don't tell mom
                 return (character, "stroke the big tree", "", false);
@@ -283,7 +305,7 @@ namespace GGStriveUtilsBot.Utils
             if (character.HasValue)
             {
                 Character chara = (Character)character;
-                if(chara == Character.Ino)
+                if (chara == Character.Ino)
                 {
                     if (move == "s stroke" || move == "slash stroke")
                         return (character, "236s", "", true);
