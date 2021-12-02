@@ -29,7 +29,7 @@ namespace GGStriveUtilsBot.Utils
             @"(?<Axl>axl)(?:\s+low)?|",
             @"(?<Goldlewis>gold)(?:lewis)?(?:\s+dickinson)?|",
             @"(?<Jacko>jack-?o)|",
-            @"(?<HappyChaos>((happy(?:\s+chaos)?)|(hc)))",
+            @"(?<HappyChaos>((happy(?:\s+chaos)?)|(hc)|(chaos)))",
             @"))?\s*"
             );
         // Part of regex that captures either move names or numpad notated moves
