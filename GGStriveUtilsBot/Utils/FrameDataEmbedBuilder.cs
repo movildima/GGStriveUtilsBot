@@ -93,8 +93,9 @@ namespace GGStriveUtilsBot.Utils
             embed.Author = new DiscordEmbedBuilder.EmbedAuthor();
             if (DustloopDataFetcher.iconSource.Where(f => f.name == move.chara && f.iconLoaded).Count() == 1)
             {
-                embed.Author.IconUrl = DustloopDataFetcher.iconSource.FirstOrDefault(f => f.name == move.chara).iconFull;
-                embed = embed.WithThumbnail(DustloopDataFetcher.iconSource.FirstOrDefault(f => f.name == move.chara).iconFull);
+                var iconSource = DustloopDataFetcher.iconSource.FirstOrDefault(f => f.name == move.chara).iconFull;
+                embed.Author.IconUrl = iconSource;
+                embed = embed.WithThumbnail(iconSource);
             }
             if (!string.IsNullOrEmpty(move.name))
             {
