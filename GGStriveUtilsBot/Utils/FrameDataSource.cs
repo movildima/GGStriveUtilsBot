@@ -79,4 +79,6 @@ public enum Character
     Jacko,
     [ChoiceName("Happy Chaos")]
     HappyChaos,
+    [ChoiceName("Baiken")]
+    Baiken,
 }
