@@ -30,6 +30,7 @@ namespace GGStriveUtilsBot.Utils
             @"(?<Goldlewis>gold)(?:lewis)?(?:\s+dickinson)?|",
             @"(?<Jacko>jack-?o)|",
             @"(?<Baiken>baiken)|",
+            @"(?<Testament>test)(?:ament)?|",
             @"(?<HappyChaos>((happy(?:\s+chaos)?)|(hc)|(chaos)))",
             @"))?\s*"
             );
