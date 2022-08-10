@@ -31,7 +31,8 @@ namespace GGStriveUtilsBot.Utils
             @"(?<Jacko>jack-?o)|",
             @"(?<Baiken>baiken)|",
             @"(?<Testament>test)(?:ament)?|",
-            @"(?<HappyChaos>((happy(?:\s+chaos)?)|(hc)|(chaos)))",
+            @"(?<HappyChaos>((happy(?:\s+chaos)?)|(hc)|(chaos)))|",
+            @"(?<Bridget>bridget)",
             @"))?\s*"
             );
         // Part of regex that captures either move names or numpad notated moves

@@ -170,7 +170,7 @@ namespace GGStriveUtilsBot.Utils
                 {
                     Character chara = (Character)character;
                     List<string> levelMoves = new List<string>(){
-                        "j.h", "2h", "6h", "5h"
+                        "f.s", "f.ss", "f.sss", "5h", "2s", "2h", "j.s", "j.h", "j.d", "6h"
                     };
                     if (chara == Character.Nago && levelMoves.Any(s => s.Equals(move)) && level.Length == 0)
                         return (character, move, "level", isNumpad);
