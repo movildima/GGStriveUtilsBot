@@ -31,7 +31,7 @@ namespace GGStriveUtilsBot
                 Token = System.IO.File.ReadAllText("token-testing.txt"),
 #endif
                 TokenType = TokenType.Bot,
-                //MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Debug
+                //MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Trace
             });
 
             discord.UseInteractivity(new InteractivityConfiguration()
@@ -56,6 +56,13 @@ namespace GGStriveUtilsBot
             commands.RegisterCommands<Commands.AdminUtilsModule>();
 
             slash.RegisterCommands<SlashCommands.FrameDataSlashModule>();
+
+            //ly liske
+            discord.MessageCreated += async (s, e) =>
+            {
+                if (e.Message.Content == "Ly")
+                    await e.Channel.SendMessageAsync("Liske <:Ky:810597089980448768>");
+            };
 
             //download frame data
             Utils.DustloopDataFetcher.Initialize();
