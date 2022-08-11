@@ -330,7 +330,7 @@ namespace GGStriveUtilsBot.Utils
                 {
                     if (move == "s stroke" || move == "slash stroke")
                         return (character, "236s", "", true);
-                    if (move == "h stroke" || move == "hs stroke" || move == "heavy stroke" || move == "heavy slash stroke")
+                    if (move == "h stroke" || move == "hs stroke" || move == "heavy stroke" || move == "heavy slash stroke" || move == "-2")
                         return (character, "236h", "", true);
                 }
             }
@@ -338,7 +338,7 @@ namespace GGStriveUtilsBot.Utils
             {
                 if (move == "s stroke" || move == "slash stroke")
                     return (Character.Ino, "236s", "", true);
-                if (move == "h stroke" || move == "hs stroke" || move == "heavy stroke" || move == "heavy slash stroke")
+                if (move == "h stroke" || move == "hs stroke" || move == "heavy stroke" || move == "heavy slash stroke" || move == "-2")
                     return (Character.Ino, "236h", "", true);
             }
 
