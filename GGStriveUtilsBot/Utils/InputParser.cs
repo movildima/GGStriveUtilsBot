@@ -13,7 +13,7 @@ namespace GGStriveUtilsBot.Utils
             "",
             @"^(?<chara>(",
             @"(?<Sol>sol)(?:\s+badguy)?|",
-            @"(?<Ky>ky)(?:\s+kiske)?|",
+            @"(?<Ky>(k|l)y)(?:\s+(k|l)iske)?|",
             @"(?<May>may)|",
             @"(?<Faust>faust)|",
             @"(?<Ino>i-?no)|",
