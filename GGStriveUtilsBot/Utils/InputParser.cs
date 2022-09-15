@@ -31,7 +31,7 @@ namespace GGStriveUtilsBot.Utils
             @"(?<Jacko>jack-?o)|",
             @"(?<Baiken>baiken)|",
             @"(?<Testament>test)(?:ament)?|",
-            @"(?<HappyChaos>((happy(?:\s+chaos)?)|(hc)|(chaos)))|",
+            @"(?<HappyChaos>((happy(?:\s+chaos)?)|(hc)|(chaos)|(fatherless)))|",
             @"(?<Bridget>bridget)",
             @"))?\s*"
             );
