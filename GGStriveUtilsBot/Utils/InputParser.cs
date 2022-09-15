@@ -38,9 +38,10 @@ namespace GGStriveUtilsBot.Utils
         // Part of regex that captures either move names or numpad notated moves
         static private string movePattern = String.Join(
             "",
-            @"((?<literal>(([a-z]*\s*)*))|",
-            @"(?<numpad>(([cfj]|(bt))?\.?\d*(\]|\[)?\d?(p|k|s|hs?|d)?(\]|\[)?\d?\s*)*))",
-            @"(?<level>((Level\s(1|2|3|(br)){1})|([2468]{3}))?$)"
+            @"((?<numpad>((([cfj]|(bt)|\-)?\.?\d*(\]|\[)?\d?(p|k|s|hs?|d)?(\]|\[)?\d?\s*)|", // general numpad notation
+            @"(\[((s\/h)|(h\/s))\]\s*((s\/h)|(h\/s))))*)|",                               // (exception for Leo's janky guard attack)
+            @"(?<literal>(([a-z\.\'\?]*\s*)*)))",                                         // literal move names (e.g. "stun edge")
+            @"(?<level>((Level\s(1|2|3|(br)){1})|([2468]{3}))?$)"                         // 'leveled' moves with multiple entries
         );
         static private string charaMovePattern = String.Join("", charaPattern, movePattern);
 

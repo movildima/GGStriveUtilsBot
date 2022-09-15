@@ -119,6 +119,8 @@ namespace GGStriveUtilsBot.Utils
                             return (character, "Eisen Sturm", "", false);
                         case Character.Chipp:
                             return (character, "Beta Blade", "", false);
+                        case Character.Bridget:
+                            return (character, "Starship", "", false);
                     }
                 }
             }
@@ -156,6 +158,8 @@ namespace GGStriveUtilsBot.Utils
                             return (character, "Wild Throw", "", false);
                         case Character.Zato:
                             return (character, "Damned Fang", "", false);
+                        case Character.Bridget:
+                            return (character, "Rock the Baby", "", false);
                         case Character.Jacko:
                             return (character, "Forever Elysion Driver", "", false);
                         case Character.Ino:
@@ -271,6 +275,10 @@ namespace GGStriveUtilsBot.Utils
             if (move == "drill")
                 return (character, "invite hell", "", false);
 
+            //that's a lot
+            if (move == "drills")
+                return (character, "that's a lot", "", false);
+
             //rtl
             if (move == "rtl")
                 return (character, "ride the lightning", "", false);
@@ -377,8 +385,10 @@ namespace GGStriveUtilsBot.Utils
                     else if (chara == Character.Sol && Levenshtein.Distance(move, "nascente") < LDistance)
                         return (Character.Gio, "sol nascente", "", isNumpad);
                     //leo parry attack fix
-                    else if (chara == Character.Leo && (move == "[s]h" || move == "[h]s"))
-                        return (character, "[s/h] h/s", "", isNumpad);
+                    else if (chara == Character.Leo && (
+                             move == "[s]h" || move == "[h]s" ||
+                             move == "[s/h]h/s" || move == "guard attack"))
+                        return (character, "[s/h] h/s", "", true);
                     //zarameyuki (nago clone)
                     else if (chara == Character.Nago && move == "clone")
                         return (character, "zarameyuki", "", isNumpad);
@@ -421,16 +431,30 @@ namespace GGStriveUtilsBot.Utils
             if (move == "super")
                 results1.AddRange(dataSource.Where(f => move == f.type)); // overdrive search
             else if (level.Length == 0)
-                results1.AddRange(dataSource.Where(f => (isNumpad && f.input != null && f.input.ToLower() == move) || // numpad notation
-                                                        (!isNumpad && f.name != null && Levenshtein.Distance(f.name.ToLower(), move) < LDistance) || //typos
-                                                        (f.name != null && f.name.ToLower().Contains(move)) || // direct match
-                                                        (move == "5s" && (f.input == "c.S" || f.input == "f.S")))); // 5S fix
-            else if (level.Length > 0)
-                results1.AddRange(dataSource.Where(f => (isNumpad && f.input != null && f.input.ToLower().Contains(move + " " + level)) || // numpad notation
-                                                        (!isNumpad && f.name != null && Levenshtein.Distance(f.name.ToLower(), move) < LDistance && f.input.ToLower().EndsWith(level)) || // typos
-                                                        (!isNumpad && f.name != null && f.name.ToLower().Contains(move) && f.input.ToLower().EndsWith(level)) || // direct match
-                                                        (!isNumpad && f.name != null && Levenshtein.Distance(f.name.ToLower(), move) < LDistance && f.input.ToLower().Contains(level)))); // all levels
+            {
+                // Check Exact matches
+                results1.AddRange(dataSource.Where(f => (isNumpad && f.input != null && f.input.ToLower() == move) || // numpad & literal exact matches
+                                                        (!isNumpad && f.name != null && f.name.ToLower().Contains(move)) ||
+                                                        (move == "5s" && (f.input == "c.S" || f.input == "f.S"))));   // Also 5S fix
 
+                // Check Levenshtein if no exact match
+                if (results1.Count == 0)
+                {
+                    results1.AddRange(dataSource.Where(f => (!isNumpad && f.name != null && Levenshtein.Distance(f.name.ToLower(), move) < LDistance)));
+                }
+            }
+            else if (level.Length > 0)
+            {
+                // Check exact matches
+                results1.AddRange(dataSource.Where(f => (isNumpad && f.input != null && f.input.ToLower().Contains(move + " " + level)) || // numpad & literal exact matches
+                                                        (!isNumpad && f.name != null && f.name.ToLower().Contains(move) && f.input.ToLower().EndsWith(level))));
+                // Check Levenshtein if no exact match
+                if (results1.Count == 0)
+                {
+                    results1.AddRange(dataSource.Where(f => (!isNumpad && f.name != null && Levenshtein.Distance(f.name.ToLower(), move) < LDistance && f.input.ToLower().EndsWith(level)) || // typos
+                                                        (!isNumpad && f.name != null && Levenshtein.Distance(f.name.ToLower(), move) < LDistance && f.input.ToLower().Contains(level)))); // all levels
+                }
+            }
             //remove moves that don't match the character
             if (character.HasValue)
             {
