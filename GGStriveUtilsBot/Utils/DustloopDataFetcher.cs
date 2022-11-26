@@ -121,6 +121,8 @@ namespace GGStriveUtilsBot.Utils
                             return (character, "Beta Blade", "", false);
                         case Character.Bridget:
                             return (character, "Starship", "", false);
+                        case Character.Sin:
+                            return (character, "Hawk Baker", "", false);
                     }
                 }
             }
@@ -281,8 +283,17 @@ namespace GGStriveUtilsBot.Utils
 
             //rtl
             if (move == "rtl")
+            {
+                if (character.HasValue)
+                {
+                    Character chara = (Character)character;
+                    if (chara == Character.Sin)
+                    {
+                        return (character, "r.t.l", "", false);
+                    }
+                }
                 return (character, "ride the lightning", "", false);
-
+            }
             //calvados
             if (character.HasValue)
             {
