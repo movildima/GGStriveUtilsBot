@@ -175,38 +175,38 @@ namespace GGStriveUtilsBot.Utils
             DiscordMessageBuilder goldlewisGroundMsg = new DiscordMessageBuilder()
             /*embed*/
             .WithEmbed(GenericEmbedBuilder.Create()
-                        .WithImageUrl("https://cdn.discordapp.com/attachments/377843610219053059/869983493428490240/Behemoth_Typhoon___DPAD_Ver.png") /* PseudoWoodo's awesome behemoth selector \o/ */
+                        .WithImageUrl("https://cdn.discordapp.com/attachments/1036038892022927450/1036039026278404136/Behemoth_Typhoon___DPAD_Ver.png") /* PseudoWoodo's awesome behemoth selector \o/ */
                         .WithAuthor("In this Behemoth Typhoon", "https://www.dustloop.com/wiki/index.php?title=GGST/Goldlewis_Dickinson#Note_on_Behemoth_Typhoon",
                                     DustloopDataFetcher.iconSource.Where(f => f.name == "Goldlewis Dickinson" && f.iconLoaded).Count() == 1 ? DustloopDataFetcher.iconSource.FirstOrDefault(f => f.name == "Goldlewis Dickinson").iconFull : null)
                         .WithDescription("You select which version of Behemoth Typhoon you want to check.\nCurrently selecting ground moves."))
             // the whole shebang lmao
             .AddComponents(new DiscordComponent[]
             {
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty1", "", true,  new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "87412H", "", false, new DiscordComponentEmoji(868814261902790656)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "89632H", "", false, new DiscordComponentEmoji(868814261625978891)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty2", "", true,  new DiscordComponentEmoji(869984289259929692))
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty1", "", true,  new DiscordComponentEmoji(1036029682354761808)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "87412H", "", false, new DiscordComponentEmoji(1036013167496663190)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "89632H", "", false, new DiscordComponentEmoji(1036013178653524039)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty2", "", true,  new DiscordComponentEmoji(1036029682354761808))
             })
             .AddComponents(new DiscordComponent[]
             {
-                new DiscordButtonComponent(ButtonStyle.Secondary, "47896H", "", false, new DiscordComponentEmoji(868814261923762176)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty3", "", true,  new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty4", "", true,  new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "69874H", "", false, new DiscordComponentEmoji(868814261571432459))
+                new DiscordButtonComponent(ButtonStyle.Secondary, "47896H", "", false, new DiscordComponentEmoji(1036013106280792064)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty3", "", true,  new DiscordComponentEmoji(1036029682354761808)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty4", "", true,  new DiscordComponentEmoji(1036029682354761808)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "69874H", "", false, new DiscordComponentEmoji(1036013150828503132))
             })
             .AddComponents(new DiscordComponent[]
             {
-                new DiscordButtonComponent(ButtonStyle.Secondary, "41236H", "", false, new DiscordComponentEmoji(868814261919580190)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty5", "", true,  new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty6", "", true,  new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "63214H", "", false, new DiscordComponentEmoji(868814262032818176))
+                new DiscordButtonComponent(ButtonStyle.Secondary, "41236H", "", false, new DiscordComponentEmoji(1036013094670979102)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty5", "", true,  new DiscordComponentEmoji(1036029682354761808)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty6", "", true,  new DiscordComponentEmoji(1036029682354761808)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "63214H", "", false, new DiscordComponentEmoji(1036013122143649813))
             })
             .AddComponents(new DiscordComponent[]
             {
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty7", "", true,  new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "21478H", "", false, new DiscordComponentEmoji(868814261886021672)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "23698H", "", false, new DiscordComponentEmoji(868814262066376724)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty8", "", true,  new DiscordComponentEmoji(869984289259929692))
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty7", "", true,  new DiscordComponentEmoji(1036029682354761808)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "21478H", "", false, new DiscordComponentEmoji(1036013073699438652)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "23698H", "", false, new DiscordComponentEmoji(1036013082750746704)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty8", "", true,  new DiscordComponentEmoji(1036029682354761808))
             })
             .AddComponents(new DiscordComponent[]
             {
@@ -216,38 +216,38 @@ namespace GGStriveUtilsBot.Utils
             DiscordMessageBuilder goldlewisAirMsg = new DiscordMessageBuilder()
             /*embed*/
             .WithEmbed(GenericEmbedBuilder.Create()
-                        .WithImageUrl("https://cdn.discordapp.com/attachments/377843610219053059/869983493428490240/Behemoth_Typhoon___DPAD_Ver.png") /* PseudoWoodo's awesome behemoth selector \o/ */
+                        .WithImageUrl("https://cdn.discordapp.com/attachments/1036038892022927450/1036039026278404136/Behemoth_Typhoon___DPAD_Ver.png") /* PseudoWoodo's awesome behemoth selector \o/ */
                         .WithAuthor("In this Behemoth Typhoon", "https://www.dustloop.com/wiki/index.php?title=GGST/Goldlewis_Dickinson#Note_on_Behemoth_Typhoon",
                                     DustloopDataFetcher.iconSource.Where(f => f.name == "Goldlewis Dickinson" && f.iconLoaded).Count() == 1 ? DustloopDataFetcher.iconSource.FirstOrDefault(f => f.name == "Goldlewis Dickinson").iconFull : null)
                         .WithDescription("You select which version of Behemoth Typhoon you want to check.\nCurrently selecting air moves."))
             // the whole shebang lmao
             .AddComponents(new DiscordComponent[]
             {
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty1", "", true,    new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "j.87412H", "", false, new DiscordComponentEmoji(868814261902790656)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "j.89632H", "", false, new DiscordComponentEmoji(868814261625978891)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty2", "", true,    new DiscordComponentEmoji(869984289259929692))
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty1", "", true,  new DiscordComponentEmoji(1036029682354761808)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "j.87412H", "", false, new DiscordComponentEmoji(1036013167496663190)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "j.89632H", "", false, new DiscordComponentEmoji(1036013178653524039)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty2", "", true,  new DiscordComponentEmoji(1036029682354761808))
             })
             .AddComponents(new DiscordComponent[]
             {
-                new DiscordButtonComponent(ButtonStyle.Secondary, "j.47896H", "", false, new DiscordComponentEmoji(868814261923762176)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty3", "", true,    new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty4", "", true,    new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "j.69874H", "", false, new DiscordComponentEmoji(868814261571432459))
+                new DiscordButtonComponent(ButtonStyle.Secondary, "j.47896H", "", false, new DiscordComponentEmoji(1036013106280792064)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty3", "", true,  new DiscordComponentEmoji(1036029682354761808)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty4", "", true,  new DiscordComponentEmoji(1036029682354761808)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "j.69874H", "", false, new DiscordComponentEmoji(1036013150828503132))
             })
             .AddComponents(new DiscordComponent[]
             {
-                new DiscordButtonComponent(ButtonStyle.Secondary, "j.41236H", "", false, new DiscordComponentEmoji(868814261919580190)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty5", "", true,    new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty6", "", true,    new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "j.63214H", "", false, new DiscordComponentEmoji(868814262032818176))
+                new DiscordButtonComponent(ButtonStyle.Secondary, "j.41236H", "", false, new DiscordComponentEmoji(1036013094670979102)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty5", "", true,  new DiscordComponentEmoji(1036029682354761808)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty6", "", true,  new DiscordComponentEmoji(1036029682354761808)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "j.63214H", "", false, new DiscordComponentEmoji(1036013122143649813))
             })
             .AddComponents(new DiscordComponent[]
             {
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty7", "", true,    new DiscordComponentEmoji(869984289259929692)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "j.21478H", "", false, new DiscordComponentEmoji(868814261886021672)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "j.23698H", "", false, new DiscordComponentEmoji(868814262066376724)),
-                new DiscordButtonComponent(ButtonStyle.Secondary, "empty8", "", true,    new DiscordComponentEmoji(869984289259929692))
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty7", "", true,  new DiscordComponentEmoji(1036029682354761808)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "j.21478H", "", false, new DiscordComponentEmoji(1036013073699438652)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "j.23698H", "", false, new DiscordComponentEmoji(1036013082750746704)),
+                new DiscordButtonComponent(ButtonStyle.Secondary, "empty8", "", true,  new DiscordComponentEmoji(1036029682354761808))
             })
             .AddComponents(new DiscordComponent[]
             {

@@ -54,11 +54,8 @@ namespace GGStriveUtilsBot
 
             commands.RegisterCommands<Commands.FrameDataModule>();
             commands.RegisterCommands<Commands.AdminUtilsModule>();
-#if !DEBUG
+            
             slash.RegisterCommands<SlashCommands.FrameDataSlashModule>();
-#elif DEBUG
-            slash.RegisterCommands<SlashCommands.FrameDataSlashModule>(946531839043063838);
-#endif
             //ly liske
             discord.MessageCreated += async (s, e) =>
             {
@@ -71,7 +68,7 @@ namespace GGStriveUtilsBot
 
             //connect
             await discord.ConnectAsync(new DiscordActivity("Asuka R. Kreutz Radio Station", ActivityType.ListeningTo));
-
+            slash.RefreshCommands();
             //load bad requests channel
             if (File.Exists("bad-requests.txt"))
             {

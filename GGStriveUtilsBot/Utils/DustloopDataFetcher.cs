@@ -292,8 +292,33 @@ namespace GGStriveUtilsBot.Utils
                         return (character, "calvados", "", true);
             }
 
-            //volcanic viper
+            //mortobato
+            if (move == "motorboat")
+                return (character, "mortobato", "", false);
+
+            //hop
             if (character.HasValue)
+            {
+                Character chara = (Character)character;
+                if (chara == Character.Ram)
+                    if (move == "hop")
+                        return (character, "214k", "", true);
+                if (chara == Character.Anji)
+                    if (move == "hop")
+                        return (character, "236h k", "", true);
+            }
+
+            //servant shoot
+            if (character.HasValue)
+            {
+                Character chara = (Character)character;
+                if (chara == Character.Jacko)
+                    if (move == "kick")
+                        return (character, "236k", "", true);
+            }
+
+                //volcanic viper
+                if (character.HasValue)
             {
                 Character chara = (Character)character;
                 if (chara == Character.Sol)
@@ -348,6 +373,52 @@ namespace GGStriveUtilsBot.Utils
                     return (Character.Ino, "236s", "", true);
                 if (move == "h stroke" || move == "hs stroke" || move == "heavy stroke" || move == "heavy slash stroke" || move == "-2")
                     return (Character.Ino, "236h", "", true);
+            }
+
+            //i-no note
+            if (move == "note")
+                return (Character.Ino, "antidepressant scale", "", false);
+
+            //dolphins
+            if (character.HasValue)
+            {
+                Character chara = (Character)character;
+                if (chara == Character.May)
+                {
+                    if (move == "s dolphin" || move == "slash dolphin")
+                        return (character, "[4]6s", "", true);
+                    if (move == "h dolphin" || move == "hs dolphin" || move == "heavy dolphin" || move == "heavy slash dolphin")
+                        return (character, "[4]6h", "", true);
+                }
+            }
+            else
+            {
+                if (move == "s dolphin" || move == "slash dolphin")
+                    return (Character.May, "[4]6s", "", true);
+                if (move == "h dolphin" || move == "hs dolphin" || move == "heavy dolphin" || move == "heavy slash dolphin")
+                    return (Character.May, "[4]6h", "", true);
+            }
+
+            //arbiter
+            if (character.HasValue)
+            {
+                Character chara = (Character)character;
+                if (chara == Character.Testament)
+                {
+                    if (move == "s arbiter" || move == "slash arbiter" || move == "s arbiter sign" || move == "slash arbiter sign")
+                        return (character, "236s", "", true);
+                    if (move == "h arbiter" || move == "hs arbiter" || move == "heavy arbiter" || move == "heavy slash arbiter" ||
+                        move == "h arbiter sign" || move == "hs arbiter sign" || move == "heavy arbiter sign" || move == "heavy slash arbiter sign")
+                        return (character, "236h", "", true);
+                }
+            }
+            else
+            {
+                if (move == "s arbiter" || move == "slash arbiter" || move == "s arbiter sign" || move == "slash arbiter sign")
+                    return (Character.Testament, "236s", "", true);
+                if (move == "h arbiter" || move == "hs arbiter" || move == "heavy arbiter" || move == "heavy slash arbiter" ||
+                    move == "h arbiter sign" || move == "hs arbiter sign" || move == "heavy arbiter sign" || move == "heavy slash arbiter sign")
+                    return (Character.Testament, "236h", "", true);
             }
 
             //kamuriyuki / Nago spin special
