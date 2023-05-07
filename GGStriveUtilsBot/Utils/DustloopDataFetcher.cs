@@ -23,7 +23,7 @@ namespace GGStriveUtilsBot.Utils
         static public List<MoveData> dataSource;
         static public List<IconData> iconSource;
 
-        public static void Initialize()
+        public static Task Initialize()
         {
             var response = new WebClient().DownloadString(mainQuery);
             dataSource = JsonConvert.DeserializeObject<List<MoveData>>(response);
@@ -49,6 +49,8 @@ namespace GGStriveUtilsBot.Utils
             foreach (var icon in iconSource) //load icons
                 loadIcon(icon);
             Console.WriteLine("Icons loaded");
+
+            return Task.CompletedTask;
         }
 
         private static void loadImage(MoveData dataMove)

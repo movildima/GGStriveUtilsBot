@@ -33,7 +33,8 @@ namespace GGStriveUtilsBot.Utils
             @"(?<Testament>test)(?:ament)?|",
             @"(?<HappyChaos>((happy(?:\s+chaos)?)|(hc)|(chaos)|(fatherless)))|",
             @"(?<Bridget>bridget)|",
-            @"(?<Sin>sin)(?:\s+kiske)?",
+            @"(?<Sin>sin)(?:\s+kiske)?|",
+            @"(?<Bedman>bed)(?:man)?",
             @"))?\s*"
             );
         // Part of regex that captures either move names or numpad notated moves
@@ -41,7 +42,7 @@ namespace GGStriveUtilsBot.Utils
             "",
             @"((?<numpad>((([cfj]|(bt)|\-)?\.?\d*(\]|\[)?\d?(p|k|s|hs?|d)?(\]|\[)?\d?\s*)|", // general numpad notation
             @"(\[((s\/h)|(h\/s))\]\s*((s\/h)|(h\/s))))*)|",                               // (exception for Leo's janky guard attack)
-            @"(?<literal>(([a-z\.\'\?]*\s*)*)))",                                         // literal move names (e.g. "stun edge")
+            @"(?<literal>(([a-z\.\'\?0-9\$]*\s*)*)))",                                         // literal move names (e.g. "stun edge")
             @"(?<level>((Level\s(1|2|3|(br)){1})|([2468]{3}))?$)"                         // 'leveled' moves with multiple entries
         );
         static private string charaMovePattern = String.Join("", charaPattern, movePattern);

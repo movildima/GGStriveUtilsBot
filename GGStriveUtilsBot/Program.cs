@@ -27,10 +27,15 @@ namespace GGStriveUtilsBot
             {
 #if !DEBUG
                 Token = System.IO.File.ReadAllText("token.txt"),
+
+                Intents = DiscordIntents.AllUnprivileged,
 #elif DEBUG
                 Token = System.IO.File.ReadAllText("token-testing.txt"),
+
+                Intents = DiscordIntents.AllUnprivileged | DiscordIntents.MessageContents,
 #endif
                 TokenType = TokenType.Bot,
+
                 //MinimumLogLevel = Microsoft.Extensions.Logging.LogLevel.Trace
             });
 
@@ -59,16 +64,18 @@ namespace GGStriveUtilsBot
             //ly liske
             discord.MessageCreated += async (s, e) =>
             {
+                //Console.WriteLine("message: " + e.Message.Content);
                 if (e.Message.Content == "Ly")
-                    await e.Channel.SendMessageAsync("Liske <:Ky:810597089980448768>");
+                    await e.Message.RespondAsync("Liske <:Ky:810597089980448768>");
             };
-
-            //download frame data
-            Utils.DustloopDataFetcher.Initialize();
 
             //connect
             await discord.ConnectAsync(new DiscordActivity("Asuka R. Kreutz Radio Station", ActivityType.ListeningTo));
             slash.RefreshCommands();
+
+            //download frame data
+            await Utils.DustloopDataFetcher.Initialize();
+
             //load bad requests channel
             if (File.Exists("bad-requests.txt"))
             {

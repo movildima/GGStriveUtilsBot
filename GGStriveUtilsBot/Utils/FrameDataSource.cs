@@ -87,4 +87,6 @@ public enum Character
     Bridget,
     [ChoiceName("Sin Kiske")]
     Sin,
+    [ChoiceName("Bedman")]
+    Bedman,
 }
