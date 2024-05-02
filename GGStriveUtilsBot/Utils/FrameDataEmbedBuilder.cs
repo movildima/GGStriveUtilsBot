@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
+using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.SlashCommands;
 
@@ -21,6 +23,8 @@ namespace GGStriveUtilsBot.Utils
 
             var results = DustloopDataFetcher.fetchMove(character, move, level, isNumpad);
             var interactivity = client.GetInteractivity();
+            DiscordMessage buttonResponse;
+            InteractivityResult<ComponentInteractionCreateEventArgs> buttonReaction;
 
             switch (results.result)
             {
@@ -30,31 +34,43 @@ namespace GGStriveUtilsBot.Utils
                     await Commands.ErrorChannel.sendMessage(results, Move, client, user);
                     return buildNoResultEmbed();
                 case MoveDataResult.ExtraResults:
-                    var response = await channel.SendMessageAsync(buildXEmbed(results.moves));
-                    for (int i = 0; i < results.moves.Count; i++)
+                    //var response = await channel.SendMessageAsync(buildXEmbed(results.moves));
+                    //for (int i = 0; i < results.moves.Count; i++)
+                    //{
+                    //    if (i < emoteList.Count)
+                    //    {
+                    //        await response.CreateReactionAsync(DiscordEmoji.FromUnicode(client, emoteList[i]));
+                    //    }
+                    //}
+                    //var reaction = await interactivity.WaitForReactionAsync(f => f.User == user && emoteList.Where(g => f.Emoji == DiscordEmoji.FromUnicode(g)).Count() > 0, TimeSpan.FromSeconds(20));
+                    //if (!reaction.TimedOut)
+                    //{
+                    //    await response.DeleteAsync();
+                    //    return build1XEmbed(results.moves[emoteList.IndexOf(emoteList.Where(g => reaction.Result.Emoji == DiscordEmoji.FromUnicode(g)).FirstOrDefault())]);
+                    //}
+                    //else
+                    //{
+                    //    await response.DeleteAsync();
+                    //    return null;
+                    //}
+                    buttonResponse = await channel.SendMessageAsync(buildXEmbed(results.moves));
+                    buttonReaction = await buttonResponse.WaitForButtonAsync(user, TimeSpan.FromSeconds(40));
+                    if (!buttonReaction.TimedOut)
                     {
-                        if (i < emoteList.Count)
-                        {
-                            await response.CreateReactionAsync(DiscordEmoji.FromUnicode(client, emoteList[i]));
-                        }
-                    }
-                    var reaction = await interactivity.WaitForReactionAsync(f => f.User == user && emoteList.Where(g => f.Emoji == DiscordEmoji.FromUnicode(g)).Count() > 0, TimeSpan.FromSeconds(20));
-                    if (!reaction.TimedOut)
-                    {
-                        await response.DeleteAsync();
-                        return build1XEmbed(results.moves[emoteList.IndexOf(emoteList.Where(g => reaction.Result.Emoji == DiscordEmoji.FromUnicode(g)).FirstOrDefault())]);
+                        await buttonResponse.DeleteAsync();
+                        return build1XEmbed(results.moves.ElementAt(int.Parse(buttonReaction.Result.Id)));
                     }
                     else
                     {
-                        await response.DeleteAsync();
+                        await buttonResponse.DeleteAsync();
                         return null;
                     }
                 case MoveDataResult.TooManyResults:
                     await Commands.ErrorChannel.sendMessage(results, Move, client, user);
                     return buildTooManyEmbed();
                 case MoveDataResult.SpecialBehemoth:
-                    var buttonResponse = await channel.SendMessageAsync(buildBehemothSelector(false));
-                    var buttonReaction = await buttonResponse.WaitForButtonAsync(user, TimeSpan.FromSeconds(40));
+                    buttonResponse = await channel.SendMessageAsync(buildBehemothSelector(false));
+                    buttonReaction = await buttonResponse.WaitForButtonAsync(user, TimeSpan.FromSeconds(40));
                     if (!buttonReaction.TimedOut)
                     {
                         if (buttonReaction.Result.Id == "air_ok")
@@ -131,7 +147,7 @@ namespace GGStriveUtilsBot.Utils
             return embed.Build();
         }
 
-        public static DiscordEmbed buildXEmbed(List<MoveData> moves)
+        public static DiscordMessageBuilder buildXEmbed(List<MoveData> moves)
         {
             var embed = GenericEmbedBuilder.Create();
             embed = embed.WithTitle("Multiple results found!");
@@ -144,7 +160,26 @@ namespace GGStriveUtilsBot.Utils
                 else
                     embed.AddField((moves.IndexOf(move) + 1).ToString() + ": (" + move.chara + ") " + move.name, string.IsNullOrEmpty(move.input) ? "No input" : move.input);
             }
-            return embed.Build();
+
+            DiscordComponent[] components1 = new DiscordComponent[4];
+            DiscordComponent[] components2 = new DiscordComponent[4];
+            bool big = false;
+            for (int i = 0; i < moves.Count; i++)
+            {
+                if (i < 4)
+                    components1[i] = new DiscordButtonComponent(ButtonStyle.Secondary, i.ToString(), "", false, new DiscordComponentEmoji(emoteList[i]));
+                else
+                {
+                    components2[i - 4] = new DiscordButtonComponent(ButtonStyle.Secondary, i.ToString(), "", false, new DiscordComponentEmoji(emoteList[i]));
+                    big = true;
+                }
+            }
+            var message = new DiscordMessageBuilder()
+                .WithEmbed(embed)
+                .AddComponents(components1);
+            if(big)
+                message.AddComponents(components2);
+            return message;
         }
 
         public static DiscordEmbed buildNoResultEmbed()
@@ -154,9 +189,7 @@ namespace GGStriveUtilsBot.Utils
             embed = embed.WithDescription(
                 String.Join(
                     "",
-                    "Double check your request for errors.\n",
-                    "\nTo see the expected format:\n",
-                    "`!help f`\n"
+                    "Double check your request for errors.\n"
                 )
             );
             return embed.Build();

@@ -14,7 +14,7 @@ namespace GGStriveUtilsBot.Utils
 {
     static class DustloopDataFetcher
     {
-        static private string mainQuery = "https://www.dustloop.com/wiki/index.php?title=Special:CargoExport&tables=MoveData_GGST&&fields=chara%2C+input%2C+name%2C+images%2C+damage%2C+guard%2C+startup%2C+active%2C+recovery%2C+onBlock%2C+onHit%2C+invuln%2C+type&&order+by=%60chara%60%2C%60input%60%2C%60name%60%2C%60cargo__MoveData_GGST%60.%60images__full%60%2C%60damage%60&limit=1000&format=json";
+        static private string mainQuery = "https://www.dustloop.com/wiki/index.php?title=Special:CargoExport&tables=MoveData_GGST&&fields=chara%2C+input%2C+name%2C+images%2C+damage%2C+guard%2C+startup%2C+active%2C+recovery%2C+onBlock%2C+onHit%2C+invuln%2C+type&&order+by=%60chara%60%2C%60input%60%2C%60name%60%2C%60cargo__MoveData_GGST%60.%60images__full%60%2C%60damage%60&limit=2000&format=json";
         static private string imgQuery = "https://dustloop.com/wiki/api.php?action=query&format=json&prop=imageinfo&titles=File:{0}&iiprop=url";
         static private string iconQuery = "https://www.dustloop.com/wiki/index.php?title=Special:CargoExport&tables=ggstCharacters&&fields=name%2Cicon&&order+by=%60name%60%2C%60icon%60&limit=1000&format=json";
         const int LDistance = 3; //google Levenshtein distance for more info
@@ -112,19 +112,19 @@ namespace GGStriveUtilsBot.Utils
                     switch (chara)
                     {
                         case Character.Sol:
-                            return (character, "Volcanic Viper", "", false);
+                            return (character, "volcanic viper", "", false);
                         case Character.Ky:
-                            return (character, "Vapor Thrust", "", false);
+                            return (character, "vapor thrust", "", false);
                         case Character.Gio:
-                            return (character, "Sol Nascente", "", false);
+                            return (character, "sol nascente", "", false);
                         case Character.Leo:
-                            return (character, "Eisen Sturm", "", false);
+                            return (character, "eisen sturm", "", false);
                         case Character.Chipp:
-                            return (character, "Beta Blade", "", false);
+                            return (character, "beta blade", "", false);
                         case Character.Bridget:
-                            return (character, "Starship", "", false);
+                            return (character, "starship", "", false);
                         case Character.Sin:
-                            return (character, "Hawk Baker", "", false);
+                            return (character, "hawk baker", "", false);
                     }
                 }
             }
@@ -145,29 +145,29 @@ namespace GGStriveUtilsBot.Utils
                     switch (chara)
                     {
                         case Character.Axl:
-                            return (character, "Winter Mantis", "", false);
+                            return (character, "winter mantis", "", false);
                         case Character.Chipp:
-                            return (character, "Genrouzan", "", false);
+                            return (character, "genrouzan", "", false);
                         case Character.Faust:
-                            return (character, "Snip Snip Snip", "", false);
+                            return (character, "snip snip snip", "", false);
                         case Character.Leo:
-                            return (character, "Gländzendes Dunkel", "", false);
+                            return (character, "gländzendes dunkel", "", false);
                         case Character.May:
-                            return (character, "Overhead Kiss", "", false);
+                            return (character, "overhead kiss", "", false);
                         case Character.Nago:
-                            return (character, "Bloodsucking Universe", "", false);
+                            return (character, "bloodsucking universe", "", false);
                         case Character.Pot:
-                            return (character, "Potemkin Buster", "", false);
+                            return (character, "potemkin buster", "", false);
                         case Character.Sol:
-                            return (character, "Wild Throw", "", false);
+                            return (character, "wild throw", "", false);
                         case Character.Zato:
-                            return (character, "Damned Fang", "", false);
+                            return (character, "damned fang", "", false);
                         case Character.Bridget:
-                            return (character, "Rock the Baby", "", false);
+                            return (character, "rock the baby", "", false);
                         case Character.Jacko:
-                            return (character, "Forever Elysion Driver", "", false);
+                            return (character, "forever elysion driver", "", false);
                         case Character.Ino:
-                            return (character, "Megalomania", "", false);
+                            return (character, "megalomania", "", false);
                     }
                 }
             }

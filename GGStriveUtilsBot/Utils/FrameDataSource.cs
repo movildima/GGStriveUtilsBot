@@ -89,4 +89,12 @@ public enum Character
     Sin,
     [ChoiceName("Bedman")]
     Bedman,
+    [ChoiceName("Asuka R")]
+    Asuka,
+    [ChoiceName("Johnny")]
+    Johnny,
+    [ChoiceName("Elphelt Valentine")]
+    Elphelt,
+    [ChoiceName("A.B.A")]
+    ABA,
 }

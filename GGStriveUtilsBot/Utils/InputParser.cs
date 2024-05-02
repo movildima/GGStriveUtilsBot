@@ -34,13 +34,17 @@ namespace GGStriveUtilsBot.Utils
             @"(?<HappyChaos>((happy(?:\s+chaos)?)|(hc)|(chaos)|(fatherless)))|",
             @"(?<Bridget>bridget)|",
             @"(?<Sin>sin)(?:\s+kiske)?|",
-            @"(?<Bedman>bed)(?:man)?",
+            @"(?<Bedman>bed)(?:man)?|",
+            @"(?<Asuka>asuka)|",
+            @"(?<Johnny>joh?hn?ny)|",
+            @"(?<Elphelt>elphelt)?(?:\s+valentine)?",
+            @"(?<ABA>a.?b.?a.?)|",
             @"))?\s*"
             );
         // Part of regex that captures either move names or numpad notated moves
         static private string movePattern = String.Join(
             "",
-            @"((?<numpad>((([cfj]|(bt)|\-)?\.?\d*(\]|\[)?\d?(p|k|s|hs?|d)?(\]|\[)?\d?\s*)|", // general numpad notation
+            @"((?<numpad>((([cfj]|(bt)|\-)?\.?\d*(\]|\[)?\d?(p|k|s|hs?|d|x|~|/)?(\]|\[)?\d?\s*)|", // general numpad notation
             @"(\[((s\/h)|(h\/s))\]\s*((s\/h)|(h\/s))))*)|",                               // (exception for Leo's janky guard attack)
             @"(?<literal>(([a-z\.\'\?0-9\$]*\s*)*)))",                                         // literal move names (e.g. "stun edge")
             @"(?<level>((Level\s(1|2|3|(br)){1})|([2468]{3}))?$)"                         // 'leveled' moves with multiple entries
@@ -50,7 +54,7 @@ namespace GGStriveUtilsBot.Utils
         static private Regex charaMoveRegex = new Regex(charaMovePattern,
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-        static private Regex prefixMoveRegex = new Regex(@"^(j|bt)\d{0,6}(p|k|s|hs?|d)|(c|f)s{1,3}$",
+        static private Regex prefixMoveRegex = new Regex(@"^(j|jr|jr j|bt)\d{0,6}(p|k|s|hs?|d)|(c|f)s{1,3}$",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         // Returns the Character enum, move name string, move level string, and a bool indicating numpad format
@@ -98,6 +102,17 @@ namespace GGStriveUtilsBot.Utils
                 if (move.StartsWith("bt"))
                 {
                     move = move.Insert(2, ".");
+                }
+                else if (move.StartsWith("jr")) //aba stuff
+                {
+                    move = move.Replace("cs", "c.s");
+                    move = move.Replace("fs", "f.s");
+                    move = move.Replace("jp", "j.p");
+                    move = move.Replace("jk", "j.k");
+                    move = move.Replace("js", "j.s");
+                    move = move.Replace("jh", "j.h");
+                    move = move.Replace("jd", "j.d");
+
                 }
                 else
                 {
