@@ -161,8 +161,8 @@ namespace GGStriveUtilsBot.Utils
                     embed.AddField((moves.IndexOf(move) + 1).ToString() + ": (" + move.chara + ") " + move.name, string.IsNullOrEmpty(move.input) ? "No input" : move.input);
             }
 
-            DiscordComponent[] components1 = new DiscordComponent[4];
-            DiscordComponent[] components2 = new DiscordComponent[4];
+            DiscordComponent[] components1 = new DiscordComponent[4 < moves.Count ? 4 : moves.Count];
+            DiscordComponent[] components2 = new DiscordComponent[(moves.Count - 4) > 0 ? moves.Count - 4 : 4];
             bool big = false;
             for (int i = 0; i < moves.Count; i++)
             {
