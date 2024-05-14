@@ -37,7 +37,7 @@ namespace GGStriveUtilsBot.Utils
             @"(?<Bedman>bed)(?:man)?|",
             @"(?<Asuka>asuka)|",
             @"(?<Johnny>joh?hn?ny)|",
-            @"(?<Elphelt>elphelt)?(?:\s+valentine)?",
+            @"(?<Elphelt>elphelt)?(?:\s+valentine)?|",
             @"(?<ABA>a.?b.?a.?)|",
             @"))?\s*"
             );
