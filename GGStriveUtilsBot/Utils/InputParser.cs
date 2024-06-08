@@ -37,14 +37,14 @@ namespace GGStriveUtilsBot.Utils
             @"(?<Bedman>bed)(?:man)?|",
             @"(?<Asuka>asuka)|",
             @"(?<Johnny>joh?hn?ny)|",
-            @"(?<Elphelt>elphelt)?(?:\s+valentine)?|",
-            @"(?<ABA>a.?b.?a.?)|",
+            @"(?<Elphelt>el)(?:phelt)?(?:\s+valentine)?|",
+            @"(?<ABA>aba)",
             @"))?\s*"
             );
         // Part of regex that captures either move names or numpad notated moves
         static private string movePattern = String.Join(
             "",
-            @"((?<numpad>((([cfj]|(bt)|\-)?\.?\d*(\]|\[)?\d?(p|k|s|hs?|d|x|~|/)?(\]|\[)?\d?\s*)|", // general numpad notation
+            @"((?<numpad>((([cfj]|(bt)|(jr )|\-)?\.?\d*(\]|\[)?\d?(p|k|s|hs?|d|x|~|/)?(\]|\[)?\d?\s*)|", // general numpad notation
             @"(\[((s\/h)|(h\/s))\]\s*((s\/h)|(h\/s))))*)|",                               // (exception for Leo's janky guard attack)
             @"(?<literal>(([a-z\.\'\?0-9\$]*\s*)*)))",                                         // literal move names (e.g. "stun edge")
             @"(?<level>((Level\s(1|2|3|(br)){1})|([2468]{3}))?$)"                         // 'leveled' moves with multiple entries

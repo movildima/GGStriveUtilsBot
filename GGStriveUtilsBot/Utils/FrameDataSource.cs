@@ -96,5 +96,5 @@ public enum Character
     [ChoiceName("Elphelt Valentine")]
     Elphelt,
     [ChoiceName("A.B.A")]
-    ABA,
+    ABA
 }
