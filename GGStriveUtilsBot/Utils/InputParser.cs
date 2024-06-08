@@ -38,7 +38,8 @@ namespace GGStriveUtilsBot.Utils
             @"(?<Asuka>asuka)|",
             @"(?<Johnny>joh?hn?ny)|",
             @"(?<Elphelt>el)(?:phelt)?(?:\s+valentine)?|",
-            @"(?<ABA>aba)",
+            @"(?<ABA>aba)|",
+            @"(?<Slayer>slayer)",
             @"))?\s*"
             );
         // Part of regex that captures either move names or numpad notated moves
