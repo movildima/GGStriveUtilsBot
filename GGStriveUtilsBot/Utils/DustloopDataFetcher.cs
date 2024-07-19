@@ -26,6 +26,8 @@ namespace GGStriveUtilsBot.Utils
         public static Task Initialize()
         {
             var response = new WebClient().DownloadString(mainQuery);
+            response = response.Remove(0, response.LastIndexOf(">") + 1);
+            //Console.Write(response.Substring(0,100));
             dataSource = JsonConvert.DeserializeObject<List<MoveData>>(response);
 
             response = new WebClient().DownloadString(iconQuery);
